@@ -6,7 +6,7 @@ Báo cáo chuyên đề học phần **Học máy nâng cao (004295)**, Trườn
 > **Làm việc nhóm: đọc `TEAM.md` trước.** Trạng thái: khung ban đầu. Mã nhóm G = 18, SEED = 2044 (`src/config.py`). Phần lõi trong `src/` còn là stub.
 
 ## Môi trường
-Python 3.12 (phát triển trên 3.12.10), thư viện trong `requirements.txt`.
+Python 3.12 (phát triển trên 3.12.10), thư viện trong `requirements.txt`. Quy ước môi trường đầy đủ: mục "Thống nhất cách làm việc" bên dưới.
 
 ```bash
 python -m venv .venv
@@ -40,6 +40,80 @@ python run_all.py --final       # chạy cuối, mở tập kiểm tra đúng m�
 python -m pytest                # kiểm tra cấu trúc, quy tắc 72 giờ, hành vi các phần tự cài đặt
 ```
 Thời gian chạy ước tính: _điền sau_ (giới hạn của đề: 60 phút).
+
+## Thống nhất cách làm việc, cấu hình, môi trường
+Mục tiêu: ba người, ba AI vẫn ra cùng một con số. Quy tắc đầy đủ: [`TEAM.md`](TEAM.md) (đọc đầu tiên), [`docs/CONVENTIONS.md`](docs/CONVENTIONS.md).
+
+### Mỗi loại thông tin chỉ có một chỗ
+| Loại | Nơi duy nhất | Ai sửa |
+|---|---|---|
+| Thông số (SEED, ngày chia, độ trễ, phân vị, tên cột, tệp dữ liệu) | [`src/config.py`](src/config.py) | Chỉ Phi |
+| Công thức, nhãn, chỉ số, tên tệp hình/bảng, chữ ký hàm | [`docs/CONVENTIONS.md`](docs/CONVENTIONS.md) | Chỉ Phi |
+| Quyết định đổi thông số hoặc quy ước | [`docs/decisions/`](docs/decisions/README.md) | Chỉ Phi |
+| Checklist theo phase | [`docs/CHECKLIST.md`](docs/CHECKLIST.md) (README chỉ tóm tắt) | Chỉ Phi |
+| Việc hằng ngày | [`tasks/`](tasks/README.md) | Phi tạo; người nhận cập nhật trạng thái |
+| Luật cho AI | `TEAM.md`, `AGENTS.md` | Chỉ Phi |
+
+### Thông số đã khóa
+| Mục | Giá trị |
+|---|---|
+| Mã nhóm G, SEED | 18, SEED = 2026 + G = **2044** (mọi `rng` lấy từ `config.get_seed()`) |
+| Chia dữ liệu (tuần Thứ Bảy 00:00 → Thứ Sáu 23:00, 168 giờ) | train 209 tuần, val 26, test_a 37, test_b 14; không xáo trộn |
+| Quy tắc 72 giờ | đặc trưng trễ cố định ≥ **240 giờ** (336, 504, 672 hợp lệ); trễ 168 giờ không dùng |
+| Mô hình cơ sở | trễ 336 giờ; trung bình cùng giờ các tuần 2–4 trước; dự báo CND |
+| Chỉ số chính | MAPE theo giờ của từng tuần, rồi trung bình các tuần; báo riêng 37 tuần và 14 tuần |
+| Bài toán phụ "giờ cao điểm" | nhãn +1 nếu tải > phân vị 90% **của tập huấn luyện**, ngược lại −1 |
+| Ký hiệu | `X̃ = [X, 1]` (cột 1 ở cuối); chuẩn hóa z-score khớp trên train; float64; phần lõi chỉ NumPy |
+| Hồi quy tuyến tính | J = 1/(2n)·‖X̃w − y‖² + (λ/2)·‖w[:-1]‖² (không phạt hệ số tự do) |
+| Tập kiểm tra | chỉ mở một lần bằng `python run_all.py --final` do Phi chạy |
+
+### Môi trường
+- **Hệ điều hành, shell:** Windows, PowerShell. CI chạy Ubuntu, nên đường dẫn trong mã dùng `pathlib`.
+- **Python 3.12** (phát triển trên 3.12.10), trong `.venv`; đặt `$env:PYTHONUTF8=1` để in tiếng Việt không lỗi.
+- **Thư viện:** `requirements.txt`. Đã kiểm thử trên numpy 2.5.5, pandas 3.1.1, scipy 1.18.1, scikit-learn 1.9.1, matplotlib 3.11.2, pytest 9.2.0. **Chưa ghim phiên bản** (đang `>=`); Phi chạy `pip freeze` trước khi nộp.
+- **Kiểm môi trường:** `python scripts\doctor.py` kiểm Python, thư viện, venv, nhánh, `git config user.name` khớp nhánh, dữ liệu đúng kích thước + SHA-256, SEED = 2044.
+- **Dữ liệu:** không nằm trong git (`data/raw/`); tải theo mục "Tải dữ liệu".
+
+### Nhánh, commit, PR
+- Chỉ **4 nhánh**: `main` (chỉ nhận PR, chỉ Phi merge, merge commit) và 3 nhánh cá nhân.
+
+| Người | `git config user.name` | Nhánh duy nhất |
+|---|---|---|
+| Nguyễn Bảo Phi (trưởng nhóm) | `Nguyen Bao Phi` | `phi-lead-data-mlp` |
+| Đỗ Minh Huấn | `Do Minh Huan` | `huan-eda-gd` |
+| Nguyễn Serov Trọng Việt | `Nguyen Serov Trong Viet` | `viet-perceptron-features` |
+
+- Mỗi người một PR thường trực `<nhánh> → main`; đã có thì chỉ push thêm.
+- Commit: `T003 feat(b3): them momentum gd` (mã task; Phi dùng `LEAD`; loại `feat|fix|test|docs|chore`). CI từ chối commit sai mẫu.
+- Cấm: `push --force`, `reset --hard`, `rebase`, `add .`, push lên nhánh người khác, tạo nhánh thứ năm.
+- Mỗi buổi làm bắt đầu bằng: `checkout` nhánh mình → `pull` → `merge origin/main` → `doctor.py`. Xung đột thì dừng và báo Phi.
+
+### File sở hữu (mỗi file một chủ)
+| Người | Được sửa |
+|---|---|
+| Phi | `src/config.py`, `data_prep`, `mlp`, `evaluate`, `hand_calc`, `run_all.py`, `docs/`, `tasks/`, `scripts/`, `.github/`, `.claude/`, `prompts/`, `TEAM.md`, `AGENTS.md` |
+| Huấn | `src/optim_linear.py`, `hand_calc_huan.py`, `cnd_compare.py`, `notebooks/huan_*`, `docs/DATA_DICTIONARY.md` |
+| Việt | `src/perceptron.py`, `features.py`, `hand_calc_viet.py`, `notebooks/viet_*` |
+
+Cần sửa file người khác: ghi vào task, nhắn chủ file.
+
+### Luật AI (theo đề mục 7)
+- Dùng công cụ nào cũng được (Claude, ChatGPT, Antigravity): đều đọc `TEAM.md` trước (`CLAUDE.md`, `AGENTS.md`, `GEMINI.md` chỉ trỏ về đó).
+- **Không** để AI viết thay phần tự cài đặt (GD/SGD/mini-batch/momentum, PLA/Pocket, MLP + lan truyền ngược + kiểm tra gradient, PCA, LDA), không sinh đoạn báo cáo, không bịa số liệu.
+- Mỗi lần dùng AI ghi một dòng vào [`docs/ai_usage_log.md`](docs/ai_usage_log.md). Ai cũng phải giải thích được mọi dòng mã và con số, kể cả phần của người khác.
+
+### Máy chặn, và quy ước thuần túy
+| Có test hoặc CI chặn | Chỉ là quy ước (cần người kiểm) |
+|---|---|
+| Số "ma thuật" trong `src/` (`test_no_magic_numbers`) | Số trong báo cáo Google Docs phải lấy từ `results/` |
+| Số tuần chia, quy tắc trễ 240 giờ, khóa tập kiểm tra | Notebook không chứa hằng số tự đặt, đã xóa output |
+| Chữ ký hàm trong `src/` (`test_interfaces`) | Không dùng AI viết phần tự cài đặt |
+| Mẫu commit, tệp > 1 MB, dữ liệu thô bị track, file task | Công thức và nhãn trong `CONVENTIONS.md` |
+| Nhánh và `user.name` khớp nhau (`doctor.py`, chạy tay) | Không push lên nhánh người khác (đã bảo vệ `main`) |
+
+### Còn mở (chưa kết luận)
+- **UNKNOWN:** nhãn thời gian của tệp phụ tải có lệch 1 giờ so với tệp dự báo CND hay không (Phi kiểm trong T002; chưa kết luận thì chưa so với CND).
+- Phiên bản thư viện chưa ghim (xem trên).
 
 ## Checklist (cố định theo phase)
 Tóm tắt từ [`docs/CHECKLIST.md`](docs/CHECKLIST.md) (nguồn đầy đủ, có điều kiện được điểm; chỉ Phi sửa, Phi đổi ☐ → ☑ khi có bằng chứng). Mã khớp mã chấm của đề, tổng Phần I = 10,0. Task hằng ngày nằm ở [`tasks/`](tasks/README.md).
