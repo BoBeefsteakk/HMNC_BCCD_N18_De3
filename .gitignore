@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Dữ liệu gốc: không nộp kèm (đề mục 2.2) — chỉ nộp script tải
+data/raw/
+data/*.csv
+data/*.xlsx
+data/*.zip
+
+# Khóa "tập kiểm tra đã dùng" (src/guards.py), mỗi máy một khóa
+results/.test_used
+
+# Khác
+*.zip
+~$*
+.DS_Store
+Thumbs.db
+
+# Antigravity (báo cáo/mission của agent, không đưa lên git)
+anti-reports/
+anti-missions/
