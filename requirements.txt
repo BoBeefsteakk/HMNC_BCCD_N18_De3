@@ -1,10 +1,10 @@
 # Đề mục 2.4: Python >= 3.10 với NumPy, pandas, Matplotlib, SciPy; scikit-learn chỉ để tiền xử lý,
 # tính chỉ số và làm mô hình ĐỐI CHỨNG. Phần lõi tự cài đặt bằng NumPy.
-# Kiểm thử ngày 16/11/2026 trên Python 3.12.10 / numpy 2.5.5 / pandas 3.1.1 / scipy 1.18.1 / scikit-learn 1.9.1 / matplotlib 3.11.2 / pytest 9.2.0.
-# TODO(trước khi nộp): chốt phiên bản đúng bằng `pip freeze` trên bản chạy lại sạch (repro-runner).
-numpy>=1.26
-pandas>=2.1
-scipy>=1.11
-scikit-learn>=1.4
-matplotlib>=3.8
-pytest>=8.0
+# Ghim đúng phiên bản đã kiểm thử (17/11/2026, Python 3.12.10, Windows). Cả nhóm dùng cùng bộ này.
+# Thêm thư viện mới: báo Phi. Trước khi nộp Phi đối chiếu lại bằng `pip freeze` trên bản chạy sạch.
+numpy==2.5.5
+pandas==3.1.1
+scipy==1.18.1
+scikit-learn==1.9.1
+matplotlib==3.11.2
+pytest==9.2.0
