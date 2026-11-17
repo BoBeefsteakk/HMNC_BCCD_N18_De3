@@ -60,13 +60,13 @@ Hạn ở bảng dưới là mốc tham khảo; nếu lệch với `due:` trong 
 ## f. Dùng AI cho phần của bạn
 | Được hỏi AI | Không được để AI làm |
 |---|---|
-| Khái niệm PLA, Pocket, Fisher, PCA, LDA, hiện tượng Hughes | Viết `pla`, `pocket`, `pca`, `lda_two_class`, `lda_multiclass` |
+| Khái niệm PLA, Pocket, Fisher, PCA, LDA, hiện tượng Hughes | Nộp mã PLA/Pocket/PCA/LDA bạn chưa hiểu (AI được viết; bạn giải thích được từng dòng, Phi review) |
 | Cách dùng `scipy.optimize.linprog`, `numpy.linalg.eigh`, `sklearn.decomposition.PCA` (để đối chứng) | Viết thay suy dẫn B2.2(d) hoặc phần tính tay B7.1(b), B7.3 |
 | Tìm lỗi cú pháp, giải thích traceback, cách vẽ hình | Sinh nguyên đoạn báo cáo; sinh số liệu, bảng, hình không do mã nhóm chạy |
 | Sửa chính tả, diễn đạt câu chữ | Thêm tài liệu tham khảo chưa đọc; tự đặt hệ số từ [7] |
 | Nhờ đặt câu hỏi ôn vấn đáp | Chọn đặc trưng hoặc ngưỡng bằng cách nhìn tập kiểm tra |
 
-Mỗi lần dùng AI thêm MỘT dòng vào `docs/ai_usage_log.md` (ngày | công cụ | việc | tệp/phần báo cáo | người). PLA/Pocket, PCA, LDA là phần bắt buộc tự cài đặt (đề mục 2.4): bạn phải giải thích được từng dòng.
+Mỗi lần dùng AI thêm MỘT dòng vào `docs/ai_usage_log.md` (ngày | công cụ | việc | tệp/phần báo cáo | người). PLA/Pocket, PCA, LDA là phần bắt buộc tự cài đặt (đề mục 2.4): AI được viết mã, nhưng bạn phải giải thích được từng dòng, Phi review trước khi merge, nhật ký ghi rõ (khai ở Phụ lục C).
 
 ## g. Chuẩn bị vấn đáp
 **II.2 — phải giải thích được**: hàm mất mát perceptron J_P và vì sao không phạt mẫu đúng sát biên; PLA và Pocket khác nhau thế nào; quy ước y·g ≤ 0; vì sao w̃(0) = 0 thì kết quả bất biến theo η; bài toán LP kiểm tra khả tách; tiêu chí Fisher; PCA qua trị riêng/SVD, phương sai giải thích, loadings, sai số tái tạo; LDA (S_W, S_B), vì sao w ∝ S_W⁻¹(m1 − m0); ba họ chọn đặc trưng; hiện tượng Hughes.

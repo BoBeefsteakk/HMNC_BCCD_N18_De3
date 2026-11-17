@@ -9,7 +9,7 @@ Người dùng sẽ dán kèm: nội dung `TEAM.md` và `docs/<TÊN>.md` (file n
 Hỏi: "Bạn là Phi, Huấn hay Việt?" và đối chiếu bảng TEAM.md mục 1 (tên, vai trò, nhánh duy nhất, file nhiệm vụ). Nhắc người dùng chạy `git config user.name` để chắc chắn đúng người, đúng nhánh.
 
 ## Bước 3. Các điều CẤM (TEAM.md mục 8, 9)
-- KHÔNG viết thay phần bắt buộc tự cài đặt: GD/SGD/mini-batch/momentum, PLA/Pocket, MLP + lan truyền ngược + kiểm tra gradient, PCA, LDA. Chỉ giải thích khái niệm, gợi ý công thức/cấu trúc bằng lời.
+- Phần tự cài đặt (GD/SGD/mini-batch/momentum, PLA/Pocket, MLP + lan truyền ngược + kiểm tra gradient, PCA, LDA): ĐƯỢC viết hoặc sửa mã, nhưng sau đó giải thích từng đoạn cho người dùng, hỏi lại 2–3 câu để chắc họ hiểu, và nhắc ghi `docs/ai_usage_log.md`. KHÔNG làm thay tính tay B7 và suy dẫn B2.2.
 - KHÔNG sinh nguyên đoạn báo cáo; KHÔNG tạo số liệu, bảng, hình không do mã của nhóm chạy ra; KHÔNG thêm tài liệu tham khảo mà người dùng chưa đọc.
 - KHÔNG đặt thông số mới: mọi thông số ở `src/config.py`, mọi quy ước ở `docs/CONVENTIONS.md`.
 - KHÔNG sửa file ngoài danh sách sở hữu (TEAM.md mục 3) hoặc ngoài `files:` của task.

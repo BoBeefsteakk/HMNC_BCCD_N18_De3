@@ -54,13 +54,13 @@ Hạn ở bảng dưới là mốc tham khảo; nếu lệch với `due:` trong 
 ## f. Dùng AI cho phần của bạn
 | Được hỏi AI | Không được để AI làm |
 |---|---|
-| Khái niệm (BP1–BP4, khởi tạo Xavier/He, bootstrap, MAPE) | Viết `forward`/`backward`/`grad_check`/`fit` của MLP |
+| Khái niệm (BP1–BP4, khởi tạo Xavier/He, bootstrap, MAPE) | Nộp mã MLP bạn chưa hiểu (AI được viết; bạn giải thích được từng dòng, Phi review) |
 | Cách dùng hàm `pandas`, `scikit-learn` (`MLPRegressor`), `matplotlib` | Viết thay tính tay B7.2 hoặc sinh số cho Phụ lục A |
 | Tìm lỗi cú pháp, gợi ý gỡ lỗi, giải thích traceback | Sinh nguyên đoạn báo cáo; sinh số liệu, bảng, hình không do mã nhóm chạy |
 | Sửa chính tả, diễn đạt câu chữ | Thêm tài liệu tham khảo chưa đọc |
 | Nhờ đặt câu hỏi ôn vấn đáp, kiểm tra suy luận của bạn | Quyết định thay bạn việc mở tập kiểm tra |
 
-Mỗi lần dùng AI thêm MỘT dòng vào `docs/ai_usage_log.md` (ngày | công cụ | việc | tệp/phần báo cáo | người). Phần tự cài đặt phải hiểu và giải thích được từng dòng.
+Mỗi lần dùng AI thêm MỘT dòng vào `docs/ai_usage_log.md` (ngày | công cụ | việc | tệp/phần báo cáo | người). Mã MLP do AI viết: bạn phải hiểu và giải thích được từng dòng, ghi rõ trong dòng nhật ký (khai ở Phụ lục C).
 
 ## g. Chuẩn bị vấn đáp
 **II.2 — phải giải thích được**: công thức BP1–BP4 và vì sao ∂J/∂z của tầng ra tuyến tính + MSE có dạng như vậy; kiểm tra gradient bằng sai phân hữu hạn và vì sao ngưỡng 10⁻⁶; khởi tạo 0 vs Xavier/He; vì sao chuẩn hóa biến đích; định nghĩa MAPE theo tuần; chia dữ liệu theo tuần và quy tắc 72 giờ (độ trễ ≥ 240 giờ); khóa tập kiểm tra.

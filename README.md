@@ -99,7 +99,7 @@ Cần sửa file người khác: ghi vào task, nhắn chủ file.
 
 ### Luật AI (theo đề mục 7)
 - Dùng công cụ nào cũng được (Claude, ChatGPT, Antigravity): đều đọc `TEAM.md` trước (`CLAUDE.md`, `AGENTS.md`, `GEMINI.md` chỉ trỏ về đó).
-- **Không** để AI viết thay phần tự cài đặt (GD/SGD/mini-batch/momentum, PLA/Pocket, MLP + lan truyền ngược + kiểm tra gradient, PCA, LDA), không sinh đoạn báo cáo, không bịa số liệu.
+- AI **được** viết mã, kể cả phần tự cài đặt, nếu người nộp giải thích được từng dòng và Phi review trước khi merge. **Không** sinh nguyên đoạn báo cáo (đề cấm), không làm thay tính tay B7 và suy dẫn B2.2, không bịa số liệu hay tài liệu tham khảo.
 - Mỗi lần dùng AI ghi một dòng vào [`docs/ai_usage_log.md`](docs/ai_usage_log.md). Ai cũng phải giải thích được mọi dòng mã và con số, kể cả phần của người khác.
 
 ### Máy chặn, và quy ước thuần túy
@@ -107,7 +107,7 @@ Cần sửa file người khác: ghi vào task, nhắn chủ file.
 |---|---|
 | Số "ma thuật" trong `src/` (`test_no_magic_numbers`) | Số trong báo cáo Google Docs phải lấy từ `results/` |
 | Số tuần chia, quy tắc trễ 240 giờ, khóa tập kiểm tra | Notebook không chứa hằng số tự đặt, đã xóa output |
-| Chữ ký hàm trong `src/` (`test_interfaces`) | Không dùng AI viết phần tự cài đặt |
+| Chữ ký hàm trong `src/` (`test_interfaces`) | Mã AI viết phải được người nộp giải thích được; Phi review |
 | Mẫu commit, tệp > 1 MB, dữ liệu thô bị track, file task | Công thức và nhãn trong `CONVENTIONS.md` |
 | Nhánh và `user.name` khớp nhau (`doctor.py`, chạy tay) | Không push lên nhánh người khác (đã bảo vệ `main`) |
 
@@ -115,7 +115,7 @@ Cần sửa file người khác: ghi vào task, nhắn chủ file.
 - **UNKNOWN:** nhãn thời gian của tệp phụ tải có lệch 1 giờ so với tệp dự báo CND hay không (Phi kiểm trong T002; chưa kết luận thì chưa so với CND).
 
 ## Checklist (cố định theo phase)
-Tóm tắt từ [`docs/CHECKLIST.md`](docs/CHECKLIST.md) (nguồn đầy đủ, có điều kiện được điểm; chỉ Phi sửa, Phi đổi ☐ → ☑ khi có bằng chứng). Mã khớp mã chấm của đề, tổng Phần I = 10,0. Task hằng ngày nằm ở [`tasks/`](tasks/README.md).
+Tóm tắt từ [`docs/CHECKLIST.md`](docs/CHECKLIST.md) (nguồn đầy đủ, có điều kiện được điểm; chỉ Phi sửa, Phi đổi ☐ → ☑ khi có bằng chứng). Mã khớp mã chấm của đề, tổng Phần I = 10,0. Task hằng ngày nằm ở [`tasks/`](tasks/README.md). Dàn ý báo cáo Chương 1–2: [`docs/BAOCAO_DAN_Y_C1_C2.md`](docs/BAOCAO_DAN_Y_C1_C2.md).
 
 | Phase | Hạn |
 |---|---|

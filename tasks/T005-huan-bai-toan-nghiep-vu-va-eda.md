@@ -25,7 +25,7 @@ Phát biểu bài toán nghiệp vụ (ai dùng, quyết định gì, chi phí s
 
 
 ## Không được làm
-- Không để AI viết thay phần tự cài đặt (GD/SGD/mini-batch/momentum, PLA/Pocket, MLP + backprop, PCA, LDA).
+- AI được viết mã phần tự cài đặt (GD/SGD/mini-batch/momentum, PLA/Pocket, MLP + backprop, PCA, LDA), nhưng bạn phải giải thích được từng dòng và ghi `docs/ai_usage_log.md`.
 - Không sửa file ngoài `files:`.
 - Không tự đặt thông số ngoài `src/config.py`; thiếu thông số thì ghi vào task và báo Phi.
 
