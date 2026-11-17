@@ -17,7 +17,7 @@ Bạn hỗ trợ Phi (trưởng nhóm) review một nhánh hoặc PR của Huấ
 4. Không rò rỉ: chuẩn hóa/PCA/ngưỡng chỉ khớp trên train; trễ ≥ 240 giờ; không đọc nhãn tập kiểm tra.
 5. Không commit dữ liệu thô, `.venv/`, tệp > 1 MB, notebook còn output (kiểm `outputs` trong .ipynb).
 6. `python -m pytest` không đỏ; test của task xanh và KHÔNG SKIP như mục "Xong khi".
-7. Có dòng trong `docs/ai_usage_log.md` nếu dấu hiệu dùng AI; mã tự cài đặt do AI viết thì kiểm có dòng nhật ký, rồi HỎI người nộp 2–3 câu để họ tự giải thích; không giải thích được thì yêu cầu viết lại phần đó.
+7. Có dòng trong `docs/ai_usage_log.md` nếu dấu hiệu dùng AI; mã tự cài đặt do AI viết thì kiểm có dòng nhật ký và dòng `Tự kiểm hiểu (model hỏi): <hàm> | qua` trong mục "Kết quả" của task cho từng hàm AI viết; thiếu hoặc `chưa qua` thì trả lại và bảo người nộp chạy bước kiểm hiểu với task-runner. Không tự hỏi dồn từng người.
 8. Hình/bảng đặt tên đúng `CONVENTIONS.md` mục 5 và có dòng trong `docs/trace_<tên>.md`.
 
 ## Đầu ra
