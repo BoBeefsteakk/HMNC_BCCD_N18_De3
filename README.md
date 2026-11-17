@@ -115,7 +115,7 @@ Cần sửa file người khác: ghi vào task, nhắn chủ file.
 - **UNKNOWN:** nhãn thời gian của tệp phụ tải có lệch 1 giờ so với tệp dự báo CND hay không (Phi kiểm trong T002; chưa kết luận thì chưa so với CND).
 
 ## Checklist (cố định theo phase)
-Tóm tắt từ [`docs/CHECKLIST.md`](docs/CHECKLIST.md) (nguồn đầy đủ, có điều kiện được điểm; chỉ Phi sửa, Phi đổi ☐ → ☑ khi có bằng chứng). Mã khớp mã chấm của đề, tổng Phần I = 10,0. Task hằng ngày nằm ở [`tasks/`](tasks/README.md). Dàn ý báo cáo Chương 1–2: [`docs/BAOCAO_DAN_Y_C1_C2.md`](docs/BAOCAO_DAN_Y_C1_C2.md).
+Tóm tắt từ [`docs/CHECKLIST.md`](docs/CHECKLIST.md) (nguồn đầy đủ, có điều kiện được điểm; chỉ Phi sửa, Phi đổi ☐ → ☑ khi có bằng chứng). Mã khớp mã chấm của đề, tổng Phần I = 10,0. Task hằng ngày nằm ở [`tasks/`](tasks/README.md). Dàn ý báo cáo đầy đủ: [`docs/BAOCAO_DAN_Y.md`](docs/BAOCAO_DAN_Y.md).
 
 | Phase | Hạn |
 |---|---|
