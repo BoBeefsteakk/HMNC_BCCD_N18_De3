@@ -66,7 +66,7 @@ Hạn ở bảng dưới là mốc tham khảo; nếu lệch với `due:` trong 
 | Sửa chính tả, diễn đạt câu chữ | Thêm tài liệu tham khảo chưa đọc; tự đặt hệ số từ [7] |
 | Nhờ đặt câu hỏi ôn vấn đáp | Chọn đặc trưng hoặc ngưỡng bằng cách nhìn tập kiểm tra |
 
-Mỗi lần dùng AI thêm MỘT dòng vào `docs/ai_usage_log.md` (ngày | công cụ | việc | tệp/phần báo cáo | người). PLA/Pocket, PCA, LDA là phần bắt buộc tự cài đặt (đề mục 2.4): AI được viết mã, nhưng bạn phải giải thích được từng dòng, Phi review trước khi merge, nhật ký ghi rõ (khai ở Phụ lục C).
+Cuối mỗi task (trước `review`), mỗi loại việc AI đã dùng ghi MỘT dòng vào `docs/ai_usage_log.md` (gộp mọi phiên của task; 7 cột và 6 loại T/G/M/B/D/R xem đầu file; việc M ghi tên hàm). PLA/Pocket, PCA, LDA là phần bắt buộc tự cài đặt (đề mục 2.4): AI được viết mã, nhưng bạn phải giải thích được từng dòng, Phi review trước khi merge, nhật ký ghi rõ (khai ở Phụ lục C).
 
 ## g. Chuẩn bị vấn đáp
 **II.2 — phải giải thích được**: hàm mất mát perceptron J_P và vì sao không phạt mẫu đúng sát biên; PLA và Pocket khác nhau thế nào; quy ước y·g ≤ 0; vì sao w̃(0) = 0 thì kết quả bất biến theo η; bài toán LP kiểm tra khả tách; tiêu chí Fisher; PCA qua trị riêng/SVD, phương sai giải thích, loadings, sai số tái tạo; LDA (S_W, S_B), vì sao w ∝ S_W⁻¹(m1 − m0); ba họ chọn đặc trưng; hiện tượng Hughes.

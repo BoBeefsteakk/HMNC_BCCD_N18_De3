@@ -7,7 +7,7 @@ Tiêu đề: `[<nhánh>] Txxx Tyyy` (liệt kê mã task có trong PR). Reviewer
 - [ ] Chỉ sửa file trong `files:` của task và trong danh sách sở hữu (TEAM.md mục 3)
 - [ ] `python -m pytest` không có test ĐỎ; test của khối mình không còn SKIP
 - [ ] Không có số/ngày/ngưỡng viết thẳng ngoài `src/config.py`; không đọc tập kiểm tra
-- [ ] Đã ghi dòng vào `docs/ai_usage_log.md` nếu dùng AI
+- [ ] Đã ghi `docs/ai_usage_log.md` (mỗi loại việc một dòng cho task này) nếu dùng AI
 - [ ] Mỗi hàm AI viết trong phần tự cài đặt có dòng `Tự kiểm hiểu (model hỏi): ... | qua` trong task
 - [ ] Tôi tự giải thích được từng dòng mã tự cài đặt và từng con số trong PR này (đề: vấn đáp hỏi chéo)
 

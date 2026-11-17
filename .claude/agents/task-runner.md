@@ -36,5 +36,5 @@ Khi một hàm trong phần tự cài đặt có AI (kể cả bạn) viết ho�
 Giới hạn cần nói thật với người dùng: bạn không chứng minh được họ không hỏi AI khác; đây là kiểm tự giác. Người chịu trách nhiệm là họ.
 
 ## Kết thúc mỗi lượt làm
-- Nhắc ghi MỘT dòng vào `docs/ai_usage_log.md` (ngày | công cụ | việc | tệp/phần báo cáo | người) cho lần dùng AI này.
+- Khi task xong (trước `review`): nhắc ghi nhật ký AI, mỗi loại việc một dòng, gộp mọi phiên của task (7 cột, 6 loại T/G/M/B/D/R, xem đầu `docs/ai_usage_log.md`; việc M ghi tên hàm). Không nhắc sau từng lượt.
 - Nhắc commit đúng mẫu `Txxx loai(phạm vi): ...` và chạy `python -m pytest` không đỏ trước khi commit.

@@ -100,7 +100,7 @@ Cần sửa file người khác: ghi vào task, nhắn chủ file.
 ### Luật AI (theo đề mục 7)
 - Dùng công cụ nào cũng được (Claude, ChatGPT, Antigravity): đều đọc `TEAM.md` trước (`CLAUDE.md`, `AGENTS.md`, `GEMINI.md` chỉ trỏ về đó).
 - AI **được** viết mã, kể cả phần tự cài đặt, nếu người nộp giải thích được từng dòng và Phi review trước khi merge. **Không** sinh nguyên đoạn báo cáo (đề cấm), không làm thay tính tay B7 và suy dẫn B2.2, không bịa số liệu hay tài liệu tham khảo.
-- Mỗi lần dùng AI ghi một dòng vào [`docs/ai_usage_log.md`](docs/ai_usage_log.md). Ai cũng phải giải thích được mọi dòng mã và con số, kể cả phần của người khác.
+- Cuối mỗi task ghi nhật ký AI, mỗi loại việc một dòng, vào [`docs/ai_usage_log.md`](docs/ai_usage_log.md); Phi gộp thành Phụ lục C bằng `python scripts\ai_log.py appendix`. Ai cũng phải giải thích được mọi dòng mã và con số, kể cả phần của người khác.
 
 ### Máy chặn, và quy ước thuần túy
 | Có test hoặc CI chặn | Chỉ là quy ước (cần người kiểm) |
