@@ -95,7 +95,7 @@ Mỗi lần dùng AI thêm MỘT dòng vào `docs/ai_usage_log.md` (ngày | côn
 2. Chạy `python scripts\doctor.py` và `python -m pytest` trên nhánh; không được có test ĐỎ.
 3. `git diff main...<nhánh>`: chỉ thay đổi trong `files:` của task và trong danh sách sở hữu (TEAM.md mục 3).
 4. Kiểm bất biến: thông số lấy từ `config.py`; không rò rỉ; float64; không `rng` ngoài `get_seed()`; không đọc nhãn tập kiểm tra; notebook không còn output; không tệp > 1 MB.
-5. Chỉ HỎI và GỢI Ý công thức hoặc hướng kiểm tra; KHÔNG dán code mẫu cho người khác chép. Hỏi họ giải thích một đoạn mã để chắc họ hiểu.
+5. Chỉ HỎI và GỢI Ý công thức hoặc hướng kiểm tra; KHÔNG dán code mẫu cho người khác chép. Với mỗi hàm AI viết trong phần tự cài đặt: hỏi 3 câu trực tiếp (người nộp không mở AI) và bắt họ tự sửa một chỗ nhỏ rồi giải thích kết quả (TEAM.md mục 8, "ngưỡng hiểu"). Ghi `qua` hoặc `chưa qua` vào "Kết quả" của task; chưa qua thì không merge.
 6. Đối chiếu số trong `results/` với dòng truy vết `docs/trace_<tên>.md`.
 7. Đạt thì **merge commit, không squash**, rồi báo "đã merge"; mọi người làm lại các bước đầu buổi (TEAM.md mục 4). Không đạt thì ghi mục cần sửa vào task.
 **Giữ chuẩn**: chỉ bạn sửa `config.py`, `CONVENTIONS.md`, `CHECKLIST.md`; đổi hằng số → ghi quyết định vào `docs/decisions/`. Cập nhật ☑ trong CHECKLIST khi có bằng chứng.
