@@ -9,3 +9,4 @@ Mỗi lần dùng AI thêm MỘT dòng ở cuối bảng (chỉ thêm, không s�
 | 17/11/2026 | Antigravity (agy 1.5.9) | Viết script kiểm môi trường và test chặn số lạ | `scripts/doctor.py`, `tests/test_no_magic_numbers.py` | Phi |
 | 17/11/2026 | Claude Code (claude-sonnet-5-5) | CI, mẫu PR, CODEOWNERS | `.github/` | Phi |
 | 17/11/2026 | Claude Code (claude-sonnet-5-5) | Nới luật AI về mã trong tài liệu hướng dẫn; dựng dàn ý Chương 1 và 2 (không viết đoạn báo cáo) | `TEAM.md`, `AGENTS.md`, `docs/`, `.claude/agents/`, `prompts/`, `tasks/`, `docs/BAOCAO_DAN_Y_C1_C2.md` | Phi |
+| 17/11/2026 | Claude Code (claude-sonnet-5-5) | Ghi "ngưỡng hiểu" vào hướng dẫn review | `TEAM.md`, `docs/PHI.md`, `docs/decisions/README.md` | Phi |
