@@ -24,3 +24,5 @@ Cột `Người` ghi `Phi`, `Huấn` hoặc `Việt`; cột `Task` ghi mã task 
 | 17/11/2026 | Claude Code (claude-sonnet-5-5) | D | Chuyển bước kiểm hiểu sang model chủ động hỏi | `TEAM.md`, `docs/PHI.md`, `.claude/agents/`, `prompts/`, `tasks/_TEMPLATE.md`, `.github/` | Phi | LEAD |
 | 17/11/2026 | Claude Code (claude-sonnet-5-5) | D | Đổi định dạng nhật ký AI (6 loại, một dòng mỗi loại mỗi task), viết `scripts/ai_log.py` | `docs/ai_usage_log.md`, `scripts/ai_log.py`, `tests/test_ai_log.py` | Phi | LEAD |
 | 17/11/2026 | Claude Code (claude-sonnet-5-5) | D | Dựng dàn ý đầy đủ báo cáo (bìa đến phụ lục, không viết đoạn báo cáo) | `docs/BAOCAO_DAN_Y.md` | Phi | LEAD |
+| 17/11/2026 | Claude Code (claude-sonnet-5-5) | M | Thêm hằng số quyết định và `get_run_seeds` | `src/config.py` (`get_run_seeds`), `tests/test_config_decisions.py` | Phi | LEAD |
+| 17/11/2026 | Claude Code (claude-sonnet-5-5) | D | Ghi các quyết định vào quy ước, dàn ý, nhật ký quyết định | `docs/CONVENTIONS.md`, `docs/BAOCAO_DAN_Y.md`, `docs/decisions/README.md` | Phi | LEAD |

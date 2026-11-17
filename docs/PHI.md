@@ -71,7 +71,7 @@ Cuối mỗi task (trước `review`), mỗi loại việc AI đã dùng ghi M�
 4. Vì sao L(h−168) tạo sai số "ảo" ở R1? Hợp lệ cho bao nhiêu giờ trong tuần?
 5. Đọc một dòng trong bảng MAPE theo giờ trong ngày của R3 và giải thích.
 6. Vì sao MAPE nhạy với giờ tải thấp bất thường? Nhóm đã xử lý thế nào?
-7. Khoảng tin cậy bootstrap được tính trên đơn vị nào (giờ hay tuần)? Vì sao?
+7. Khoảng tin cậy bootstrap được tính trên đơn vị nào? (Đã chốt: tuần, vì các giờ liền nhau tương quan.) Vì sao?
 **II.4 — phần của hai người còn lại**:
 1. (Huấn) Số điều kiện của hàm mất mát liên hệ thế nào với η và với z-score?
 2. (Huấn) Momentum thay đổi số lần cập nhật để đạt cùng mức mất mát ra sao?

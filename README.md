@@ -66,6 +66,10 @@ Mục tiêu: ba người, ba AI vẫn ra cùng một con số. Quy tắc đầy 
 | Ký hiệu | `X̃ = [X, 1]` (cột 1 ở cuối); chuẩn hóa z-score khớp trên train; float64; phần lõi chỉ NumPy |
 | Hồi quy tuyến tính | J = 1/(2n)·‖X̃w − y‖² + (λ/2)·‖w[:-1]‖² (không phạt hệ số tự do) |
 | Tập kiểm tra | chỉ mở một lần bằng `python run_all.py --final` do Phi chạy |
+| Hạt giống lặp (B4.3) | 5 hạt giống = SEED..SEED+4 (2044–2048), `config.get_run_seeds()` |
+| Bootstrap (B9.1) | lấy lại mẫu theo tuần, 2000 lần, khoảng tin cậy 95% kiểu phân vị |
+| Trễ và cửa sổ trượt (B6.2) | `FEATURE_LAGS_HOURS` = (336, 504, 672); Tref chọn từ lưới phân vị nhiệt độ trên train, theo MAPE kiểm định |
+| Nhãn B7 | {0, 1} cho logistic (B7.1) và mạng 2–2–1 (B7.2); PLA dùng ±1 |
 
 ### Môi trường
 - **Hệ điều hành, shell:** Windows, PowerShell. CI chạy Ubuntu, nên đường dẫn trong mã dùng `pathlib`.
@@ -112,7 +116,7 @@ Cần sửa file người khác: ghi vào task, nhắn chủ file.
 | Nhánh và `user.name` khớp nhau (`doctor.py`, chạy tay) | Không push lên nhánh người khác (đã bảo vệ `main`) |
 
 ### Còn mở (chưa kết luận)
-- **UNKNOWN:** nhãn thời gian của tệp phụ tải có lệch 1 giờ so với tệp dự báo CND hay không (Phi kiểm trong T002; chưa kết luận thì chưa so với CND).
+- **UNKNOWN (cần dữ liệu):** nhãn thời gian của tệp phụ tải có lệch 1 giờ so với tệp dự báo CND hay không (Phi kiểm trong T002; chưa kết luận thì chưa so với CND). Mặc định đến khi T002 kết luận: độ dịch 0.
 
 ## Checklist (cố định theo phase)
 Tóm tắt từ [`docs/CHECKLIST.md`](docs/CHECKLIST.md) (nguồn đầy đủ, có điều kiện được điểm; chỉ Phi sửa, Phi đổi ☐ → ☑ khi có bằng chứng). Mã khớp mã chấm của đề, tổng Phần I = 10,0. Task hằng ngày nằm ở [`tasks/`](tasks/README.md). Dàn ý báo cáo đầy đủ: [`docs/BAOCAO_DAN_Y.md`](docs/BAOCAO_DAN_Y.md).

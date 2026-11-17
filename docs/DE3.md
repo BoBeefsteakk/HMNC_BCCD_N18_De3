@@ -148,7 +148,7 @@ idx = [p[0], n[0], p[1], n[1], p[2], n[2]]  # thứ tự duyệt
 | B7.2 | Một bước lan truyền thuận và ngược cho mạng 2–2–1 (sigmoid ở tầng ẩn và tầng ra, BCE) trên mẫu thứ nhất trong 6 mẫu. Khởi tạo: hàng 1 của W(1) = (0,2; −0,3), hàng 2 = (0,4; 0,1); b(1) = (0; 0); w(2) = (0,5; −0,6); b(2) = 0; η = 0,5. Tính z(1), a(1), ŷ, J, δ(2), δ(1), các gradient, tham số mới và J sau cập nhật | Như B7.1; thêm kiểm chứng ít nhất một đạo hàm bằng sai phân hữu hạn | 0,25 |
 | B7.3 | PCA trên 6 mẫu × 2 đặc trưng: véc tơ trung bình, ma trận hiệp phương sai (chia n − 1), hai trị riêng, hai véc tơ riêng đơn vị (dấu chọn sao cho thành phần có trị tuyệt đối lớn nhất là dương), tỉ lệ phương sai giải thích, tọa độ chiếu của mẫu thứ nhất. LDA hai lớp trên cùng 6 mẫu: m+, m−, S_W, w ∝ S_W⁻¹(m+ − m−) chuẩn hóa ‖w‖ = 1, giá trị chiếu của 6 mẫu | Như B7.1; nếu S_W suy biến thì cộng 10⁻³·I và nêu rõ | 0,25 |
 
-UNKNOWN (ghi chú nhóm, không phải của đề): đề không nói rõ nhãn cho B7.2 (BCE); B7.1 ghi hồi quy logistic dùng {0, 1}. Hỏi Phi nếu cần xác nhận.
+Ghi chú nhóm (không phải của đề): đề không nói rõ nhãn cho B7.2 (BCE); nhóm chốt dùng {0, 1} như B7.1 (docs/CONVENTIONS.md mục 3 và 7).
 
 **B8 (1,0):** bốn yêu cầu R1–R4 (mục 2e ở trên), mỗi yêu cầu 0,25 điểm, chấm theo điều kiện kèm theo và theo mục 3.1.
 

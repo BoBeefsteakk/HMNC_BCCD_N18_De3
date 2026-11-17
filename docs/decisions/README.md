@@ -10,3 +10,9 @@
 | 17/11/2026 | Ngưỡng hiểu trước khi merge hàm do AI viết: 3 câu trực tiếp không mở AI + tự sửa một chỗ nhỏ | Mã AI viết 100% rủi ro vấn đáp (ki ≤ 0,5 nếu Phần II < 3,0), đối chiếu chéo giữa các nhóm | `TEAM.md` mục 8, `docs/PHI.md` bước review 5 |
 | 17/11/2026 | Kiểm hiểu do model chủ động hỏi (task-runner) trước khi `review`; Phi chỉ kiểm có dòng "qua" | Giảm tải cho Phi khi merge; chấp nhận kiểm tự giác (yếu hơn Phi hỏi trực tiếp) | `TEAM.md` mục 8, `docs/PHI.md`, agents, prompts, task template, mẫu PR |
 | 17/11/2026 | Nhật ký AI ghi theo loại việc (T/G/M/B/D/R), mỗi loại một dòng cho mỗi task; thêm `scripts/ai_log.py` (check, appendix); CI kiểm định dạng | Giảm số dòng cho thành khoảng 10–14 dòng Phụ lục C vừa 1 trang | `docs/ai_usage_log.md`, `TEAM.md`, `docs/{PHI,HUAN,VIET}.md`, agents, prompts, task template, mẫu PR, `.github/workflows/ci.yml` |
+| 17/11/2026 | Hạt giống lặp = SEED..SEED+4 (`get_run_seeds`, `N_RUN_SEEDS` = 5) | Đề B4.3 cần ≥ 5 hạt giống; cần quy ước chung để ba người ra cùng số | `src/config.py`, `docs/CONVENTIONS.md` mục 7 |
+| 17/11/2026 | Bootstrap theo tuần, 2000 lần, CI 95% phân vị | Giờ liền nhau tương quan; đề yêu cầu ≥ 1.000 lần | `config.BOOTSTRAP_ITERS`, `BOOTSTRAP_CI` |
+| 17/11/2026 | Tref chọn từ lưới phân vị `TREF_QUANTILES` của T trung bình 3 thành phố trên train, theo MAPE kiểm định | Không có nguồn cho giá trị Tref; tránh giả định đơn vị | `config.TREF_QUANTILES` |
+| 17/11/2026 | Trễ và cửa sổ trượt dùng `FEATURE_LAGS_HOURS` = (336, 504, 672) | Khớp mô hình cơ sở (tuần 2–4), mọi trễ ≥ 240 giờ | `config.FEATURE_LAGS_HOURS` |
+| 17/11/2026 | Nhãn B7.2 dùng {0, 1} | BCE cần nhãn {0, 1}; thống nhất với B7.1 | `docs/CONVENTIONS.md` mục 3 |
+| 17/11/2026 | Nhãn thời gian: mặc định độ dịch 0 đến khi T002 kết luận bằng số liệu | Chưa có dữ liệu để kiểm | `docs/CONVENTIONS.md` mục 1 |
