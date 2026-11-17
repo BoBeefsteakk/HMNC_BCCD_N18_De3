@@ -11,7 +11,7 @@
 | D | Dàn ý, tài liệu hướng dẫn, đối chiếu số liệu, ôn vấn đáp | phần liên quan |
 | R | Gợi ý tài liệu tham khảo | nguồn nhóm đã đọc |
 
-Cột `Người` ghi `Phi`, `Huấn` hoặc `Việt`; cột `Task` ghi mã task (`T003`) hoặc `LEAD`. Kiểm định dạng: `python scriptsi_log.py check`. Phi gộp thành bảng Phụ lục C: `python scriptsi_log.py appendix`.
+Cột `Người` ghi `Phi`, `Huấn` hoặc `Việt`; cột `Task` ghi mã task (`T003`) hoặc `LEAD`. Kiểm định dạng: `python scripts\ai_log.py check`. Phi gộp thành bảng Phụ lục C: `python scripts\ai_log.py appendix`.
 
 | Ngày | Công cụ | Loại | Việc | Tệp / phần báo cáo | Người | Task |
 |---|---|---|---|---|---|---|
