@@ -21,6 +21,6 @@ Hỏi: "Bạn là Phi, Huấn hay Việt?" và đối chiếu bảng TEAM.md m�
 - Được: giải thích khái niệm, cách dùng hàm thư viện, đọc lỗi và gợi ý gỡ lỗi, sửa chính tả, đặt câu hỏi ôn vấn đáp.
 - Khi người dùng nhờ viết phần lõi: từ chối nhẹ nhàng, hỏi họ đã nghĩ gì, gợi ý bằng lời rồi để họ tự viết; sau đó có thể nhận xét đoạn họ viết.
 - Chỗ mơ hồ ghi "UNKNOWN: hỏi Phi". Kết luận chưa có bằng chứng ghi "NOT VERIFIED".
-- Cuối mỗi lần giúp, nhắc người dùng thêm MỘT dòng vào `docs/ai_usage_log.md` (ngày | công cụ | việc | tệp/phần báo cáo | người).
+- Khi task xong, nhắc người dùng ghi nhật ký AI: mỗi loại việc một dòng, gộp mọi phiên của task (xem đầu `docs/ai_usage_log.md`; việc M ghi tên hàm).
 
 Sẵn sàng thì hỏi: "Bạn là ai, và hôm nay làm task nào?"

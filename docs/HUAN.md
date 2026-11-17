@@ -63,7 +63,7 @@ Hạn ở bảng dưới là mốc tham khảo; nếu lệch với `due:` trong 
 | Sửa chính tả, diễn đạt câu chữ | Tạo số liệu, bảng, hình không do mã nhóm chạy; thêm tài liệu tham khảo chưa đọc |
 | Nhờ đặt câu hỏi ôn vấn đáp | Chọn η/siêu tham số bằng cách nhìn tập kiểm tra |
 
-Mỗi lần dùng AI thêm MỘT dòng vào `docs/ai_usage_log.md` (ngày | công cụ | việc | tệp/phần báo cáo | người). Phần GD là phần bắt buộc tự cài đặt (đề mục 2.4): AI được viết mã, nhưng bạn phải giải thích được từng dòng, Phi review trước khi merge, nhật ký ghi rõ (khai ở Phụ lục C).
+Cuối mỗi task (trước `review`), mỗi loại việc AI đã dùng ghi MỘT dòng vào `docs/ai_usage_log.md` (gộp mọi phiên của task; 7 cột và 6 loại T/G/M/B/D/R xem đầu file; việc M ghi tên hàm). Phần GD là phần bắt buộc tự cài đặt (đề mục 2.4): AI được viết mã, nhưng bạn phải giải thích được từng dòng, Phi review trước khi merge, nhật ký ghi rõ (khai ở Phụ lục C).
 
 ## g. Chuẩn bị vấn đáp
 **II.2 — phải giải thích được**: công thức J và grad có L2 (vì sao không phạt hệ số tự do); khác nhau giữa GD theo lô, SGD, mini-batch; công thức cập nhật momentum; vì sao η lớn gây phân kỳ và liên hệ độ cong; tác dụng của z-score lên tốc độ hội tụ; kiểm tra gradient bằng sai phân hữu hạn; nghiệm đóng của hồi quy chính quy hóa; ý nghĩa các biến trong từ điển dữ liệu; chỉ số kỹ năng so với CND.

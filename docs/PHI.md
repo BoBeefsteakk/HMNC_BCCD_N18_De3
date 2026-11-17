@@ -60,7 +60,7 @@ Hạn ở bảng dưới là mốc tham khảo; nếu lệch với `due:` trong 
 | Sửa chính tả, diễn đạt câu chữ | Thêm tài liệu tham khảo chưa đọc |
 | Nhờ đặt câu hỏi ôn vấn đáp, kiểm tra suy luận của bạn | Quyết định thay bạn việc mở tập kiểm tra |
 
-Mỗi lần dùng AI thêm MỘT dòng vào `docs/ai_usage_log.md` (ngày | công cụ | việc | tệp/phần báo cáo | người). Mã MLP do AI viết: bạn phải hiểu và giải thích được từng dòng, ghi rõ trong dòng nhật ký (khai ở Phụ lục C).
+Cuối mỗi task (trước `review`), mỗi loại việc AI đã dùng ghi MỘT dòng vào `docs/ai_usage_log.md` (gộp mọi phiên của task; 7 cột và 6 loại T/G/M/B/D/R xem đầu file; việc M ghi tên hàm). Mã MLP do AI viết: bạn phải hiểu và giải thích được từng dòng, ghi rõ trong dòng nhật ký (khai ở Phụ lục C).
 
 ## g. Chuẩn bị vấn đáp
 **II.2 — phải giải thích được**: công thức BP1–BP4 và vì sao ∂J/∂z của tầng ra tuyến tính + MSE có dạng như vậy; kiểm tra gradient bằng sai phân hữu hạn và vì sao ngưỡng 10⁻⁶; khởi tạo 0 vs Xavier/He; vì sao chuẩn hóa biến đích; định nghĩa MAPE theo tuần; chia dữ liệu theo tuần và quy tắc 72 giờ (độ trễ ≥ 240 giờ); khóa tập kiểm tra.
