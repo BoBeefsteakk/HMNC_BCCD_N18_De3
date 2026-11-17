@@ -70,7 +70,7 @@ Mục tiêu: ba người, ba AI vẫn ra cùng một con số. Quy tắc đầy 
 ### Môi trường
 - **Hệ điều hành, shell:** Windows, PowerShell. CI chạy Ubuntu, nên đường dẫn trong mã dùng `pathlib`.
 - **Python 3.12** (phát triển trên 3.12.10), trong `.venv`; đặt `$env:PYTHONUTF8=1` để in tiếng Việt không lỗi.
-- **Thư viện:** `requirements.txt`. Đã kiểm thử trên numpy 2.5.5, pandas 3.1.1, scipy 1.18.1, scikit-learn 1.9.1, matplotlib 3.11.2, pytest 9.2.0. **Chưa ghim phiên bản** (đang `>=`); Phi chạy `pip freeze` trước khi nộp.
+- **Thư viện:** `requirements.txt`. **Đã ghim đúng phiên bản** (`==`): numpy 2.5.5, pandas 3.1.1, scipy 1.18.1, scikit-learn 1.9.1, matplotlib 3.11.2, pytest 9.2.0; cài sạch và chạy test đạt ngày 17/11/2026. Cần thêm thư viện: báo Phi. Trước khi nộp Phi đối chiếu lại bằng `pip freeze`.
 - **Kiểm môi trường:** `python scripts\doctor.py` kiểm Python, thư viện, venv, nhánh, `git config user.name` khớp nhánh, dữ liệu đúng kích thước + SHA-256, SEED = 2044.
 - **Dữ liệu:** không nằm trong git (`data/raw/`); tải theo mục "Tải dữ liệu".
 
@@ -113,7 +113,6 @@ Cần sửa file người khác: ghi vào task, nhắn chủ file.
 
 ### Còn mở (chưa kết luận)
 - **UNKNOWN:** nhãn thời gian của tệp phụ tải có lệch 1 giờ so với tệp dự báo CND hay không (Phi kiểm trong T002; chưa kết luận thì chưa so với CND).
-- Phiên bản thư viện chưa ghim (xem trên).
 
 ## Checklist (cố định theo phase)
 Tóm tắt từ [`docs/CHECKLIST.md`](docs/CHECKLIST.md) (nguồn đầy đủ, có điều kiện được điểm; chỉ Phi sửa, Phi đổi ☐ → ☑ khi có bằng chứng). Mã khớp mã chấm của đề, tổng Phần I = 10,0. Task hằng ngày nằm ở [`tasks/`](tasks/README.md).
