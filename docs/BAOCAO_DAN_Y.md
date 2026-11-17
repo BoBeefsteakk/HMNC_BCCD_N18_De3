@@ -133,7 +133,7 @@ Chủ trì: Việt. Mọi thống kê dùng để tạo đặc trưng, PCA, LDA,
 - Lịch: giờ trong ngày và ngày trong tuần mã hóa sin/cos hoặc one-hot, cuối tuần, lễ, kỳ học.
 - Thời tiết: nhiệt độ trung bình ba thành phố, độ nóng CDH = max(0, T − Tref), tương tác giờ × nhiệt độ.
 - Bảng 3.2: tên, công thức, ý nghĩa, **độ trễ nhỏ nhất**, Fisher trước/sau (độ trễ nhỏ nhất cũng là nguồn cho bảng R1 ở Chương 6).
-- **UNKNOWN:** Tref và độ rộng cửa sổ trượt chưa có trong `src/config.py`. Phi phải chốt và thêm vào `config.py` (kèm dòng ở `docs/decisions/`) trước khi Việt dùng; không tự đặt.
+- **Đã chốt (17/11/2026, `config.py`, `CONVENTIONS` mục 7):** Tref chọn từ lưới phân vị `TREF_QUANTILES` của nhiệt độ trung bình ba thành phố trên train, bằng MAPE trên kiểm định; cửa sổ trượt dùng ba trễ `FEATURE_LAGS_HOURS` = (336, 504, 672).
 
 ### 3.3 PCA (B6.3)
 Điều kiện được điểm: chuẩn hóa trước PCA khi các biến khác đơn vị (hoặc giải thích vì sao không); trị riêng khớp thư viện đến 1e-6.
@@ -203,7 +203,7 @@ Chủ trì: Việt. Mọi thống kê dùng để tạo đặc trưng, PCA, LDA,
 Điều kiện được điểm: có hình số lỗi theo epoch; bảng trung bình ± độ lệch chuẩn qua các lần chạy.
 - Số lỗi theo epoch của PLA và Pocket (Hình 4.3); ảnh hưởng của chuẩn hóa và thứ tự duyệt.
 - ≥ 5 hạt giống; kiểm chứng tính bất biến theo η khi `w̃(0) = 0`.
-- **UNKNOWN:** quy ước sinh ≥ 5 hạt giống từ SEED = 2044 (ví dụ SEED + i) chưa có trong `docs/CONVENTIONS.md`. Phi chốt trước khi Việt chạy B4.3.
+- **Đã chốt:** 5 hạt giống = SEED..SEED+4 (2044–2048), `config.get_run_seeds()`.
 
 ### 4.8 So sánh perceptron với tuyến tính và MLP (B4.4)
 Điều kiện được điểm: giải thích khác biệt qua hàm mất mát.
@@ -272,7 +272,7 @@ Chương này dùng tập kiểm tra **đúng một lần** (`python run_all.py 
 Điều kiện được điểm: không chọn lại mô hình sau khi đã xem kết quả trên tập kiểm tra.
 - Bảng tổng hợp mọi mô hình trên tập kiểm tra (dùng một lần), kèm 3 mô hình cơ sở của đề (trễ 336 giờ; trung bình cùng giờ các tuần 2–4; dự báo CND). Báo riêng (a) 37 tuần và (b) 14 tuần.
 - Khoảng tin cậy 95% bằng bootstrap (≥ 1.000 lần lặp) cho chỉ số chính; kết luận chênh lệch có ý nghĩa hay không.
-- **UNKNOWN:** đơn vị lấy lại mẫu bootstrap (tuần hay giờ) chưa chốt. Giờ liền nhau tương quan nên lấy lại theo tuần có lý hơn; Phi chốt và ghi vào `docs/decisions/`.
+- **Đã chốt:** bootstrap lấy lại mẫu theo tuần, 2000 lần, khoảng tin cậy 95% kiểu phân vị (`config.BOOTSTRAP_ITERS`, `BOOTSTRAP_CI`).
 - Điểm khuyến khích: kiểm định ghép cặp giữa hai mô hình tốt nhất (0,25).
 
 ### 6.2 R1: giao thức dự báo không rò rỉ
@@ -395,9 +395,11 @@ Nội dung đề yêu cầu: kết quả EDA, cách chia dữ liệu, kết qu�
 - [ ] Nộp đúng hạn (muộn bị trừ 1,0 điểm mỗi ngày; quá 3 ngày không nhận).
 
 ## Chưa biết / chưa kiểm chứng (UNKNOWN)
-- Nhãn thời gian tệp phụ tải có lệch 1 giờ so với tệp dự báo CND hay không (T002).
-- Tref và độ rộng cửa sổ trượt (Chương 3); quy ước sinh ≥ 5 hạt giống (4.7); đơn vị bootstrap (6.1): Phi chốt và ghi vào `docs/decisions/`.
+**Đã chốt ngày 17/11/2026** (xem `docs/CONVENTIONS.md` mục 7): hạt giống lặp, đơn vị và số lần bootstrap, lưới Tref, ba trễ cho cửa sổ trượt, nhãn B7.2.
+
+**Còn UNKNOWN (cần dữ liệu hoặc nguồn ngoài, không chốt bằng quyết định được):**
+- Nhãn thời gian tệp phụ tải có lệch 1 giờ so với tệp dự báo CND hay không: cần dữ liệu; T002 thử dịch −1/0/+1 giờ. Mặc định cho đến lúc đó: độ dịch 0.
 - Các vấn đề dữ liệu thực sự có trong EDA, các nhóm nguyên nhân lỗi, kết quả mọi chương: chưa chạy.
-- Tên giảng viên; ngày tải dữ liệu.
-- Ánh xạ trang tài liệu → mục lý thuyết lấy từ chữ của B2.1; nên mở sách đối chiếu.
+- Tên giảng viên; ngày tải dữ liệu (dữ liệu chưa được tải về máy).
+- Ánh xạ trang tài liệu → mục lý thuyết lấy từ chữ của B2.1; cần mở sách đối chiếu.
 - Bảng trong PDF đề bị vỡ chữ ở vài chỗ (B6.3, B6.4, mục 6.4); các điều kiện chấm ở đó mình đã đối chiếu với tổng điểm khối, chưa với bản gốc từng ô.

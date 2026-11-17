@@ -7,7 +7,7 @@ sai số đỉnh tuần, đáy tuần, năng lượng tuần [7]. Chỉ số k�
 Hàm cần có:
   mape / mae / rmse (theo từng tuần, rồi trung bình tuần)
   skill_score(mape_model, mape_baseline)
-  bootstrap_ci(per_week_errors, n_boot=1000, seed)        # khoảng tin cậy 95%, >= 1.000 lần lặp (B9.1)
+  bootstrap_ci(per_week_errors, n_boot=config.BOOTSTRAP_ITERS, seed)  # CI 95% (config.BOOTSTRAP_CI), lấy lại mẫu THEO TUẦN (B9.1)
 Tập kiểm tra: BẮT BUỘC đi qua src.guards.open_test_set(final) — chỉ mở một lần, ở cuối (đề mục 3.1d, 6.4).
 """
 from __future__ import annotations
