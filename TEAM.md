@@ -58,7 +58,7 @@ python scripts\doctor.py
 2. Đọc file task. **Chỉ sửa các file ghi ở dòng `files:`.**
 3. Đổi `status: doing`. Làm xong → `status: review` và điền mục "Kết quả".
 4. Thông số lấy từ `src/config.py`. Thiếu thông số → KHÔNG tự đặt, ghi vào task và báo Phi.
-5. Tự cài đặt phần lõi (xem mục 8). Có thể hỏi AI cách làm, nhưng bạn phải hiểu và tự giải thích được từng dòng.
+5. Phần lõi (mục 8): AI được viết mã, nhưng bạn phải hiểu và tự giải thích được từng dòng.
 
 ## 6. Commit và push
 - Mẫu commit: `T003 feat(b3): them momentum gd`
@@ -73,12 +73,14 @@ python scripts\doctor.py
 - Mỗi người có MỘT PR thường trực `<nhánh-của-bạn> → main`. Đã có thì chỉ push thêm.
 - Tiêu đề: `[huan-eda-gd] T003 T004` (liệt kê mã task trong PR). Điền đủ mẫu PR.
 - Reviewer là Phi. **Chỉ Phi merge** (merge commit, không squash).
-- Review chỉ được HỎI và GỢI Ý công thức; **không dán code mẫu cho người khác chép** (để mỗi người tự cài đặt, bảo vệ điểm vấn đáp).
+- Review chỉ được HỎI và GỢI Ý công thức; **không dán code mẫu cho người khác chép** (để người nộp tự hiểu và tự sửa, bảo vệ điểm vấn đáp).
 - Sau khi Phi báo "đã merge", mọi người làm lại mục 4.
 
 ## 8. Luật AI (theo đề, mục 7)
-- ĐƯỢC: tra khái niệm; hỏi cách dùng hàm thư viện; nhờ tìm lỗi cú pháp, gợi ý gỡ lỗi; sửa chính tả; nhờ kiểm tra, đặt câu hỏi ôn vấn đáp.
-- KHÔNG ĐƯỢC: để AI viết thay phần bắt buộc tự cài đặt (GD/SGD/mini-batch/momentum, PLA/Pocket, MLP + lan truyền ngược + kiểm tra gradient, PCA, LDA); sinh nguyên đoạn báo cáo; tạo số liệu/bảng/hình không do mã của nhóm chạy ra; thêm tài liệu tham khảo chưa đọc.
+- ĐƯỢC: tra khái niệm; hỏi cách dùng hàm thư viện; tìm lỗi, gỡ lỗi; sửa chính tả, diễn đạt; dựng dàn ý báo cáo; đặt câu hỏi ôn vấn đáp; gợi ý tài liệu tham khảo để nhóm đọc; viết mã sinh bảng, hình (con số lên báo cáo chỉ lấy từ `results/` do mã chạy ra).
+- ĐƯỢC (quyết định của trưởng nhóm, 17/11/2026): **AI viết hoặc sửa mã, kể cả phần bắt buộc tự cài đặt** (GD/SGD/mini-batch/momentum, PLA/Pocket, MLP + lan truyền ngược + kiểm tra gradient, PCA, LDA), với 3 điều kiện: (1) người nộp giải thích được từng dòng (vấn đáp có thể bắt chạy lại, đổi tham số); (2) Phi review trước khi merge; (3) ghi dòng vào `docs/ai_usage_log.md` để khai ở Phụ lục C.
+- KHÔNG ĐƯỢC: sinh nguyên đoạn báo cáo (đề mục 7 cấm thẳng; chỉ được dàn ý, sửa chính tả, diễn đạt); để AI làm thay phần tính tay B7 và suy dẫn B2.2 (đề yêu cầu nhóm tự tính, tự viết); tạo số liệu/bảng/hình không do mã của nhóm chạy ra; đưa vào báo cáo tài liệu chưa đọc hoặc chưa kiểm tra là tồn tại thật.
+- Rủi ro đã biết: mục 2.4 của đề yêu cầu "tự cài đặt" và chỉ cấm nộp mã AI sinh "khi chưa hiểu". Nếu giảng viên hiểu chặt hơn, phần mã do AI viết có thể bị xem là vi phạm. Phi biết và chấp nhận; mọi lần AI viết mã phải có trong nhật ký.
 - **Mỗi lần dùng AI** thêm MỘT dòng vào `docs/ai_usage_log.md` (ngày | công cụ | việc | tệp/phần báo cáo | người). Khai báo trung thực không bị trừ điểm.
 - Mọi thành viên phải giải thích được mọi dòng mã tự cài đặt và mọi con số trong báo cáo, kể cả phần người khác làm (vấn đáp hỏi chéo).
 

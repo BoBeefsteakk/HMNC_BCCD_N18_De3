@@ -57,13 +57,13 @@ Hạn ở bảng dưới là mốc tham khảo; nếu lệch với `due:` trong 
 ## f. Dùng AI cho phần của bạn
 | Được hỏi AI | Không được để AI làm |
 |---|---|
-| Khái niệm GD/SGD/momentum, số điều kiện, hội tụ | Viết `gd`, `sgd`, `minibatch_gd`, `momentum_gd`, `ridge_closed_form`, `finite_diff_check` |
+| Khái niệm GD/SGD/momentum, số điều kiện, hội tụ | Nộp mã GD/SGD/momentum bạn chưa hiểu (AI được viết; bạn giải thích được từng dòng, Phi review) |
 | Cách dùng `numpy`, `pandas`, `matplotlib`; sửa lỗi cú pháp, giải thích traceback | Viết thay tính tay B7.1(a) hoặc sinh số cho Phụ lục A |
 | Gợi ý cách vẽ hình EDA, cách mô tả dữ liệu | Sinh nguyên đoạn B1.1, từ điển dữ liệu, hoặc phần lý thuyết |
 | Sửa chính tả, diễn đạt câu chữ | Tạo số liệu, bảng, hình không do mã nhóm chạy; thêm tài liệu tham khảo chưa đọc |
 | Nhờ đặt câu hỏi ôn vấn đáp | Chọn η/siêu tham số bằng cách nhìn tập kiểm tra |
 
-Mỗi lần dùng AI thêm MỘT dòng vào `docs/ai_usage_log.md` (ngày | công cụ | việc | tệp/phần báo cáo | người). Phần GD là phần bắt buộc tự cài đặt (đề mục 2.4): bạn phải giải thích được từng dòng.
+Mỗi lần dùng AI thêm MỘT dòng vào `docs/ai_usage_log.md` (ngày | công cụ | việc | tệp/phần báo cáo | người). Phần GD là phần bắt buộc tự cài đặt (đề mục 2.4): AI được viết mã, nhưng bạn phải giải thích được từng dòng, Phi review trước khi merge, nhật ký ghi rõ (khai ở Phụ lục C).
 
 ## g. Chuẩn bị vấn đáp
 **II.2 — phải giải thích được**: công thức J và grad có L2 (vì sao không phạt hệ số tự do); khác nhau giữa GD theo lô, SGD, mini-batch; công thức cập nhật momentum; vì sao η lớn gây phân kỳ và liên hệ độ cong; tác dụng của z-score lên tốc độ hội tụ; kiểm tra gradient bằng sai phân hữu hạn; nghiệm đóng của hồi quy chính quy hóa; ý nghĩa các biến trong từ điển dữ liệu; chỉ số kỹ năng so với CND.

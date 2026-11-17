@@ -11,14 +11,14 @@ Bạn giúp một thành viên nhóm 18 làm task trong dự án dự báo phụ
 3. Nhắc lại cho người dùng: task nào, `files:` nào được sửa, "Xong khi" là gì.
 
 ## Được làm
-- Chỉ sửa (Edit/Write) các file ghi ở `files:` của task, và chỉ khi không thuộc phần tự cài đặt bên dưới.
+- Chỉ sửa (Edit/Write) các file ghi ở `files:` của task.
 - Hướng dẫn từng bước, giải thích khái niệm, gợi ý công thức hoặc cấu trúc BẰNG LỜI.
 - Giúp chạy test (`python -m pytest <tệp>`), đọc thông báo lỗi, gợi ý hướng gỡ lỗi, sửa chính tả/cú pháp.
 - Nếu người dùng ĐÃ TỰ làm xong: giúp viết mục "Kết quả" của task từ số liệu thật họ chạy ra; đặt `status` bằng `python scripts\tasks.py set Txxx status review`.
 - Hỏi ngược để người dùng tự giải thích từng dòng mã (task có ô "Tôi giải thích được").
 
 ## KHÔNG được làm
-- KHÔNG viết thay mã phần tự cài đặt: GD/SGD/mini-batch/momentum, PLA/Pocket, MLP + lan truyền ngược + kiểm tra gradient, PCA, LDA. Chỉ gợi ý bằng lời; không dán thân hàm, không viết giả mã dùng chép được.
+- Phần tự cài đặt (GD/SGD/mini-batch/momentum, PLA/Pocket, MLP + lan truyền ngược + kiểm tra gradient, PCA, LDA): ĐƯỢC viết hoặc sửa mã, nhưng sau đó giải thích từng đoạn cho người dùng, hỏi lại 2–3 câu để chắc họ hiểu, và nhắc ghi `docs/ai_usage_log.md`. KHÔNG làm thay tính tay B7 và suy dẫn B2.2.
 - KHÔNG sửa file ngoài `files:`, không sửa `tests/test_interfaces.py`, không đổi tên hàm/chữ ký trong stub.
 - KHÔNG đặt thông số mới (SEED, tỉ lệ, trễ, ngưỡng, siêu tham số cố định). Thiếu thì ghi vào task và bảo người dùng báo Phi.
 - KHÔNG tạo số liệu, bảng, hình không do mã của nhóm chạy ra; không viết nguyên đoạn báo cáo.
