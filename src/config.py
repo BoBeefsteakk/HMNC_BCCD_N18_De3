@@ -84,9 +84,18 @@ BOOTSTRAP_ITERS = 2000  # B9.1 (>= 1.000 lần); lấy lại mẫu THEO TUẦN v
 BOOTSTRAP_CI = 0.95  # khoảng tin cậy kiểu phân vị (2,5% và 97,5%)
 TREF_QUANTILES = (0.10, 0.25, 0.50, 0.75, 0.90)  # lưới Tref cho CDH: phân vị của T trung bình 3 thành phố trên TRAIN
 FEATURE_LAGS_HOURS = (336, 504, 672)  # trễ phụ tải và cửa sổ trượt: cùng giờ của tuần 2, 3, 4 trước (đều >= 240 giờ)
+# Khởi động (18/11/2026): trễ xa nhất cần ngần ấy tuần lịch sử, nên các tuần đầu của train chỉ làm lịch sử, không huấn luyện.
+WARMUP_WEEKS = -(-max(FEATURE_LAGS_HOURS) // HOURS_PER_WEEK)  # = 4, làm tròn lên
 
 
 def get_run_seeds() -> list[int]:
     """N_RUN_SEEDS hạt giống liên tiếp bắt đầu từ SEED (nhóm 18: 2044..2048), cho thí nghiệm lặp (B4.3)."""
     base = get_seed()
     return [base + i for i in range(N_RUN_SEEDS)]
+
+# --- Phát hiện khi làm T001 (18/11/2026) ----------------------------------------------------------
+# continuous.csv có 48.048 dòng = 286 tuần x 168 giờ đúng từng giờ, nhưng dòng đầu là 2015-01-03 01:00 và dòng
+# cuối là 2020-06-27 00:00 -> nhãn thời gian là GIỜ KẾT THÚC. Lùi 1 giờ để về giờ bắt đầu thì mọi tuần tròn
+# Thứ Bảy 00:00 -> Thứ Sáu 23:00 và khớp 209/26/37/14. T002 vẫn phải đối chiếu với tệp dự báo CND.
+TIMESTAMP_SHIFT_HOURS = -1
+LOW_LOAD_FRACTION = 0.5  # giờ phụ tải thấp bất thường: < 50% trung vị (CONVENTIONS mục 4)
