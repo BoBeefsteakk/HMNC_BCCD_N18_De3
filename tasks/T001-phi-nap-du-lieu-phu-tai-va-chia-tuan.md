@@ -4,7 +4,7 @@ title: Nạp dữ liệu phụ tải và chia tuần
 phase: P1
 checklist: B1.4
 owner: phi
-status: doing
+status: review
 due: 20/11/2026
 files: src/data_prep.py,tests/test_data_prep.py
 depends: -
@@ -46,7 +46,8 @@ Nạp `data/raw/continuous.csv` (parse datetime, kiểm thiếu/trùng giờ); `
 - **Phát hiện:** nhãn thời gian là giờ kết thúc (dòng đầu 2015-01-03 01:00, dòng cuối 2020-06-27 00:00). Phải lùi 1 giờ (`TIMESTAMP_SHIFT_HOURS = -1`) thì mới ra tuần Thứ Bảy 00:00 → Thứ Sáu 23:00. Đã sửa `docs/CONVENTIONS.md` mục 1 và `docs/decisions/README.md`. T002 vẫn phải căn với tệp CND (UNKNOWN: CND gắn nhãn giờ bắt đầu hay kết thúc, chưa kiểm).
 - Giờ phụ tải < 50% trung vị train (1156,71 MWh): 8 giờ. 3 giờ lẻ trong train (24/01/2015 16:00, 27/06/2017 11:00, 01/07/2017 13:00) và 5 giờ liên tiếp trong val (20/01/2019 11:00–15:00, thấp nhất 85,19 MWh = 7%). Không giờ nào nằm trong test. Nguyên nhân: UNKNOWN (chưa tra). Đề xuất xử lý: giữ nguyên dữ liệu, báo MAPE trên val cả có và không có 5 giờ ngày 20/01/2019 (MAPE chia cho y nên rất nhạy); quyết định cuối thuộc Phi.
 - Tỷ lệ giờ cao điểm theo ngưỡng của train: train 10,0%; val 17,5%; test_a 17,3%; test_b 0,0% (không có nhãn +1 nào trên test_b). Chi tiết và các ghi chú khác: `docs/CONVENTIONS.md` mục 8.
-- Chưa làm: `align_cnd` (T002); mục "Tôi giải thích được" chưa tick; chưa chuyển `review` (chờ kiểm hiểu).
+- Chưa làm: `align_cnd` (T002); mục "Tôi giải thích được" do Phi tự tick.
+- Tự kiểm hiểu (model hỏi): `peak_label`, `parse_raw`, `TIMESTAMP_SHIFT_HOURS` | qua | 18/11/2026 (qua sau khi giải thích lại; sửa nhỏ: chạy thử phân vị 95% không sửa tệp, ngưỡng 1494,42 MWh)
 
 ## Ghi chú AI đã dùng
 Nếu dùng AI (kể cả hỏi khái niệm): thêm MỘT dòng vào `docs/ai_usage_log.md` (ngày | công cụ | việc | tệp/phần báo cáo | người). Không dùng AI thì ghi "không".

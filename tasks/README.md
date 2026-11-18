@@ -12,7 +12,7 @@
 
 | id | owner | status | due | checklist | tiêu đề |
 |---|---|---|---|---|---|
-| T001 | phi | doing | 20/11/2026 | B1.4 | [Nạp dữ liệu phụ tải và chia tuần](T001-phi-nap-du-lieu-phu-tai-va-chia-tuan.md) |
+| T001 | phi | review | 20/11/2026 | B1.4 | [Nạp dữ liệu phụ tải và chia tuần](T001-phi-nap-du-lieu-phu-tai-va-chia-tuan.md) |
 | T004 | huan | todo | 21/11/2026 | B1.2 | [Từ điển dữ liệu](T004-huan-tu-dien-du-lieu.md) |
 | T002 | phi | todo | 22/11/2026 | B1.4,R2 | [Căn dự báo CND với phụ tải thực](T002-phi-can-du-bao-cnd-voi-phu-tai-thuc.md) |
 
