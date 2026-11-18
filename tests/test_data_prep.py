@@ -188,3 +188,89 @@ def test_real_data_peak_rate_on_train_is_about_ten_percent():
     y = parts["train"][config.TARGET_COL].to_numpy()
     lab = data_prep.peak_label(y, np.ones(len(y), dtype=bool))
     assert abs((lab == 1).mean() - (1 - config.PEAK_QUANTILE)) < 0.001
+
+
+# ------------------------------------------------------------------ T002: căn dự báo CND
+def _synthetic_cnd(prepared: pd.DataFrame, label_offset_hours: int, noise: float = 0.0, seed: int = 3) -> pd.DataFrame:
+    """CND giả: dự báo = phụ tải thực (+ nhiễu), gắn nhãn lệch `label_offset_hours` so với nhãn giờ bắt đầu."""
+    rng = np.random.default_rng(seed)
+    y = prepared[config.TARGET_COL].to_numpy()
+    fc = y * (1 + noise * rng.normal(size=len(y)))
+    ts = prepared[config.TIME_COL] + pd.Timedelta(hours=label_offset_hours)
+    return pd.DataFrame({"cnd_ts": ts.to_numpy(), data_prep.CND_COL: fc})
+
+
+def test_load_cnd_parses_month_day_year_with_bom(tmp_path):
+    p = tmp_path / "cnd.csv"
+    p.write_text("\ufeffdatetime,load_forecast\n1/2/2016 0:00,1056.9\n1/2/2016 1:00,1057.1\n", encoding="utf-8")
+    cnd = data_prep.load_cnd(p)
+    assert cnd["cnd_ts"].iloc[0] == pd.Timestamp("2016-01-02 00:00")  # M/D: 2 tháng 1, Thứ Bảy
+    assert cnd["cnd_ts"].iloc[0].day_of_week == 5
+    assert list(cnd.columns) == ["cnd_ts", data_prep.CND_COL]
+
+
+def test_load_cnd_rejects_duplicate_and_gap(tmp_path):
+    dup = tmp_path / "dup.csv"
+    dup.write_text("datetime,load_forecast\n1/2/2016 0:00,1\n1/2/2016 0:00,2\n", encoding="utf-8")
+    with pytest.raises(ValueError, match="trùng"):
+        data_prep.load_cnd(dup)
+    gap = tmp_path / "gap.csv"
+    gap.write_text("datetime,load_forecast\n1/2/2016 0:00,1\n1/2/2016 2:00,2\n", encoding="utf-8")
+    with pytest.raises(ValueError, match="nhảy giờ"):
+        data_prep.load_cnd(gap)
+
+
+def test_align_cnd_matches_by_shifted_label(prepared):
+    cnd = _synthetic_cnd(prepared, label_offset_hours=1)  # nhãn CND lớn hơn nhãn phụ tải 1 giờ
+    aligned = data_prep.align_cnd(prepared, cnd, shift_hours=-1)
+    assert np.allclose(aligned[data_prep.CND_COL], aligned[config.TARGET_COL])
+
+
+def test_align_cnd_gives_nan_where_cnd_does_not_cover(prepared):
+    cnd = _synthetic_cnd(prepared, 0).iloc[config.HOURS_PER_WEEK:]  # CND bắt đầu muộn 1 tuần
+    aligned = data_prep.align_cnd(prepared, cnd, shift_hours=0)
+    assert aligned[data_prep.CND_COL].iloc[: config.HOURS_PER_WEEK].isna().all()
+    assert aligned[data_prep.CND_COL].iloc[config.HOURS_PER_WEEK :].notna().all()
+    assert len(aligned) == len(prepared)
+
+
+@pytest.mark.parametrize("offset", [-1, 0, 1])
+def test_select_cnd_shift_recovers_known_label_offset(prepared, offset):
+    """CND giả gắn nhãn lệch `offset` giờ -> độ dịch đúng là -offset, MAPE gần 0 ở đúng độ dịch đó."""
+    val = data_prep.split_weeks(prepared)["val"]
+    cnd = _synthetic_cnd(prepared, offset, noise=0.02)
+    table = data_prep.select_cnd_shift(val, cnd)
+    best = int(table.loc[table["mape"].idxmin(), "shift_hours"])
+    assert best == -offset
+    assert table["mape"].min() < 0.03 < table["mape"].max()
+
+
+def test_select_cnd_shift_refuses_train_and_test_data(prepared):
+    parts = data_prep.split_weeks(prepared)
+    cnd = _synthetic_cnd(prepared, 0)
+    for name in ("train", "test_a", "test_b"):
+        with pytest.raises(ValueError, match="kiểm định"):
+            data_prep.select_cnd_shift(parts[name], cnd)
+
+
+def test_cnd_mape_is_mean_of_weekly_means(prepared):
+    val = data_prep.split_weeks(prepared)["val"].copy()
+    val[data_prep.CND_COL] = val[config.TARGET_COL] * 1.1
+    ape = (val[config.TARGET_COL] - val[data_prep.CND_COL]).abs() / val[config.TARGET_COL]
+    assert data_prep.cnd_mape(val) == pytest.approx(float(ape.mean()))  # tuần đủ giờ nên trung bình tuần = trung bình giờ
+    assert data_prep.cnd_mape(val) == pytest.approx(0.1, rel=1e-9)
+
+
+real_cnd = pytest.mark.skipif(
+    not (data_prep.RAW_CONTINUOUS.exists() and data_prep.RAW_CND.exists()), reason="chưa có tệp phụ tải và CND trong data/raw"
+)
+
+
+@real_cnd
+def test_real_cnd_best_shift_on_validation_matches_config():
+    df = data_prep.load_raw()
+    val = data_prep.split_weeks(df)["val"]
+    table = data_prep.select_cnd_shift(val, data_prep.load_cnd())
+    best = int(table.loc[table["mape"].idxmin(), "shift_hours"])
+    assert best == config.CND_SHIFT_HOURS
+    assert (table["n_hours"] == len(val)).all()  # CND phủ trọn tập kiểm định

@@ -4,7 +4,7 @@
    Thứ Ba trước đó. Dùng `lag_violations` để lập bảng "đặc trưng – độ trễ nhỏ nhất – vì sao hợp lệ" (R1).
 2. Tập kiểm tra chỉ dùng MỘT lần: `open_test_set(final=True)`.
 
-Quy ước thời gian (UNKNOWN, cần kiểm khi làm data_prep.align_cnd): ta tính theo mốc "giờ bắt đầu".
+Quy ước thời gian (đã kiểm ở T001/T002, xem docs/CONVENTIONS.md mục 1): ta tính theo mốc "giờ bắt đầu"; nhãn gốc của tệp là giờ kết thúc.
 Nếu nhãn thời gian trong tệp là "giờ kết thúc", ngưỡng đúng là 239 giờ; dùng 240 là an toàn cho cả hai
 cách hiểu, và mọi trễ là bội số của tuần (336, 504, 672...) cho cùng kết luận.
 """
