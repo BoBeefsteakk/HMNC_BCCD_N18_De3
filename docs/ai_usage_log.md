@@ -30,3 +30,4 @@ Cột `Người` ghi `Phi`, `Huấn` hoặc `Việt`; cột `Task` ghi mã task 
 | 18/11/2026 | Claude Code (claude-sonnet-5-5) | D | Khảo sát dữ liệu thật, ghi chú dữ liệu và quy ước | `docs/CONVENTIONS.md`, `docs/decisions/README.md`, `tasks/T001-phi-nap-du-lieu-phu-tai-va-chia-tuan.md` | Phi | T001 |
 | 18/11/2026 | Claude Code (claude-sonnet-5-5) | D | Thêm mục "Việc chính của từng người" vào README | `README.md` | Phi | LEAD |
 | 18/11/2026 | Claude Code (claude-sonnet-5-5) | D | Chuyển phần báo cáo và hồ sơ sang Huấn trong các tài liệu phân công | `README.md`, `docs/CHECKLIST.md`, `docs/PHI.md`, `docs/HUAN.md`, `TEAM.md`, `scripts/tasks.py`, `tasks/T008-T010` | Phi | LEAD |
+| 18/11/2026 | Claude Code (claude-sonnet-5-5) | M | Nạp CND, căn nhãn giờ, MAPE theo độ dịch trên val, test | `src/data_prep.py` (`load_cnd`, `align_cnd`, `cnd_mape`, `select_cnd_shift`), `tests/test_data_prep.py`, `src/config.py` | Phi | T002 |

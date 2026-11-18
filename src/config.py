@@ -99,3 +99,11 @@ def get_run_seeds() -> list[int]:
 # Thứ Bảy 00:00 -> Thứ Sáu 23:00 và khớp 209/26/37/14. T002 vẫn phải đối chiếu với tệp dự báo CND.
 TIMESTAMP_SHIFT_HOURS = -1
 LOW_LOAD_FRACTION = 0.5  # giờ phụ tải thấp bất thường: < 50% trung vị (CONVENTIONS mục 4)
+
+# --- T002 (18/11/2026): căn dự báo CND với phụ tải thực -------------------------------------------------
+# Tệp CND dùng định dạng ngày M/D/YYYY (vd "1/2/2016 0:00" = Thứ Bảy 02/01/2016). Dịch nhãn CND để khớp nhãn giờ bắt đầu
+# của phụ tải (đã lùi TIMESTAMP_SHIFT_HOURS): thử CND_SHIFT_CANDIDATES trên tập KIỂM ĐỊNH, chọn theo MAPE nhỏ nhất.
+# Kết quả (T002): -1 giờ, tức nhãn CND trùng nhãn gốc (giờ kết thúc) của tệp phụ tải.
+CND_TIME_FORMAT = "%m/%d/%Y %H:%M"
+CND_SHIFT_CANDIDATES = (-1, 0, 1)
+CND_SHIFT_HOURS = -1
