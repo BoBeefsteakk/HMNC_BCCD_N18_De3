@@ -96,7 +96,7 @@ Mục tiêu: ba người, ba AI vẫn ra cùng một con số. Quy tắc đầy 
 | Người | Được sửa |
 |---|---|
 | Phi | `src/config.py`, `data_prep`, `mlp`, `evaluate`, `hand_calc`, `run_all.py`, `docs/`, `tasks/`, `scripts/`, `.github/`, `.claude/`, `prompts/`, `TEAM.md`, `AGENTS.md` |
-| Huấn | `src/optim_linear.py`, `hand_calc_huan.py`, `cnd_compare.py`, `notebooks/huan_*`, `docs/DATA_DICTIONARY.md` |
+| Huấn | `src/optim_linear.py`, `hand_calc_huan.py`, `cnd_compare.py`, `notebooks/huan_*`, `docs/DATA_DICTIONARY.md`, `docs/BAOCAO_DAN_Y.md` (dàn ý báo cáo) |
 | Việt | `src/perceptron.py`, `features.py`, `hand_calc_viet.py`, `notebooks/viet_*` |
 
 Cần sửa file người khác: ghi vào task, nhắn chủ file.
@@ -118,6 +118,19 @@ Cần sửa file người khác: ghi vào task, nhắn chủ file.
 ### Còn mở (chưa kết luận)
 - **UNKNOWN (cần dữ liệu):** nhãn thời gian của tệp phụ tải có lệch 1 giờ so với tệp dự báo CND hay không (Phi kiểm trong T002; chưa kết luận thì chưa so với CND). Mặc định đến khi T002 kết luận: độ dịch 0.
 
+## Việc chính của từng người
+Một dự án, ba khối. Chi tiết từng đầu việc, điểm và hạn nằm ở bảng Checklist bên dưới; file nào của ai nằm ở "File sở hữu" ở trên. Nguồn đầy đủ: `docs/PHI.md`, `docs/HUAN.md`, `docs/VIET.md`.
+
+| Người | Việc chính | Mã trong checklist | Nhánh |
+|---|---|---|---|
+| **Phi** (trưởng nhóm) | **Phần core:** dữ liệu và chia tuần; mạng nơ-ron MLP tự cài đặt; chống rò rỉ; đánh giá cuối (chạy tập test **một lần**, bootstrap); phân tích lỗi; chạy lại một lệnh. **Quản lý:** giao task, review, merge, **duyệt final** báo cáo và hồ sơ | B1.4, B5.1–B5.5, B7.2, R1, R3, B9.1, B9.2, B10.1 (chạy lại một lệnh) | `phi-lead-data-mlp` |
+| **Huấn** | Bài toán nghiệp vụ, mô tả dữ liệu, EDA; hồi quy tuyến tính và các thuật toán tối ưu (GD, SGD, mini-batch, momentum); thí nghiệm tốc độ học; so sánh với dự báo CND và mô hình cơ sở. **Báo cáo và hồ sơ:** soạn báo cáo tiến độ, ghép báo cáo cuối và hồ sơ nộp (báo cáo, Phụ lục B, C, D, slide), bảng truy vết, kiểm cấu trúc báo cáo | B1.1–B1.3, B3.1–B3.4, B7.1a, R2, TĐ, HS, B10.1 (cấu trúc báo cáo, Phụ lục D) | `huan-eda-gd` |
+| **Việt** | Perceptron (PLA, Pocket); phân tích và xây đặc trưng (Fisher, đặc trưng trễ ≥ 240 giờ); PCA và LDA tự cài đặt; so sánh bộ đặc trưng | B2.2, B4.1–B4.4, B6.1–B6.5, B7.1b, B7.3, R4 | `viet-perceptron-features` |
+
+Phần chung của cả ba: **mỗi người tự viết phần báo cáo của khối mình** (B2.1 và mô tả kết quả khối mình), vì vấn đáp hỏi từng người về mọi phần. Huấn chỉ ghép, định dạng, kiểm nhất quán thành một báo cáo duy nhất; Phi duyệt final. AI không sinh đoạn báo cáo (xem Luật AI).
+
+Lưu ý dễ nhầm: **T002** (căn dự báo CND với phụ tải thực, kiểm lệch giờ) là việc chuẩn bị dữ liệu của **Phi**; còn **R2** (so mô hình với dự báo CND và mô hình cơ sở, lập bảng chỉ số) là của **Huấn**. R2 chỉ làm được sau khi T002 xong.
+
 ## Checklist (cố định theo phase)
 Tóm tắt từ [`docs/CHECKLIST.md`](docs/CHECKLIST.md) (nguồn đầy đủ, có điều kiện được điểm; chỉ Phi sửa, Phi đổi ☐ → ☑ khi có bằng chứng). Mã khớp mã chấm của đề, tổng Phần I = 10,0. Task hằng ngày nằm ở [`tasks/`](tasks/README.md). Dàn ý báo cáo đầy đủ: [`docs/BAOCAO_DAN_Y.md`](docs/BAOCAO_DAN_Y.md).
 
@@ -134,7 +147,7 @@ Tóm tắt từ [`docs/CHECKLIST.md`](docs/CHECKLIST.md) (nguồn đầy đủ, 
 | P1 | B1.1 | Bài toán nghiệp vụ, chỉ số chính (MAPE) | Huấn | 0,25 | ☐ |
 | P1 | B1.2 | Mô tả dữ liệu, từ điển dữ liệu | Huấn | 0,25 | ☐ |
 | P1 | B1.4 | Tiền xử lý, chia 209/26/37/14 tuần | Phi | 0,25 | ☐ |
-| P2 | TĐ | Báo cáo tiến độ 2–3 trang (không nộp: −0,5) | Phi tổng hợp | − | ☐ |
+| P2 | TĐ | Báo cáo tiến độ 2–3 trang (không nộp: −0,5) | Huấn soạn, Phi duyệt | − | ☐ |
 | P2 | B1.3 | EDA ≥ 4 hình có nhận xét | Huấn | 0,25 | ☐ |
 | P2 | B3.1 | GD, SGD, mini-batch tự cài đặt | Huấn | 0,5 | ☐ |
 | P2 | B3.2 | Momentum, so với GD | Huấn | 0,25 | ☐ |
@@ -165,8 +178,8 @@ Tóm tắt từ [`docs/CHECKLIST.md`](docs/CHECKLIST.md) (nguồn đầy đủ, 
 | P4 | R3 | Sai số theo ngữ cảnh, phong tỏa, thích nghi | Phi | 0,25 | ☐ |
 | P4 | B9.1 | Chạy tập kiểm tra một lần, bootstrap ≥ 1.000 lần | Phi | 0,25 | ☐ |
 | P5 | B9.2 | Phân tích lỗi, 4 câu hỏi nghiên cứu, khuyến nghị | Phi | 0,25 | ☐ |
-| P5 | B10.1 | Cấu trúc, chạy lại ≤ 60 phút, bảng truy vết | Phi | 0,25 | ☐ |
-| P5 | HS | Hồ sơ cuối: báo cáo .docx/.pdf, mã, README, slide ≤ 15 trang | Phi tổng hợp | − | ☐ |
+| P5 | B10.1 | Cấu trúc, chạy lại ≤ 60 phút, bảng truy vết | Phi (chạy lại), Huấn (cấu trúc báo cáo, Phụ lục D) | 0,25 | ☐ |
+| P5 | HS | Hồ sơ cuối: báo cáo .docx/.pdf, mã, README, slide ≤ 15 trang | Huấn ghép, Phi duyệt final | − | ☐ |
 
 Điểm khuyến khích (tối đa 0,5): Adam/Nesterov (Huấn), kiểm định ghép cặp (Phi), tái lập bảng của bài báo [7] (Phi), ứng dụng Streamlit + PSI (tùy chọn).
 

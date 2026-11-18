@@ -15,4 +15,6 @@
 | 17/11/2026 | Tref chọn từ lưới phân vị `TREF_QUANTILES` của T trung bình 3 thành phố trên train, theo MAPE kiểm định | Không có nguồn cho giá trị Tref; tránh giả định đơn vị | `config.TREF_QUANTILES` |
 | 17/11/2026 | Trễ và cửa sổ trượt dùng `FEATURE_LAGS_HOURS` = (336, 504, 672) | Khớp mô hình cơ sở (tuần 2–4), mọi trễ ≥ 240 giờ | `config.FEATURE_LAGS_HOURS` |
 | 17/11/2026 | Nhãn B7.2 dùng {0, 1} | BCE cần nhãn {0, 1}; thống nhất với B7.1 | `docs/CONVENTIONS.md` mục 3 |
-| 17/11/2026 | Nhãn thời gian: mặc định độ dịch 0 đến khi T002 kết luận bằng số liệu | Chưa có dữ liệu để kiểm | `docs/CONVENTIONS.md` mục 1 |
+| 17/11/2026 | Nhãn thời gian phụ tải là giờ kết thúc: lùi 1 giờ (`TIMESTAMP_SHIFT_HOURS = -1`); thay quyết định "mặc định 0" ngày 17/11 | T001 18/11: 48.048 dòng = 286 tuần đủ giờ, dòng đầu 01:00, dòng cuối 00:00 Thứ Bảy; offset 0 làm vỡ phép chia tuần. T002 còn phải căn với CND | `docs/CONVENTIONS.md` mục 1 |
+| 18/11/2026 | 4 tuần đầu của train chỉ làm lịch sử, không huấn luyện (`WARMUP_WEEKS`, phương án A); không điền khuyết | Trễ 672 giờ cần 4 tuần lịch sử; điền khuyết là bịa số | `config.WARMUP_WEEKS`, `data_prep.drop_warmup` |
+| 18/11/2026 | Báo cáo và hồ sơ giao cho Huấn soạn và ghép; Phi tập trung phần core cùng Việt và duyệt final | Phi quản lý hai dự án; Huấn nhẹ nhất ở P3. Mỗi người vẫn tự viết phần khối mình (vấn đáp hỏi từng người) | README "Việc chính của từng người", `docs/CHECKLIST.md` (TĐ, B10.1, HS), `tasks/T008–T010` (T008 báo cáo tiến độ, T009 bảng truy vết, T010 ghép hồ sơ) |

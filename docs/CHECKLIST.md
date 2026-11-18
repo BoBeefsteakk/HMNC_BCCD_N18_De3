@@ -24,7 +24,7 @@
 Nộp báo cáo tiến độ 2–3 trang (kết quả EDA, cách chia dữ liệu, kết quả GD và perceptron ban đầu, kế hoạch phần còn lại). Không nộp bị trừ 0,5 điểm Phần I (không chấm điểm, giảng viên góp ý).
 | Mã | Việc phải có | Điều kiện được điểm | Điểm | Người | Tệp kết quả / nơi nộp | ☐ |
 |---|---|---|---|---|---|---|
-| TĐ | Báo cáo tiến độ 2–3 trang nộp đúng hạn (không phải mã chấm của đề; tránh trừ 0,5) | Nộp trước 30/11/2026; nội dung đủ 4 ý ở trên | (tránh −0,5) | Phi (tổng hợp; mỗi người cấp phần của mình) | Nơi nộp theo thông báo của giảng viên (UNKNOWN: hỏi Phi) | ☐ |
+| TĐ | Báo cáo tiến độ 2–3 trang nộp đúng hạn (không phải mã chấm của đề; tránh trừ 0,5) | Nộp trước 30/11/2026; nội dung đủ 4 ý ở trên | (tránh −0,5) | Huấn soạn (mỗi người cấp phần của mình), Phi duyệt | Nơi nộp theo thông báo của giảng viên (UNKNOWN: hỏi Phi) | ☐ |
 | B1.3 | EDA: thống kê mô tả, phân bố biến mục tiêu/nhãn, giá trị thiếu, ngoại lai, tương quan; ≥ 4 hình có nhận xét | Mỗi hình ≥ 1 nhận xét định lượng; ≥ 1 vấn đề của dữ liệu và cách xử lý | 0,25 | Huấn | `notebooks/huan_*`; `results/figures/1_*` | ☐ |
 | B3.1 | Tự cài đặt GD theo lô, SGD, mini-batch cho hồi quy tuyến tính (MSE + L2); viết rõ hàm mất mát và gradient | Mã NumPy tự viết; công thức trong báo cáo khớp mã; mất mát giảm và ổn định | 0,5 | Huấn | `src/optim_linear.py`; `results/figures/4_*` | ☐ |
 | B3.2 | Tự cài đặt GD với momentum (khuyến khích Nesterov/Adam); so sánh với GD thường trên cùng hình mất mát theo số lần cập nhật | Cùng điểm khởi tạo, cùng η; nêu số lần cập nhật để đạt cùng mức mất mát | 0,25 | Huấn | `src/optim_linear.py`; `results/figures, results/tables/4_*` | ☐ |
@@ -67,8 +67,8 @@ Nộp báo cáo tiến độ 2–3 trang (kết quả EDA, cách chia dữ liệ
 | Mã | Việc phải có | Điều kiện được điểm | Điểm | Người | Tệp kết quả / nơi nộp | ☐ |
 |---|---|---|---|---|---|---|
 | B9.2 | Phân tích lỗi (≥ 10 mẫu sai, phân nhóm nguyên nhân); hạn chế; khuyến nghị triển khai và giám sát (trôi dữ liệu, cập nhật mô hình); trả lời đủ 4 câu hỏi nghiên cứu trong Kết luận | Dựa trên số liệu của nhóm | 0,25 | Phi (mọi người đóng góp) | Báo cáo Chương 6 và Kết luận | ☐ |
-| B10.1 | Báo cáo đúng cấu trúc mục 5 và quy định 2.3; mã đúng cấu trúc Phụ lục 2; chạy lại bằng một lệnh, tái tạo đúng bảng/hình chính; bảng truy vết (Phụ lục D) | Giảng viên chạy lại ≤ 60 phút | 0,25 | Phi (mọi người đóng góp) | `run_all.py`; README; Phụ lục D | ☐ |
-| HS | Hồ sơ cuối theo 2.2: báo cáo .docx và .pdf tên `HMNC_BCCD_N18_De3`; mã nguồn (.zip hoặc GitHub riêng tư mời giảng viên); README (Python, thư viện, cách tải dữ liệu, ngày tải, kích thước/SHA-256, lệnh chạy lại); slide ≤ 15 trang; Phụ lục B (phân công, tỉ lệ đóng góp, chữ ký) và Phụ lục C (khai báo AI) nằm trong báo cáo | Đủ thành phần, nộp đúng hạn (muộn: −1,0 điểm/ngày) | (điều kiện chấm; tránh trừ) | Phi (mọi người đóng góp) | Nơi nộp theo thông báo của giảng viên (UNKNOWN: hỏi Phi) | ☐ |
+| B10.1 | Báo cáo đúng cấu trúc mục 5 và quy định 2.3; mã đúng cấu trúc Phụ lục 2; chạy lại bằng một lệnh, tái tạo đúng bảng/hình chính; bảng truy vết (Phụ lục D) | Giảng viên chạy lại ≤ 60 phút | 0,25 | Phi (chạy lại một lệnh); Huấn (cấu trúc báo cáo, Phụ lục D); mọi người đóng góp | `run_all.py`; README; Phụ lục D | ☐ |
+| HS | Hồ sơ cuối theo 2.2: báo cáo .docx và .pdf tên `HMNC_BCCD_N18_De3`; mã nguồn (.zip hoặc GitHub riêng tư mời giảng viên); README (Python, thư viện, cách tải dữ liệu, ngày tải, kích thước/SHA-256, lệnh chạy lại); slide ≤ 15 trang; Phụ lục B (phân công, tỉ lệ đóng góp, chữ ký) và Phụ lục C (khai báo AI) nằm trong báo cáo | Đủ thành phần, nộp đúng hạn (muộn: −1,0 điểm/ngày) | (điều kiện chấm; tránh trừ) | Huấn ghép, Phi duyệt final (mọi người đóng góp) | Nơi nộp theo thông báo của giảng viên (UNKNOWN: hỏi Phi) | ☐ |
 
 ### Điểm khuyến khích 6.5 (tối đa 0,5; không bắt buộc)
 | Việc | Điểm | Người | ☐ |

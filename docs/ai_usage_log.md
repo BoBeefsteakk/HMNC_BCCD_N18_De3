@@ -26,3 +26,7 @@ Cột `Người` ghi `Phi`, `Huấn` hoặc `Việt`; cột `Task` ghi mã task 
 | 17/11/2026 | Claude Code (claude-sonnet-5-5) | D | Dựng dàn ý đầy đủ báo cáo (bìa đến phụ lục, không viết đoạn báo cáo) | `docs/BAOCAO_DAN_Y.md` | Phi | LEAD |
 | 17/11/2026 | Claude Code (claude-sonnet-5-5) | M | Thêm hằng số quyết định và `get_run_seeds` | `src/config.py` (`get_run_seeds`), `tests/test_config_decisions.py` | Phi | LEAD |
 | 17/11/2026 | Claude Code (claude-sonnet-5-5) | D | Ghi các quyết định vào quy ước, dàn ý, nhật ký quyết định | `docs/CONVENTIONS.md`, `docs/BAOCAO_DAN_Y.md`, `docs/decisions/README.md` | Phi | LEAD |
+| 18/11/2026 | Claude Code (claude-sonnet-5-5) | M | Nạp dữ liệu, chia tuần, nhãn cao điểm, giờ phụ tải thấp, test | `src/data_prep.py` (`parse_raw`, `week_starts`, `split_weeks`, `peak_label`, `low_load_hours`, `drop_warmup`), `tests/test_data_prep.py`, `src/config.py` | Phi | T001 |
+| 18/11/2026 | Claude Code (claude-sonnet-5-5) | D | Khảo sát dữ liệu thật, ghi chú dữ liệu và quy ước | `docs/CONVENTIONS.md`, `docs/decisions/README.md`, `tasks/T001-phi-nap-du-lieu-phu-tai-va-chia-tuan.md` | Phi | T001 |
+| 18/11/2026 | Claude Code (claude-sonnet-5-5) | D | Thêm mục "Việc chính của từng người" vào README | `README.md` | Phi | LEAD |
+| 18/11/2026 | Claude Code (claude-sonnet-5-5) | D | Chuyển phần báo cáo và hồ sơ sang Huấn trong các tài liệu phân công | `README.md`, `docs/CHECKLIST.md`, `docs/PHI.md`, `docs/HUAN.md`, `TEAM.md`, `scripts/tasks.py`, `tasks/T008-T010` | Phi | LEAD |

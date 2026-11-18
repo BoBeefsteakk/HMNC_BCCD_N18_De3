@@ -12,7 +12,7 @@
 
 | id | owner | status | due | checklist | tiêu đề |
 |---|---|---|---|---|---|
-| T001 | phi | todo | 20/11/2026 | B1.4 | [Nạp dữ liệu phụ tải và chia tuần](T001-phi-nap-du-lieu-phu-tai-va-chia-tuan.md) |
+| T001 | phi | doing | 20/11/2026 | B1.4 | [Nạp dữ liệu phụ tải và chia tuần](T001-phi-nap-du-lieu-phu-tai-va-chia-tuan.md) |
 | T004 | huan | todo | 21/11/2026 | B1.2 | [Từ điển dữ liệu](T004-huan-tu-dien-du-lieu.md) |
 | T002 | phi | todo | 22/11/2026 | B1.4,R2 | [Căn dự báo CND với phụ tải thực](T002-phi-can-du-bao-cnd-voi-phu-tai-thuc.md) |
 
@@ -24,3 +24,11 @@
 | T006 | viet | todo | 25/11/2026 | B4.1 | [Tự cài đặt PLA và Pocket](T006-viet-tu-cai-dat-pla-va-pocket.md) |
 | T005 | huan | todo | 26/11/2026 | B1.1,B1.3 | [Bài toán nghiệp vụ và EDA](T005-huan-bai-toan-nghiep-vu-va-eda.md) |
 | T007 | viet | todo | 27/11/2026 | B6.1,B6.3 | [Tự cài đặt Fisher score và PCA](T007-viet-tu-cai-dat-fisher-score-va-pca.md) |
+| T008 | huan | todo | 27/11/2026 | TĐ | [Báo cáo tiến độ 2–3 trang](T008-huan-bao-cao-tien-do-2-3-trang.md) |
+
+## P5
+
+| id | owner | status | due | checklist | tiêu đề |
+|---|---|---|---|---|---|
+| T009 | huan | todo | 20/12/2026 | B10.1 | [Bảng truy vết (Phụ lục D) và kiểm cấu trúc báo cáo](T009-huan-bang-truy-vet-phu-luc-d-va-kiem-cau-truc.md) |
+| T010 | huan | todo | 22/12/2026 | HS | [Ghép hồ sơ cuối](T010-huan-ghep-ho-so-cuoi.md) |

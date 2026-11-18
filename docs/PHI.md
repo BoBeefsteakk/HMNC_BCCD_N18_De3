@@ -23,7 +23,7 @@
 | B9.1, B9.2 | Đánh giá tổng hợp trên tập kiểm tra; phân tích lỗi, kết luận | 0,25 + 0,25 |
 | B10.1 | Hình thức, mã nguồn, tái lập | 0,25 |
 | 6.5 | Kiểm định ghép cặp; tái lập bảng/hình của [7]; ứng dụng + PSI (tùy chọn, bạn quyết) | 0,25 mỗi mục |
-| Lãnh đạo | Giữ `config`, `CONVENTIONS`, `CHECKLIST`; báo cáo tiến độ; hồ sơ nộp | — |
+| Lãnh đạo | Giữ `config`, `CONVENTIONS`, `CHECKLIST`; **duyệt final** báo cáo tiến độ và hồ sơ nộp (Huấn soạn và ghép) | — |
 
 ## c. File được sửa / không được sửa (TEAM.md mục 3)
 - Được sửa: `src/config.py`, `src/data_prep.py`, `src/mlp.py`, `src/evaluate.py`, `src/hand_calc.py`, `run_all.py`, `docs/` (trừ file task và `ai_usage_log.md`), `tasks/` (tạo task), `.github/`, `.claude/`, `prompts/`, `scripts/`, `TEAM.md`, `AGENTS.md`.
@@ -37,11 +37,11 @@ Hạn ở bảng dưới là mốc tham khảo; nếu lệch với `due:` trong 
 |---|---|---|---|
 | 20/11 | T001–T002: `download_data.py`, `load_raw`, `split_weeks`, `peak_label`, kiểm tra nhãn thời gian CND (UNKNOWN trong CONVENTIONS mục 1); báo kết quả để Huấn bắt đầu EDA/R2 | B1.4 | Mở khóa cho Huấn và Việt |
 | 22/11 | Hết P1: bảng kích thước tập và tỉ lệ nhãn; README ghi ngày tải, kích thước/SHA-256 | B1.4 | |
-| 28/11 | Gộp phần của từng người thành báo cáo tiến độ 2–3 trang | TĐ | Hạn nộp 30/11 |
+| 28/11 | Duyệt báo cáo tiến độ 2–3 trang do Huấn gộp (Huấn nộp bản nháp 27/11, T008) | TĐ | Hạn nộp 30/11 |
 | 07/12 | MLP: forward/backward/`grad_check`; thử trên dữ liệu tổng hợp | B5.1, B5.2 | |
 | 12/12 | Thí nghiệm kiến trúc, khởi tạo, tối ưu, chính quy hóa, đối chứng sklearn; `hand_calc.py`; R1 | B5.3–B5.5, B7.2, R1 | Hạn P3 14/12 |
 | 18/12 | Review hết PR; chạy `python run_all.py --final` ĐÚNG MỘT LẦN sau khi chốt mô hình; B9.1, R3 | B9.1, R3 | Hạn P4 20/12 |
-| 24/12 | Hợp nhất báo cáo (Google Docs), Phụ lục B, C, D, slide, README; tự kiểm Phụ lục 5 | B9.2, B10.1 | Hạn nộp 25/12 |
+| 24/12 | Duyệt final hồ sơ do Huấn ghép xong 22/12 (T010: báo cáo, Phụ lục B, C, D, slide, README); tự kiểm Phụ lục 5; chạy lại một lệnh | B9.2, B10.1 | Hạn nộp 25/12 |
 
 ## e. Cách làm từng khối của bạn
 1. **Dữ liệu (`data_prep.py`)**: làm theo docstring (`load_raw`, `week_starts`, `split_weeks`, `peak_label`, `align_cnd`). Assert số tuần = `config.EXPECTED_WEEKS`. Ngưỡng "giờ cao điểm" = phân vị `config.PEAK_QUANTILE` tính trên train. Đánh dấu giờ tải < 50% trung vị và nêu cách xử lý. Mọi `rng` từ `config.get_seed()`.
