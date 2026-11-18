@@ -38,7 +38,7 @@ Nạp `data/raw/forecast_cnd.csv`, kiểm tra nhãn thời gian có lệch 1 gi�
 
 
 ## Tôi giải thích được
-- ☐ Tôi tự giải thích được từng dòng mã và từng con số trong task này (người làm tự tick).
+- ☑ Tôi tự giải thích được từng dòng mã và từng con số trong task này (người làm tự tick).
 
 ## Kết quả (người làm điền)
 - Đã làm (18/11/2026): `src/data_prep.py` thêm `load_cnd`, `align_cnd`, `cnd_mape`, `select_cnd_shift`; `tests/test_data_prep.py` thêm 10 test (CND giả có nhãn lệch biết trước nên kiểm được hàm chọn đúng độ dịch; 1 test dữ liệu thật tự SKIP khi thiếu tệp); `src/config.py` thêm `CND_TIME_FORMAT`, `CND_SHIFT_CANDIDATES`, `CND_SHIFT_HOURS`.
