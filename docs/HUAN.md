@@ -24,6 +24,7 @@
 | B3.4 | Kiểm tra gradient, đối chiếu nghiệm giải tích | 0,25 |
 | B7.1(a) | Tính tay một bước GD logistic (chung B7.1 = 0,25 với Việt) | 0,25 chung |
 | R2 | So sánh với CND và mô hình cơ sở | 0,25 |
+| TĐ, HS, B10.1 (phần báo cáo) | Soạn báo cáo tiến độ, ghép hồ sơ cuối, bảng truy vết (Phụ lục D), kiểm cấu trúc báo cáo; Phi duyệt final | điều kiện chấm; B10.1: 0,25 chung với Phi |
 | 6.5 | Tự cài đặt Adam hoặc Nesterov + phân tích so với momentum | 0,25 |
 
 ## c. File được sửa / không được sửa (TEAM.md mục 3)
@@ -42,6 +43,9 @@ Hạn ở bảng dưới là mốc tham khảo; nếu lệch với `due:` trong 
 | 07/12 (P3) | Quét η (≥ 4 giá trị theo log), z-score vs không chuẩn hóa; phần lý thuyết GD cho Chương 2 | B3.3, B2.1 | T003 |
 | 10/12 | `hand_calc_huan.py`: B7.1(a) | B7.1(a) | (task do Phi giao) |
 | 18/12 (P4) | `cnd_compare.py`: R2 (cần kết luận căn thời gian CND của Phi, T002) | R2 | (task do Phi giao) |
+| 27/11 | Soạn báo cáo tiến độ 2–3 trang từ phần của ba người (mỗi người tự viết phần mình) | TĐ | T008 |
+| 20/12 | Bảng truy vết (Phụ lục D) và kiểm cấu trúc báo cáo theo mục 5 của đề | B10.1 | T009 |
+| 22/12 | Ghép hồ sơ cuối: báo cáo .docx/.pdf, Phụ lục B, C, D, slide ≤ 15 trang, README | HS | T010 |
 | tùy chọn | Nesterov/Adam | 6.5 | |
 
 ## e. Cách làm từng khối của bạn

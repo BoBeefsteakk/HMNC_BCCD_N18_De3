@@ -33,7 +33,7 @@ Mỗi loại thông tin chỉ có MỘT chỗ:
 | Người | Được sửa |
 |---|---|
 | Phi | `src/config.py`, `src/data_prep.py`, `src/mlp.py`, `src/evaluate.py`, `src/hand_calc.py`, `run_all.py`, `docs/` (trừ file task và `ai_usage_log.md`), `tasks/` (tạo task), `.github/`, `.claude/`, `prompts/`, `scripts/`, `TEAM.md`, `AGENTS.md` |
-| Huấn | `src/optim_linear.py`, `src/hand_calc_huan.py`, `src/cnd_compare.py`, `notebooks/huan_*`, `docs/DATA_DICTIONARY.md` |
+| Huấn | `src/optim_linear.py`, `src/hand_calc_huan.py`, `src/cnd_compare.py`, `notebooks/huan_*`, `docs/DATA_DICTIONARY.md`, `docs/BAOCAO_DAN_Y.md` (dàn ý báo cáo) |
 | Việt | `src/perceptron.py`, `src/features.py`, `src/hand_calc_viet.py`, `notebooks/viet_*` |
 | Ai cũng được | file task của mình, `docs/trace_<tên>.md` của mình, `docs/ai_usage_log.md` (chỉ thêm dòng), `results/figures|tables/` (chỉ tệp do mã của mình sinh ra, tên theo `CONVENTIONS.md`), `tests/` của khối mình |
 

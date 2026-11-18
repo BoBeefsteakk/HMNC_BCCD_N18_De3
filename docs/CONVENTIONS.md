@@ -6,7 +6,7 @@ Mục tiêu: ba người, ba AI vẫn cho ra cùng một định nghĩa, cùng m
 - Một tuần dự báo = Thứ Bảy 00:00 → Thứ Sáu 23:00 (168 giờ). `hour_in_week` ∈ [0, 167], 0 = Thứ Bảy 00:00.
 - Chia tập theo `config.SPLITS` (209/26/37/14 tuần). Không xáo trộn, không k-fold thường; chỉ kiểm định trượt theo thời gian.
 - Quy tắc 72 giờ: chỉ dùng phụ tải đến hết Thứ Ba trước tuần dự báo. Đặc trưng trễ cố định phải có trễ ≥ `guards.min_safe_lag()` = **240 giờ** (336, 504, 672 hợp lệ; 168 chỉ hợp lệ cho 96/168 giờ nên **không dùng**).
-- UNKNOWN (cần dữ liệu, Phi kiểm trong T002): nhãn thời gian trong tệp có phải "giờ kết thúc" (lệch 1 giờ so với tệp dự báo CND) hay không. **Mặc định cho đến khi T002 kết luận:** nhãn là giờ bắt đầu, độ dịch 0, chưa căn dự báo CND. T002 thử dịch −1/0/+1 giờ, chọn theo MAPE trên tập kiểm định (không dùng tập kiểm tra).
+- UNKNOWN (cần dữ liệu, Phi kiểm trong T002): nhãn thời gian trong tệp có phải "giờ kết thúc" (lệch 1 giờ so với tệp dự báo CND) hay không. **T001 (18/11/2026) đã có bằng chứng cấu trúc:** `continuous.csv` có 48.048 dòng = 286 tuần × 168 giờ, dòng đầu là 2015-01-03 01:00, dòng cuối là 2020-06-27 00:00, nên nhãn là **giờ kết thúc**; `config.TIMESTAMP_SHIFT_HOURS = -1` đưa về giờ bắt đầu (không lùi thì chia 209/26/37/14 vỡ). T002 vẫn phải đối chiếu với tệp dự báo CND (thử dịch −1/0/+1 giờ, chọn theo MAPE trên tập kiểm định, không dùng tập kiểm tra).
 
 ## 2. Dữ liệu và ký hiệu
 - Đích: `nat_demand` (MWh). Thời tiết 12 biến: `{T2M,QV2M,TQL,W2M}_{toc,san,dav}`; lịch: `Holiday_ID, holiday, school`. Đúng tên cột trong `config.py`.
@@ -43,3 +43,29 @@ Mục tiêu: ba người, ba AI vẫn cho ra cùng một định nghĩa, cùng m
 - **Tref của CDH (R3, B6.2):** không giả định đơn vị hay giá trị cố định. Lưới Tref = các phân vị `TREF_QUANTILES` của nhiệt độ trung bình ba thành phố **trên train**; chọn Tref bằng MAPE trên tập **kiểm định**.
 - **Trễ và cửa sổ trượt (B6.2):** `FEATURE_LAGS_HOURS` = (336, 504, 672). Trung bình và độ lệch chuẩn trượt tính trên ba trễ này (cùng giờ trong tuần của tuần 2, 3, 4 trước), nên mọi trễ đều ≥ 240 giờ.
 - **Nhãn B7.2:** {0, 1} như B7.1 (BCE cần nhãn {0, 1}).
+- **Tuần khởi động (18/11/2026):** trễ xa nhất là 672 giờ nên `config.WARMUP_WEEKS` = 4 tuần đầu của train chỉ làm lịch sử, KHÔNG dùng để huấn luyện (`data_prep.drop_warmup`). Train huấn luyện còn 205 tuần; val và test không bị ảnh hưởng; cách chia 209/26/37/14 giữ nguyên. Không điền khuyết. Báo cáo ghi rõ một dòng.
+
+## 8. Ghi chú từ T001 (18/11/2026; số liệu chạy trên dữ liệu thật bằng `src/data_prep.py`)
+**Nguồn và tệp**
+- Dữ liệu đúng nguồn của đề (Mendeley, doi:10.17632/byx7sztj59.1, CC BY 4.0); ba tệp khớp kích thước và SHA-256 trong `config.DATA_FILES`. Tải tay bằng trình duyệt (script bị HTTP 403) thì tệp mang tên gốc (`continuous dataset.csv`, `weekly pre-dispatch forecast.csv`, `Columns' metadata and train-test splits details.pdf`): **phải đổi tên** thành `continuous.csv`, `forecast_cnd.csv`, `columns_metadata.pdf` trong `data/raw/` rồi chạy `python data\download_data.py --with-pdf` để kiểm.
+- `continuous.csv`: 48.048 dòng, không trùng, không thiếu giờ, không NaN. `forecast_cnd.csv`: 40.152 dòng, nhãn thời gian dạng `1/2/2016 0:00` (tháng/ngày/năm), chưa căn với phụ tải (T002).
+
+**Nhãn thời gian**
+- Nhãn của `continuous.csv` là **giờ kết thúc** (xem mục 1): 48.048 dòng = 286 tuần × 168 giờ, dòng đầu 2015-01-03 01:00, dòng cuối 2020-06-27 00:00. `config.TIMESTAMP_SHIFT_HOURS = -1` đưa về giờ bắt đầu; không lùi thì `split_weeks` báo `AssertionError` (train còn 35.111 giờ thay vì 35.112).
+
+**Bài toán phụ "giờ cao điểm" và rò rỉ**
+- Ngưỡng chỉ tìm từ các giờ của **train** (35.112 giờ → phân vị 90% = **1.450,75 MWh**); sau đó áp dụng một ngưỡng đó để gán nhãn +1/−1 cho mọi giờ (train, val, test). Tính ngưỡng trên cả ba phần là rò rỉ (đề mục 3.1d): ngưỡng sẽ thành 1.460,91 và nhãn của giờ trong quá khứ đổi theo số liệu tương lai.
+- Tỷ lệ giờ cao điểm theo ngưỡng của train: train 10,0%; val 17,5%; test_a 17,3%; **test_b 0,0%**. Nghĩa là bài phân loại cao điểm trên test_b không có nhãn +1 nào để chấm; báo cáo phải nêu rõ, không được bỏ qua. Nguyên nhân: tải điện tăng theo năm (val, test_a cao hơn train) và giai đoạn phong tỏa (test_b) thấp hơn ngưỡng.
+- Quy tắc chung: mọi thứ "học từ dữ liệu" (ngưỡng, trung vị tham chiếu, chuẩn hóa, trọng số, siêu tham số) chỉ học từ train hoặc chọn bằng val; test chỉ chấm một lần.
+
+**Giờ phụ tải thấp bất thường (< 50% trung vị train = 1.156,71 MWh): 8 giờ**
+- 24/01/2015 16:00 (509,84; 44%); 27/06/2017 11:00 (380,59; 33%); 01/07/2017 13:00 (560,70; 48%) — đều trong train.
+- 20/01/2019 11:00 đến 15:00, năm giờ liền (85,19; 135,76; 263,62; 417,45; 475,80; từ 7% đến 41%) — trong val.
+- Không giờ nào nằm trong test. **UNKNOWN:** nguyên nhân (chưa tra). **Đề xuất, chưa chốt:** giữ nguyên dữ liệu, báo MAPE trên val cả khi có và không có năm giờ ngày 20/01/2019 (MAPE chia cho giá trị thật nên rất nhạy với giờ này).
+
+**Giới hạn của dữ liệu (nêu trong báo cáo)**
+- Số mẫu độc lập là số tuần (209 train, 26 val, 37 + 14 test), không phải 48.048 giờ vì các giờ liền nhau tương quan; test_b chỉ 14 tuần nên kết quả dao động mạnh, khoảng tin cậy bootstrap sẽ rộng.
+
+**Kỹ thuật**
+- pandas đã ghim 3.1.1: dùng `day_of_week`, không dùng `dayofweek` (đã deprecated, sinh `Pandas4Warning`).
+- Console Windows (cp1252) lỗi khi in tiếng Việt: chạy với `PYTHONUTF8=1` (script `run_all.py` đã tự đặt UTF-8).

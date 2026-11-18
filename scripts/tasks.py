@@ -30,7 +30,7 @@ OWNED = {
             "run_all.py", "docs/", "tasks/", ".github/", ".claude/", "prompts/", "scripts/",
             "TEAM.md", "AGENTS.md"],
     "huan": ["src/optim_linear.py", "src/hand_calc_huan.py", "src/cnd_compare.py", "notebooks/huan_*",
-             "docs/DATA_DICTIONARY.md"],
+             "docs/DATA_DICTIONARY.md", "docs/BAOCAO_DAN_Y.md"],
     "viet": ["src/perceptron.py", "src/features.py", "src/hand_calc_viet.py", "notebooks/viet_*"],
 }
 # Ai cũng được ({owner} thay bằng tên người làm).
