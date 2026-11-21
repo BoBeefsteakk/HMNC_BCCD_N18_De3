@@ -4,7 +4,7 @@ title: Từ điển dữ liệu
 phase: P1
 checklist: B1.2
 owner: huan
-status: review
+status: done
 due: 21/11/2026
 files: docs/DATA_DICTIONARY.md,docs/trace_huan.md
 depends: -
