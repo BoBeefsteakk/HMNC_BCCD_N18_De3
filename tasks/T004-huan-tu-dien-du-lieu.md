@@ -4,7 +4,7 @@ title: Từ điển dữ liệu
 phase: P1
 checklist: B1.2
 owner: huan
-status: todo
+status: review
 due: 21/11/2026
 files: docs/DATA_DICTIONARY.md,docs/trace_huan.md
 depends: -
@@ -37,10 +37,16 @@ Từ điển dữ liệu đủ mọi cột trong `src/config.py`: tên, ý nghĩ
 
 
 ## Tôi giải thích được
-- ☐ Tôi tự giải thích được từng dòng mã và từng con số trong task này (người làm tự tick).
+- [x] Tôi tự giải thích được từng dòng mã và từng con số trong task này (người làm tự tick).
 
 ## Kết quả (người làm điền)
-(Đã làm gì, lệnh đã chạy, kết quả test/số liệu, chỗ còn dở hoặc không chắc.)
+- Đã khảo sát và lập từ điển dữ liệu đầy đủ cho 17 biến trong `continuous.csv` (phụ tải nat_demand, 12 biến thời tiết ở 3 trạm Tocumen, Santiago, David, và 3 biến lịch) cùng 2 biến trong tệp dự báo `forecast_cnd.csv`.
+- Mỗi biến đều có đủ 5 tiêu chí bắt buộc: tên cột, ý nghĩa nghiệp vụ/vật lý, đơn vị đo, kiểu dữ liệu, thang đo đo lường, kèm nguồn trích dẫn từ `columns_metadata.pdf` (trang 1 và 2) và quan sát trực tiếp dữ liệu thật.
+- Bổ sung bảng tra cứu chi tiết 22 ngày lễ cho mã `Holiday_ID` (1..22) theo tài liệu của tác giả.
+- Bổ sung bảng thống kê mô tả định lượng (min, mean, std, max, null count) tính từ toàn bộ 48.048 dòng dữ liệu `continuous.csv` và 40.152 dòng `forecast_cnd.csv`.
+- Nêu rõ phát hiện kỹ thuật quan trọng về biến `QV2M` (Specific Humidity kg/kg thay vì Relative Humidity % như tác giả ghi nhầm tên trong PDF) và phát hiện 72 giờ phụ tải 0.0 MWh trong dữ liệu CND.
+- Khởi tạo bảng truy vết `docs/trace_huan.md` cho Bảng 1.1.
+- Chạy `pytest` đạt 92 passed, 0 failed; `scripts/tasks.py check` đạt 10 task, 0 lỗi; `scripts/ai_log.py check` đạt 17 dòng hợp lệ.
 
 ## Ghi chú AI đã dùng
-Nếu dùng AI (kể cả hỏi khái niệm): thêm MỘT dòng vào `docs/ai_usage_log.md` (ngày | công cụ | việc | tệp/phần báo cáo | người). Không dùng AI thì ghi "không".
+Đã thêm 1 dòng vào `docs/ai_usage_log.md` (loại D: đối chiếu số liệu và trích xuất siêu dữ liệu).
