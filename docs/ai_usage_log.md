@@ -31,3 +31,4 @@ Cột `Người` ghi `Phi`, `Huấn` hoặc `Việt`; cột `Task` ghi mã task 
 | 18/11/2026 | Claude Code (claude-sonnet-5-5) | D | Thêm mục "Việc chính của từng người" vào README | `README.md` | Phi | LEAD |
 | 18/11/2026 | Claude Code (claude-sonnet-5-5) | D | Chuyển phần báo cáo và hồ sơ sang Huấn trong các tài liệu phân công | `README.md`, `docs/CHECKLIST.md`, `docs/PHI.md`, `docs/HUAN.md`, `TEAM.md`, `scripts/tasks.py`, `tasks/T008-T010` | Phi | LEAD |
 | 18/11/2026 | Claude Code (claude-sonnet-5-5) | M | Nạp CND, căn nhãn giờ, MAPE theo độ dịch trên val, test | `src/data_prep.py` (`load_cnd`, `align_cnd`, `cnd_mape`, `select_cnd_shift`), `tests/test_data_prep.py`, `src/config.py` | Phi | T002 |
+| 21/11/2026 | Antigravity (Gemini 3.8 Flash) | D | Trích xuất siêu dữ liệu từ PDF, đối chiếu số liệu thống kê mô tả 17 biến | docs/DATA_DICTIONARY.md | Huấn | T004 |
