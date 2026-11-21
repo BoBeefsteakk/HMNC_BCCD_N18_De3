@@ -44,7 +44,7 @@ Từ điển dữ liệu đủ mọi cột trong `src/config.py`: tên, ý nghĩ
 - Mỗi biến đều có đủ 5 tiêu chí bắt buộc: tên cột, ý nghĩa nghiệp vụ/vật lý, đơn vị đo, kiểu dữ liệu, thang đo đo lường, kèm nguồn trích dẫn từ `columns_metadata.pdf` (trang 1 và 2) và quan sát trực tiếp dữ liệu thật.
 - Bổ sung bảng tra cứu chi tiết 22 ngày lễ cho mã `Holiday_ID` (1..22) theo tài liệu của tác giả.
 - Bổ sung bảng thống kê mô tả định lượng (min, mean, std, max, null count) tính từ toàn bộ 48.048 dòng dữ liệu `continuous.csv` và 40.152 dòng `forecast_cnd.csv`.
-- Nêu rõ phát hiện kỹ thuật quan trọng về biến `QV2M` (Specific Humidity kg/kg thay vì Relative Humidity % như tác giả ghi nhầm tên trong PDF) và phát hiện 72 giờ phụ tải 0.0 MWh trong dữ liệu CND.
+- Phân tích dải số thực nghiệm biến `QV2M` (gắn nhãn suy luận nhóm từ thực nghiệm dải 0,010–0,023) và khảo sát chi tiết 72 giờ CND bằng 0 (chia làm 2 đoạn 24 giờ và 48 giờ đều trong tập train năm 2016, val/test bằng 0 nên không ảnh hưởng R2); 8 giờ phụ tải thấp bất thường (ghi nhận hiện tượng, nguyên nhân UNKNOWN).
 - Khởi tạo bảng truy vết `docs/trace_huan.md` cho Bảng 1.1.
 - Chạy `pytest` đạt 92 passed, 0 failed; `scripts/tasks.py check` đạt 10 task, 0 lỗi; `scripts/ai_log.py check` đạt 17 dòng hợp lệ.
 
