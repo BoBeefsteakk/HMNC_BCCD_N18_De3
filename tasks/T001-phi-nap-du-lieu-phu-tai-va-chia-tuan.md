@@ -37,7 +37,7 @@ Nạp `data/raw/continuous.csv` (parse datetime, kiểm thiếu/trùng giờ); `
 
 
 ## Tôi giải thích được
-- ☐ Tôi tự giải thích được từng dòng mã và từng con số trong task này (người làm tự tick).
+- ☑ Tôi tự giải thích được từng dòng mã và từng con số trong task này (người làm tự tick).
 
 ## Kết quả (người làm điền)
 - Đã làm (18/11/2026): `src/data_prep.py` (`parse_raw`, `load_raw`, `week_starts`, `split_weeks`, `peak_threshold`, `peak_label`, `low_load_hours`, `split_of`, `run`), `tests/test_data_prep.py` (16 test, 2 test dữ liệu thật tự SKIP khi thiếu tệp), thêm `TIMESTAMP_SHIFT_HOURS` và `LOW_LOAD_FRACTION` vào `src/config.py`.

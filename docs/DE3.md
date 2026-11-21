@@ -193,7 +193,7 @@ Không nộp kèm dữ liệu gốc dung lượng lớn; chỉ nộp script tả
 | 1 | T0 + 1 tuần | 11/11/2026 | Đăng ký nhóm: danh sách thành viên, nhóm trưởng, đề chọn |
 | 2 | T0 + 3 tuần | 30/11/2026 | Nộp báo cáo tiến độ 2–3 trang: kết quả EDA, cách chia dữ liệu, kết quả GD và perceptron ban đầu, kế hoạch phần còn lại. Không chấm điểm, giảng viên góp ý; không nộp bị trừ 0,5 điểm Phần I |
 | 3 | T0 + 6 tuần | 25/12/2026 | Nộp hồ sơ cuối theo mục 2.2 |
-| 4 | Theo lịch thi | 30/12/2026 | Trình bày và vấn đáp; mọi thành viên phải có mặt |
+| 4 | Theo lịch thi (lịch chính thức, Phi xác nhận 20/11/2026) | 30/12/2026 | Trình bày và vấn đáp; mọi thành viên phải có mặt |
 
 ### 6.1–6.3. Bảo vệ và công thức điểm
 - 6.1 Điều kiện chấm: đăng ký đúng hạn, đúng đề và bộ dữ liệu; hồ sơ đủ mục 2.2; không sao chép (vi phạm: 0 điểm bài thi và xử lý theo quy chế); sinh viên có mặt (vắng không lý do: 0 điểm bài thi).
