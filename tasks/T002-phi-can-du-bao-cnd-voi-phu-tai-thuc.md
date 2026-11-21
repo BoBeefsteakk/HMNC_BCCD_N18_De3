@@ -4,7 +4,7 @@ title: Căn dự báo CND với phụ tải thực
 phase: P1
 checklist: B1.4,R2
 owner: phi
-status: review
+status: done
 due: 22/11/2026
 files: src/data_prep.py,tests/test_data_prep.py
 depends: T001

@@ -4,7 +4,7 @@ title: Nạp dữ liệu phụ tải và chia tuần
 phase: P1
 checklist: B1.4
 owner: phi
-status: review
+status: done
 due: 20/11/2026
 files: src/data_prep.py,tests/test_data_prep.py
 depends: -
