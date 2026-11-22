@@ -4,7 +4,7 @@ title: Tự cài đặt Fisher score và PCA
 phase: P2
 checklist: B6.1,B6.3
 owner: viet
-status: review
+status: done
 due: 27/11/2026
 files: src/features.py
 depends: -

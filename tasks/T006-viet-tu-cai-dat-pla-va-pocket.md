@@ -4,7 +4,7 @@ title: Tự cài đặt PLA và Pocket
 phase: P2
 checklist: B4.1
 owner: viet
-status: review
+status: done
 due: 25/11/2026
 files: src/perceptron.py
 depends: -
