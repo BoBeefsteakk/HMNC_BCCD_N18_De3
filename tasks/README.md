@@ -23,6 +23,7 @@
 | T003 | huan | todo | 25/11/2026 | B3.1,B3.2 | [Tự cài đặt GD, SGD, mini-batch, momentum và nghiệm đóng ridge](T003-huan-tu-cai-dat-gd-sgd-mini-batch-va-nghiem-d.md) |
 | T006 | viet | todo | 25/11/2026 | B4.1 | [Tự cài đặt PLA và Pocket](T006-viet-tu-cai-dat-pla-va-pocket.md) |
 | T005 | huan | todo | 26/11/2026 | B1.1,B1.3 | [Bài toán nghiệp vụ và EDA](T005-huan-bai-toan-nghiep-vu-va-eda.md) |
+| T011 | viet | todo | 26/11/2026 | B4.3 | [Hình lỗi theo epoch của PLA và Pocket](T011-viet-hinh-loi-theo-epoch-cua-pla-va-pocket.md) |
 | T007 | viet | todo | 27/11/2026 | B6.1,B6.3 | [Tự cài đặt Fisher score và PCA](T007-viet-tu-cai-dat-fisher-score-va-pca.md) |
 | T008 | huan | todo | 27/11/2026 | TĐ | [Báo cáo tiến độ 2–3 trang](T008-huan-bao-cao-tien-do-2-3-trang.md) |
 

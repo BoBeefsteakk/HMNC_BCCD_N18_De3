@@ -80,6 +80,7 @@ BASELINE_LAG_HOURS = 336  # mô hình cơ sở: phụ tải cùng giờ cách đ
 
 # --- Quyết định của nhóm (docs/decisions/, 17/11/2026) ---------------------------------------------
 N_RUN_SEEDS = 5  # B4.3 (>= 5 hạt giống): SEED, SEED+1, ..., SEED+4 (xem get_run_seeds)
+PERCEPTRON_MAX_EPOCHS = 50  # B4.3: số epoch tối đa của PLA/Pocket trong thí nghiệm (như slide Chương 2, hình 50 epoch)
 BOOTSTRAP_ITERS = 2000  # B9.1 (>= 1.000 lần); lấy lại mẫu THEO TUẦN vì các giờ liền nhau tương quan
 BOOTSTRAP_CI = 0.95  # khoảng tin cậy kiểu phân vị (2,5% và 97,5%)
 TREF_QUANTILES = (0.10, 0.25, 0.50, 0.75, 0.90)  # lưới Tref cho CDH: phân vị của T trung bình 3 thành phố trên TRAIN
