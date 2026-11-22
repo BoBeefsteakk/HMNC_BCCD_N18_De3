@@ -34,3 +34,6 @@ Cột `Người` ghi `Phi`, `Huấn` hoặc `Việt`; cột `Task` ghi mã task 
 | 21/11/2026 | Antigravity (Gemini 3.8 Flash) | D | Trích xuất siêu dữ liệu từ PDF, đối chiếu số liệu thống kê mô tả 17 biến | docs/DATA_DICTIONARY.md | Huấn | T004 |
 | 22/11/2026 | Claude Code (claude-opus-5-5) | M | Viết PLA, Pocket, đếm lỗi; chạy thử trên dữ liệu tổng hợp | `src/perceptron.py` (`count_errors`, `pla`, `pocket`, `_check_inputs`, `_epoch_order`) | Việt | T006 |
 | 22/11/2026 | Claude Code (claude-opus-5-5) | D | Hỏi kiểm hiểu `pla` (3 câu + sửa nhỏ), ôn vấn đáp B4.1 | `tasks/T006-viet-tu-cai-dat-pla-va-pocket.md` | Việt | T006 |
+| 22/11/2026 | Claude Code (claude-opus-5-5) | M | Viết PCA và tiêu chí Fisher, test tính tay được trên dữ liệu tổng hợp | `src/features.py` (`pca`, `fisher_score`), `tests/test_features_viet.py` | Việt | T007 |
+| 22/11/2026 | Claude Code (claude-opus-5-5) | D | Soạn câu hỏi ôn kiểm hiểu `pocket`, `count_errors`, `pca`, `fisher_score` (tài liệu ôn cá nhân, không nộp) | B4.1, B6.1, B6.3 | Việt | T007 |
+| 22/11/2026 | Claude Code (claude-opus-5-5) | M | Thêm test đếm lỗi độc lập cho Pocket (bắt lỗi `count_errors` bỏ sót g = 0) | `tests/test_perceptron_viet.py` | Việt | T006 |
