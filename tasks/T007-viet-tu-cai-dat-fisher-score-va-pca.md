@@ -4,7 +4,7 @@ title: Tự cài đặt Fisher score và PCA
 phase: P2
 checklist: B6.1,B6.3
 owner: viet
-status: doing
+status: review
 due: 27/11/2026
 files: src/features.py
 depends: -
@@ -50,7 +50,8 @@ Tự cài đặt `fisher_score` và `pca` (trị riêng ma trận hiệp phươn
 - Lệnh: `python -m pytest -q tests/test_features_viet.py tests/test_interfaces.py -k "b6 or features_viet"` → 7 passed, 1 skipped (LDA, ngoài T007); `python -m pytest -q` → 98 passed, 10 skipped, 0 đỏ (22/11/2026).
 - Chạy thử trên train thật (22/11/2026; không ghi file kết quả): `fisher_score` chạy trên cả 15 cột (thời tiết + lịch), mọi giá trị hữu hạn, cao nhất là ba cột T2M; `pca` trên 12 biến thời tiết z-score theo train, max |Δ trị riêng| với sklearn = 1,3·10⁻¹⁵.
 - Chỗ còn dở: bảng xếp hạng Fisher và biểu đồ PCA cho báo cáo (B6.1, B6.3) để task sau; con số ở trên chỉ để kiểm mã, không đưa vào báo cáo.
-- Tự kiểm hiểu (model hỏi): `pca`, `fisher_score` | chưa qua | 22/11/2026 (chưa hỏi; người làm hẹn ôn rồi trả lời trước khi đặt `review`)
+- Tự kiểm hiểu (model hỏi): `fisher_score` | qua | 22/11/2026 (3 câu: ý nghĩa tử/mẫu, tính tay x = (0, 2 | 4, 6) → J = 8, chỉ tính trên train)
+- Tự kiểm hiểu (model hỏi): `pca` | qua | 22/11/2026 (3 câu: trừ trung bình, chia n thì trị riêng nhân (n−1)/n và véc tơ riêng không đổi, z-score khi khác đơn vị; sửa nhỏ: `/ (n - 1)` → `/ n`, giải thích test đỏ)
 
 ## Ghi chú AI đã dùng
 Có: Claude Code viết `pca`, `fisher_score` và test bổ sung; soạn câu hỏi ôn để tự kiểm hiểu. Đã ghi 2 dòng (M, D) vào `docs/ai_usage_log.md`.

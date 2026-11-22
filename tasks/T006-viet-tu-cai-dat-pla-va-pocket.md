@@ -4,7 +4,7 @@ title: Tự cài đặt PLA và Pocket
 phase: P2
 checklist: B4.1
 owner: viet
-status: doing
+status: review
 due: 25/11/2026
 files: src/perceptron.py
 depends: -
@@ -53,7 +53,8 @@ Tự cài đặt `count_errors`, `pla`, `pocket` theo docstring `src/perceptron.
 - Chạy thử trên train thật (22/11/2026; 35 112 giờ, nhãn cao điểm từ `data_prep.peak_label`, 15 cột thời tiết + lịch z-score theo train, 5 epoch, không ghi file kết quả): PLA lỗi theo epoch 5745, 5456, 5268, 5656, 5633 (dao động, không về 0); Pocket 3288, 3288, 3288, 3278, 3272 (không tăng). Mốc đoán toàn −1: 3512 lỗi. Thời gian PLA 0,3 s, Pocket 2,4 s, nên Pocket chạy được trên dữ liệu thật.
 - Chỗ còn dở: chỉ là chạy thử để kiểm mã; số liệu cho báo cáo (≥ 5 hạt giống, có/không z-score, LP khả tách) thuộc B4.2–B4.3, task sau.
 - Tự kiểm hiểu (model hỏi): `pla` | qua | 22/11/2026 (3 câu: điều kiện `<= 0`, bất biến theo η khi w̃(0) = 0, PLA trên dữ liệu không khả tách; sửa nhỏ: đổi `<= 0` thành `< 0` → w kẹt ở 0, errs = n mọi epoch)
-- Tự kiểm hiểu (model hỏi): `pocket`, `count_errors` | chưa qua | 22/11/2026 (chưa hỏi: người làm dừng phần kiểm hiểu, tự khai đã hiểu; cần làm trước khi đặt `review`)
+- Tự kiểm hiểu (model hỏi): `count_errors` | qua | 22/11/2026 (3 câu: g = 0 là sai, w = 0 cho n lỗi, `X @ w` là véc tơ g; sửa nhỏ: `<= 0` → `< 0`, giải thích test đỏ)
+- Tự kiểm hiểu (model hỏi): `pocket` | qua | 22/11/2026 (3 câu: cùng dãy cập nhật như PLA, lỗi trong túi không tăng, tốn thêm O(n·d) mỗi cập nhật)
 
 ## Ghi chú AI đã dùng
 Có: Claude Code viết `count_errors`, `pla`, `pocket` và hỏi kiểm hiểu; đã ghi 2 dòng (M, D) vào `docs/ai_usage_log.md`.
