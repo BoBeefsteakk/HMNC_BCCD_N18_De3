@@ -38,7 +38,7 @@ Tự cài đặt `fisher_score` và `pca` (trị riêng ma trận hiệp phươn
 
 
 ## Tôi giải thích được
-- ☐ Tôi tự giải thích được từng dòng mã và từng con số trong task này (người làm tự tick).
+- ☑ Tôi tự giải thích được từng dòng mã và từng con số trong task này (người làm tự tick).
 
 ## Kết quả (người làm điền)
 - Đã cài `pca` và `fisher_score` trong `src/features.py` (NumPy, float64). `lda_two_class`, `lda_multiclass`, `run` vẫn là stub (ngoài T007).
