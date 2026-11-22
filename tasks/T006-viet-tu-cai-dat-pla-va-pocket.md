@@ -38,7 +38,7 @@ Tự cài đặt `count_errors`, `pla`, `pocket` theo docstring `src/perceptron.
 
 
 ## Tôi giải thích được
-- ☐ Tôi tự giải thích được từng dòng mã và từng con số trong task này (người làm tự tick).
+- ☑ Tôi tự giải thích được từng dòng mã và từng con số trong task này (người làm tự tick).
 
 ## Kết quả (người làm điền)
 - Đã cài `count_errors`, `pla`, `pocket` trong `src/perceptron.py` (NumPy, float64). `check_separable_lp` và `run` vẫn là stub (B4.2–B4.4, ngoài T006).
