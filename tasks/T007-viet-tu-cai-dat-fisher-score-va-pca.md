@@ -48,7 +48,8 @@ Tự cài đặt `fisher_score` và `pca` (trị riêng ma trận hiệp phươn
 - Kiểm trên dữ liệu tổng hợp tính tay được (`tests/test_features_viet.py`): Fisher với x = (1, 2, 3 | 5, 7) → m0 = 2, s0² = 2/3, m1 = 6, s1² = 1, J = 16 / (5/3) = 9,6; PCA hai điểm (0, 0), (2, 2) → trị riêng 4, véc tơ (1, 1)/√2. Thêm kiểm: đổi mã nhãn không đổi J, đặc trưng hằng, dấu PCA, trực chuẩn, tổng tỉ lệ = 1 khi k = d.
 - Đối chứng sklearn (dữ liệu của `test_b6_pca_*`, seed 3): max |Δ trị riêng| = 1,8·10⁻¹⁵, max |Δ tỉ lệ| = 1,1·10⁻¹⁶ (ngưỡng 10⁻⁶).
 - Lệnh: `python -m pytest -q tests/test_features_viet.py tests/test_interfaces.py -k "b6 or features_viet"` → 7 passed, 1 skipped (LDA, ngoài T007); `python -m pytest -q` → 98 passed, 10 skipped, 0 đỏ (22/11/2026).
-- Chỗ còn dở: chưa chạy trên dữ liệu thật (máy chưa tải `data/raw/`); bảng xếp hạng Fisher và biểu đồ PCA (B6.1, B6.3) để task sau.
+- Chạy thử trên train thật (22/11/2026; không ghi file kết quả): `fisher_score` chạy trên cả 15 cột (thời tiết + lịch), mọi giá trị hữu hạn, cao nhất là ba cột T2M; `pca` trên 12 biến thời tiết z-score theo train, max |Δ trị riêng| với sklearn = 1,3·10⁻¹⁵.
+- Chỗ còn dở: bảng xếp hạng Fisher và biểu đồ PCA cho báo cáo (B6.1, B6.3) để task sau; con số ở trên chỉ để kiểm mã, không đưa vào báo cáo.
 - Tự kiểm hiểu (model hỏi): `pca`, `fisher_score` | chưa qua | 22/11/2026 (chưa hỏi; người làm hẹn ôn rồi trả lời trước khi đặt `review`)
 
 ## Ghi chú AI đã dùng

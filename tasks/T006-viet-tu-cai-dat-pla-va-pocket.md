@@ -50,7 +50,8 @@ Tự cài đặt `count_errors`, `pla`, `pocket` theo docstring `src/perceptron.
 - Lệnh: `python -m pytest -q tests/test_interfaces.py -k b4` → 2 passed (không SKIP); `python -m pytest -q` → 91 passed, 11 skipped, 0 đỏ (22/11/2026).
 - Chạy thử dữ liệu tổng hợp (như `_blobs` trong test, rng seed 0): khả tách (gap 10) PLA về 0 lỗi sau 1 epoch; không khả tách (gap 1, lật 15% nhãn, 120 mẫu, 50 epoch) PLA cuối 59 lỗi, dao động 45–65; Pocket 32 lỗi.
 - Thêm `tests/test_perceptron_viet.py` (22/11/2026): đếm lỗi độc lập với `pc.count_errors`. Lý do: nếu `count_errors` lỡ dùng `< 0` thì Pocket trả w = 0 ("0 lỗi") mà `test_b4_*` vẫn xanh, vì test đó so bằng chính `count_errors`. Test mới bắt được lỗi này (đã thử). `python -m pytest -q` → 100 passed, 10 skipped, 0 đỏ.
-- Chỗ còn dở: Pocket đếm lại lỗi toàn tập sau mỗi cập nhật nên chậm hơn PLA trên dữ liệu thật (~35 nghìn giờ train); chưa chạy trên nhãn cao điểm thật.
+- Chạy thử trên train thật (22/11/2026; 35 112 giờ, nhãn cao điểm từ `data_prep.peak_label`, 15 cột thời tiết + lịch z-score theo train, 5 epoch, không ghi file kết quả): PLA lỗi theo epoch 5745, 5456, 5268, 5656, 5633 (dao động, không về 0); Pocket 3288, 3288, 3288, 3278, 3272 (không tăng). Mốc đoán toàn −1: 3512 lỗi. Thời gian PLA 0,3 s, Pocket 2,4 s, nên Pocket chạy được trên dữ liệu thật.
+- Chỗ còn dở: chỉ là chạy thử để kiểm mã; số liệu cho báo cáo (≥ 5 hạt giống, có/không z-score, LP khả tách) thuộc B4.2–B4.3, task sau.
 - Tự kiểm hiểu (model hỏi): `pla` | qua | 22/11/2026 (3 câu: điều kiện `<= 0`, bất biến theo η khi w̃(0) = 0, PLA trên dữ liệu không khả tách; sửa nhỏ: đổi `<= 0` thành `< 0` → w kẹt ở 0, errs = n mọi epoch)
 - Tự kiểm hiểu (model hỏi): `pocket`, `count_errors` | chưa qua | 22/11/2026 (chưa hỏi: người làm dừng phần kiểm hiểu, tự khai đã hiểu; cần làm trước khi đặt `review`)
 
