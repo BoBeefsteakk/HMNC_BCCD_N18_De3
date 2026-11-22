@@ -43,6 +43,7 @@ Mục tiêu: ba người, ba AI vẫn cho ra cùng một định nghĩa, cùng m
 - **Tref của CDH (R3, B6.2):** không giả định đơn vị hay giá trị cố định. Lưới Tref = các phân vị `TREF_QUANTILES` của nhiệt độ trung bình ba thành phố **trên train**; chọn Tref bằng MAPE trên tập **kiểm định**.
 - **Trễ và cửa sổ trượt (B6.2):** `FEATURE_LAGS_HOURS` = (336, 504, 672). Trung bình và độ lệch chuẩn trượt tính trên ba trễ này (cùng giờ trong tuần của tuần 2, 3, 4 trước), nên mọi trễ đều ≥ 240 giờ.
 - **Nhãn B7.2:** {0, 1} như B7.1 (BCE cần nhãn {0, 1}).
+- **Tiêu chí Fisher (B6.1, B7; chốt 22/11/2026):** J = (μ₁ − μ₀)² / (σ₁² + σ₀²) với σ² là phương sai từng lớp **chia n_c** (không phải n_c − 1), đúng slide Chương 4 mục 4.1 (slide 12; code slide 18: `x1.var() + x0.var()`). `features.fisher_score` theo đúng dạng này. Không đổi dạng giữa chừng vì J xếp hạng đặc trưng và quyết định 2 đặc trưng dùng ở B7.
 - **Tuần khởi động (18/11/2026):** trễ xa nhất là 672 giờ nên `config.WARMUP_WEEKS` = 4 tuần đầu của train chỉ làm lịch sử, KHÔNG dùng để huấn luyện (`data_prep.drop_warmup`). Train huấn luyện còn 205 tuần; val và test không bị ảnh hưởng; cách chia 209/26/37/14 giữ nguyên. Không điền khuyết. Báo cáo ghi rõ một dòng.
 
 ## 8. Ghi chú từ T001 (18/11/2026; số liệu chạy trên dữ liệu thật bằng `src/data_prep.py`)
