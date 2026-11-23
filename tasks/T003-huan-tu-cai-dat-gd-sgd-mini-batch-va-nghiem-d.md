@@ -4,7 +4,7 @@ title: Tự cài đặt GD, SGD, mini-batch, momentum và nghiệm đóng ridge
 phase: P2
 checklist: B3.1,B3.2
 owner: huan
-status: review
+status: done
 due: 25/11/2026
 files: src/optim_linear.py
 depends: -
