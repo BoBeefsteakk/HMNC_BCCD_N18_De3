@@ -37,3 +37,5 @@ Cột `Người` ghi `Phi`, `Huấn` hoặc `Việt`; cột `Task` ghi mã task 
 | 22/11/2026 | Claude Code (claude-opus-5-5) | M | Viết PCA và tiêu chí Fisher, test tính tay được trên dữ liệu tổng hợp | `src/features.py` (`pca`, `fisher_score`), `tests/test_features_viet.py` | Việt | T007 |
 | 22/11/2026 | Claude Code (claude-opus-5-5) | D | Soạn câu hỏi ôn kiểm hiểu `pocket`, `count_errors`, `pca`, `fisher_score` (tài liệu ôn cá nhân, không nộp) | B4.1, B6.1, B6.3 | Việt | T007 |
 | 22/11/2026 | Claude Code (claude-opus-5-5) | M | Thêm test đếm lỗi độc lập cho Pocket (bắt lỗi `count_errors` bỏ sót g = 0) | `tests/test_perceptron_viet.py` | Việt | T006 |
+| 23/11/2026 | Antigravity (Gemini 3.8 Flash) | M | Cài đặt các hàm tối ưu tuyến tính, L2 loss, gradient và nghiệm đóng | `src/optim_linear.py` (`mse_l2_loss`, `mse_l2_grad`, `ridge_closed_form`, `finite_diff_check`, `gd`, `sgd`, `minibatch_gd`, `momentum_gd`), `tests/test_optim_linear_huan.py` | Huấn | T003 |
+| 23/11/2026 | Antigravity (Gemini 3.8 Flash) | D | Hỏi kiểm hiểu gd, momentum, loss/grad (3 câu + sửa nhỏ), đối chiếu nghiệm giải tích | `tasks/T003-huan-tu-cai-dat-gd-sgd-mini-batch-va-nghiem-d.md` | Huấn | T003 |
