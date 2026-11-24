@@ -92,5 +92,133 @@ def check_separable_lp(X, y):
 
 
 def run(seed: int, final: bool = False) -> None:
-    """Thí nghiệm B4.2–B4.4: khả tách (LP), lỗi theo epoch, >= 5 hạt giống, vùng quyết định 2 đặc trưng."""
-    raise NotImplementedError("B4: perceptron")
+    """Thí nghiệm B4: hiện có phần lỗi theo epoch của B4.3 (T011). Khả tách bằng LP (B4.2) và vùng quyết định (B4.4) chưa làm.
+
+    Dữ liệu: chỉ train, bỏ tuần khởi động; nhãn ±1 "giờ cao điểm" (ngưỡng từ train); 12 biến thời tiết.
+    Không đọc val/test nên `final` không đổi gì. `seed` không dùng: thí nghiệm lặp lấy hạt giống từ config.get_run_seeds().
+    """
+    from . import config, data_prep
+
+    raw_path = data_prep.RAW_CONTINUOUS
+    if not raw_path.exists():
+        print("B4: chưa có tệp dữ liệu, bỏ qua thí nghiệm lỗi theo epoch.")
+        return
+
+    train = data_prep.split_weeks(data_prep.load_raw(raw_path))["train"]
+    # Ngưỡng cao điểm tính trên cả 209 tuần train (như data_prep.run in ra), rồi mới bỏ tuần khởi động khi học.
+    y_all = data_prep.peak_label(train[config.TARGET_COL].to_numpy(), np.ones(len(train), dtype=bool))
+    learn = (train["week_idx"] >= config.WARMUP_WEEKS).to_numpy()
+    X = train.loc[learn, config.WEATHER_COLS].to_numpy(dtype=np.float64)
+    y = y_all[learn]
+
+    seeds = config.get_run_seeds()
+    max_epochs = config.PERCEPTRON_MAX_EPOCHS
+    print(f"B4.3: train {len(y)} giờ, {int(np.sum(y == 1))} giờ cao điểm (+1); {X.shape[1]} biến thời tiết; "
+          f"tối đa {max_epochs} epoch; hạt giống khi xáo: {seeds}")
+    runs = epoch_error_runs(X, y, seeds, max_epochs)
+
+    config.TABLE_DIR.mkdir(parents=True, exist_ok=True)
+    config.FIG_DIR.mkdir(parents=True, exist_ok=True)
+    table = epoch_error_table(runs, len(y))
+    table_path = config.TABLE_DIR / "4_1_pla_pocket_epoch_error.csv"
+    fig_path = config.FIG_DIR / "4_1_pla_pocket_epoch_error.png"
+    table.to_csv(table_path, index=False, float_format="%.2f")
+    plot_epoch_errors(runs, len(y), fig_path)
+    print(table.to_string(index=False))
+    print(f"đã ghi {table_path.relative_to(config.ROOT)} và {fig_path.relative_to(config.ROOT)}")
+
+
+# --- B4.3 (T011): lỗi theo epoch ---------------------------------------------------------------------
+DATA_VARIANTS = ("goc", "zscore")  # dữ liệu gốc / z-score khớp trên train
+ORDERS = ("co_dinh", "xao")  # duyệt 0..n-1 mỗi epoch / hoán vị mới mỗi epoch
+_LABELS = {"goc": "Dữ liệu gốc", "zscore": "Z-score (thống kê của train)", "co_dinh": "duyệt cố định", "xao": "xáo mỗi epoch"}
+
+
+def _zscore_fit(X):
+    """Trung bình và độ lệch chuẩn (chia n) theo cột của X; cột hằng thì lấy std = 1 để khỏi chia cho 0."""
+    mean = X.mean(axis=0)
+    std = X.std(axis=0)
+    std[std == 0.0] = 1.0
+    return mean, std
+
+
+def _pad_last(curve, length):
+    """PLA/Pocket dừng sớm khi đạt 0 lỗi; kéo dài bằng giá trị cuối để các lần chạy cùng độ dài khi lấy trung bình."""
+    curve = np.asarray(curve)
+    return np.r_[curve, np.full(length - len(curve), curve[-1])]
+
+
+def epoch_error_runs(X, y, seeds, max_epochs):
+    """Chạy PLA và Pocket cho 4 cấu hình: {dữ liệu gốc, z-score} x {duyệt cố định, xáo mỗi epoch}.
+
+    X: đặc trưng CHƯA mở rộng của tập học; z-score khớp trên chính X này (chỉ truyền train vào).
+    Duyệt cố định không dùng hạt giống nên chạy một lần; xáo thì chạy một lần cho mỗi hạt giống trong `seeds`.
+    Trả về {(du_lieu, thu_tu): {"pla": mảng (số lần chạy, max_epochs), "pocket": như trên, "pla_epochs": số epoch PLA đã chạy}}.
+    """
+    X = np.asarray(X, dtype=np.float64)
+    mean, std = _zscore_fit(X)
+    inputs = {"goc": X, "zscore": (X - mean) / std}
+    runs = {}
+    for variant in DATA_VARIANTS:
+        Xa = np.c_[inputs[variant], np.ones(len(X))]  # x̃ = (x, 1), hệ số tự do ở cuối
+        for order in ORDERS:
+            shuffle = order == "xao"
+            pla_rows, pocket_rows, pla_epochs = [], [], []
+            for s in (seeds if shuffle else seeds[:1]):
+                _, e_pla = pla(Xa, y, max_epochs=max_epochs, shuffle=shuffle, seed=s)
+                _, e_pocket = pocket(Xa, y, max_epochs=max_epochs, shuffle=shuffle, seed=s)
+                pla_epochs.append(len(e_pla))
+                pla_rows.append(_pad_last(e_pla, max_epochs))
+                pocket_rows.append(_pad_last(e_pocket, max_epochs))
+            runs[(variant, order)] = {"pla": np.array(pla_rows), "pocket": np.array(pocket_rows),
+                                      "pla_epochs": np.array(pla_epochs)}
+    return runs
+
+
+def epoch_error_table(runs, n):
+    """Bảng 4.1: mỗi cấu hình một dòng, số lỗi cuối (epoch cuối) của PLA và Pocket, trung bình ± độ lệch chuẩn (chia số lần chạy)."""
+    import pandas as pd
+
+    rows = []
+    for (variant, order), r in runs.items():
+        pla_last, pocket_last = r["pla"][:, -1], r["pocket"][:, -1]
+        rows.append({
+            "du_lieu": variant,
+            "thu_tu": order,
+            "so_lan_chay": len(pla_last),
+            "n_mau": n,
+            "pla_loi_cuoi_tb": pla_last.mean(),
+            "pla_loi_cuoi_dlc": pla_last.std(),
+            "pocket_loi_cuoi_tb": pocket_last.mean(),
+            "pocket_loi_cuoi_dlc": pocket_last.std(),
+            "pocket_ti_le_loi_tb_pct": 100.0 * pocket_last.mean() / n,
+            "pla_so_lan_ve_0_loi": int(np.sum(pla_last == 0)),
+            "pla_so_epoch_da_chay_tb": r["pla_epochs"].mean(),
+        })
+    return pd.DataFrame(rows)
+
+
+def plot_epoch_errors(runs, n, path):
+    """Hình 4.1: số lỗi theo epoch, mỗi kiểu dữ liệu một ô; khi xáo vẽ trung bình và dải ±1 độ lệch chuẩn qua hạt giống."""
+    from matplotlib.figure import Figure  # không qua pyplot nên không phụ thuộc backend màn hình
+
+    fig = Figure(figsize=(11, 4.2), layout="constrained")
+    axes = fig.subplots(1, len(DATA_VARIANTS), sharey=True)
+    colors = {"pla": "tab:red", "pocket": "tab:blue"}
+    for ax, variant in zip(axes, DATA_VARIANTS):
+        for algo in ("pla", "pocket"):
+            for order in ORDERS:
+                curves = runs[(variant, order)][algo]
+                epochs = np.arange(1, curves.shape[1] + 1)
+                mean, sd = curves.mean(axis=0), curves.std(axis=0)
+                label = f"{algo.upper() if algo == 'pla' else 'Pocket'}, {_LABELS[order]}"
+                if order == "xao":
+                    label += f" (TB ± 1 ĐLC, {curves.shape[0]} hạt giống)"
+                    ax.fill_between(epochs, mean - sd, mean + sd, color=colors[algo], alpha=0.2, linewidth=0)
+                ax.plot(epochs, mean, color=colors[algo], linestyle="-" if order == "xao" else "--", label=label)
+        ax.set_title(_LABELS[variant])
+        ax.set_xlabel("Epoch (một lượt duyệt hết train)")
+        ax.grid(alpha=0.3)
+    axes[0].set_ylabel(f"Số lỗi trên train (giờ phân loại sai, n = {n})")
+    axes[-1].legend(fontsize=8, loc="upper right")
+    fig.savefig(path, dpi=120)

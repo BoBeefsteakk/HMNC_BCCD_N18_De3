@@ -4,7 +4,7 @@ title: Hình lỗi theo epoch của PLA và Pocket
 phase: P2
 checklist: B4.3
 owner: viet
-status: todo
+status: review
 due: 26/11/2026
 files: src/perceptron.py,tests/test_perceptron_viet.py
 depends: T006
@@ -37,11 +37,36 @@ Chạy `pla` và `pocket` (T006, đã có) trên bài toán phụ "giờ cao đi
 - `python -m pytest` không có test đỏ.
 
 ## Tôi giải thích được
-- ☐ Tôi tự giải thích được từng dòng mã và từng con số trong task này (người làm tự tick).
+- ☑ Tôi tự giải thích được từng dòng mã và từng con số trong task này (người làm tự tick).
 
 ## Kết quả (người làm điền)
-(Đã làm gì, lệnh đã chạy, kết quả test/số liệu, chỗ còn dở hoặc không chắc.)
-Tự kiểm hiểu (model hỏi): (mỗi hàm AI viết một dòng: `<hàm> | qua | <ngày>`; không có hàm AI viết thì ghi "không có")
+**Đã làm (24/11/2026).** Trong `src/perceptron.py`: `run` (phần lỗi theo epoch) và các hàm phụ `epoch_error_runs`, `epoch_error_table`, `plot_epoch_errors`, `_zscore_fit`, `_pad_last`. Không đổi `pla`, `pocket`, `count_errors` của T006.
+- Dữ liệu: train, bỏ `WARMUP_WEEKS` tuần đầu (cùng điều kiện `week_idx >= WARMUP_WEEKS` như `drop_warmup`) → n = 34.440 giờ, 3.507 giờ nhãn +1; 12 biến `WEATHER_COLS`; x̃ = (x, 1). Không đọc val/test.
+- Nhãn: `peak_label` với ngưỡng tính trên **cả 209 tuần train** (giống ngưỡng `data_prep.run` in ra), sau đó mới bỏ tuần khởi động. UNKNOWN: hỏi Phi nên tính ngưỡng trên 209 tuần hay 205 tuần sau `drop_warmup`.
+- Z-score: trung bình và độ lệch chuẩn (chia n) tính trên chính 34.440 giờ này.
+- 4 cấu hình: {gốc, z-score} × {duyệt cố định, xáo mỗi epoch}. Khi xáo, chạy 5 hạt giống `config.get_run_seeds()` = 2044..2048. Duyệt cố định không dùng hạt giống nên chỉ chạy 1 lần (ĐLC = 0). `max_epochs = config.PERCEPTRON_MAX_EPOCHS` = 50. ĐLC qua các lần chạy chia số lần chạy (ddof = 0). UNKNOWN: hỏi Phi nếu báo cáo cần ddof = 1.
+- Lệnh: `python run_all.py --only perceptron` (≈ 480 s, chủ yếu do Pocket đếm lại lỗi trên toàn tập sau mỗi lần cập nhật).
+- Đầu ra: `results/figures/4_1_pla_pocket_epoch_error.png`, `results/tables/4_1_pla_pocket_epoch_error.csv`; truy vết ở `docs/trace_viet.md`.
+
+**Số liệu** (từ `results/tables/4_1_pla_pocket_epoch_error.csv`, số lỗi ở epoch 50 trên n = 34.440):
+
+| Dữ liệu | Thứ tự | Số lần chạy | PLA (TB ± ĐLC) | Pocket (TB ± ĐLC) | Pocket (% lỗi) |
+|---|---|---|---|---|---|
+| gốc | cố định | 1 | 4105 ± 0 | 3506 ± 0 | 10,18 |
+| gốc | xáo | 5 | 5742,4 ± 2255,82 | 3500,2 ± 2,71 | 10,16 |
+| z-score | cố định | 1 | 5776 ± 0 | 3341 ± 0 | 9,70 |
+| z-score | xáo | 5 | 4492,4 ± 1022,44 | 3248,2 ± 5,98 | 9,43 |
+
+- PLA **hết 50 epoch** ở cả 12 lần chạy (`pla_so_lan_ve_0_loi` = 0) và số lỗi dao động mạnh giữa các epoch; Pocket không tăng và chững lại sau vài epoch.
+- Nhận xét để Phi/Huấn cân nhắc: luôn đoán −1 thì sai đúng 3.507 giờ, nên Pocket trên dữ liệu gốc (3.506; 3.500,2) gần như không hơn cách đoán đó. Z-score giúp Pocket giảm còn khoảng 3.250–3.340 lỗi.
+- Khả tách: **UNKNOWN**. PLA không về 0 lỗi sau 50 epoch, nhưng 50 epoch chưa chắc "đủ lớn" để kết luận. Kết luận cần bài toán LP (`check_separable_lp`, B4.2, chưa giao).
+- Test: thêm 5 test vào `tests/test_perceptron_viet.py` (z-score, cách nối hạt giống với pla/pocket, kéo dài khi PLA dừng sớm, bảng khớp dữ liệu chạy, ghi PNG). `python -m pytest`: 116 passed, 3 skipped (MLP, `lda_two_class`, không thuộc task này), 0 đỏ.
+
+Tự kiểm hiểu (model hỏi): epoch_error_runs | qua | 24/11/2026
+Tự kiểm hiểu (model hỏi): epoch_error_table | qua | 24/11/2026
+Tự kiểm hiểu (model hỏi): plot_epoch_errors | qua | 24/11/2026
+Tự kiểm hiểu (model hỏi): run | qua | 24/11/2026
+(Đã hỏi 3 câu: duyệt cố định với xáo và ĐLC, `_pad_last`, z-score/rò rỉ và vì sao PLA dao động còn Pocket không tăng. Sửa nhỏ: đổi test còn 2 hạt giống, E = 3, dự đoán shape (2, 3) và (1, 3), chạy pytest xanh, chỉ đúng dòng `np.array(pla_rows)` quyết định mảng 2D, rồi trả test về như cũ.)
 
 ## Ghi chú AI đã dùng
 Nếu dùng AI: ghi vào `docs/ai_usage_log.md` mỗi loại việc một dòng, gộp mọi phiên của task (loại T/G/M/B/D/R, xem đầu file; việc M ghi tên hàm). Không dùng AI thì ghi "không".
