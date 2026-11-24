@@ -6,3 +6,5 @@ Cuối kỳ trưởng nhóm (Phi) sẽ tổng hợp các bảng truy vết cá n
 | Số Hình / Bảng | Tệp kết quả sinh ra | Hàm / Ô notebook sinh ra | Mã Task | Mô tả tóm tắt |
 |---|---|---|---|---|
 | Bảng 1.1 | `docs/DATA_DICTIONARY.md` | Thống kê từ `continuous.csv` & `forecast_cnd.csv` | T004 | Từ điển dữ liệu 17 biến phụ tải, thời tiết, lịch và tệp CND |
+| Hình 4.2 | `results/figures/4_2_gd_momentum_loss.png` | `src/optim_linear.py` (`run` → `plot_gd_momentum_loss`) | T003 | Đường mất mát của GD và Momentum theo số lần cập nhật, cùng điểm khởi tạo và cùng η |
+| Bảng 4.2 | `results/tables/4_2_gd_vs_closed_form.csv` | `src/optim_linear.py` (`run` → `save_gd_vs_closed_form_table`) | T003 | So sánh val loss của nghiệm đóng, GD, Momentum GD và sai số finite-diff |

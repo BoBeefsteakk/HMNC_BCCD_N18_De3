@@ -4,7 +4,7 @@ title: Tự cài đặt GD, SGD, mini-batch, momentum và nghiệm đóng ridge
 phase: P2
 checklist: B3.1,B3.2
 owner: huan
-status: done
+status: review
 due: 25/11/2026
 files: src/optim_linear.py
 depends: -
@@ -55,10 +55,16 @@ Tự cài đặt `mse_l2_loss`, `mse_l2_grad`, `gd`, `ridge_closed_form`, `finit
   - `tests/test_interfaces.py`: cả 4 test `test_b3_*` đều PASSED (không còn SKIP).
   - Sai số tương đối `finite_diff_check`: đạt $1.48 \times 10^{-10}$ trên dữ liệu tổng hợp và $5.02 \times 10^{-8}$ trên dữ liệu thật, đều nhỏ hơn rất nhiều so với ngưỡng yêu cầu $\le 10^{-6}$.
   - Nghiệm của `gd` hội tụ khớp hoàn toàn nghiệm giải tích `ridge_closed_form`: sai số lớn nhất $\max |w_{\text{gd}} - w_{\text{cf}}| = 3.55 \times 10^{-15}$.
-  - Chạy thử trên dữ liệu thật (`continuous.csv`, tập train 35.112 dòng, 12 biến thời tiết chuẩn hóa z-score theo train + bias cột 1 ở cuối, $\lambda = 0.1$):
-    - Nghiệm đóng Ridge val loss: 11166.7159
-    - Batch GD (500 iter, $\eta = 0.05$): val loss 11163.8568
-    - Momentum GD (500 iter, $\eta = 0.05, \beta = 0.85$): val loss 11166.7159
+  - Chạy thử trên dữ liệu thật (`continuous.csv`, tập train sau khi gọi `data_prep.drop_warmup` loại 4 tuần khởi động theo `docs/CONVENTIONS.md` mục 7 còn 205 tuần = 34.440 dòng; 12 biến thời tiết chuẩn hóa z-score theo train + bias cột 1 ở cuối, siêu tham số đọc từ `src/config.py`):
+    - Sai số kiểm tra gradient `finite_diff_check`: đạt $4.74 \times 10^{-8}$ (<= 1e-6 là ĐẠT)
+    - Nghiệm đóng Ridge (`B3_LAMBDA = 0.1`): train loss 9486.6085, val loss 11089.2577
+    - Batch GD (`B3_N_ITER = 500`, `B3_ETA = 0.05`): train loss 9486.6340, val loss 11086.2728
+    - Momentum GD (`B3_N_ITER = 500`, `B3_ETA = 0.05`, `B3_MOMENTUM_BETA = 0.85`): train loss 9486.6085, val loss 11089.2577
+  - Lưu kết quả theo `docs/CONVENTIONS.md` mục 5:
+    - Đã xuất hình `results/figures/4_2_gd_momentum_loss.png` (Hình 4.2): Đồ thị đường mất mát theo số lần cập nhật của GD và Momentum GD (panel thang log toàn bộ 500 bước lặp và panel thang tuyến tính 50 bước đầu).
+    - Đã xuất bảng `results/tables/4_2_gd_vs_closed_form.csv` (Bảng 4.2): So sánh val loss, train loss, tham số và sai số finite-diff giữa nghiệm đóng, GD và Momentum GD.
+    - Đã cập nhật dòng truy vết tương ứng cho Hình 4.2 và Bảng 4.2 trong `docs/trace_huan.md`.
+    - Đã đưa 4 hằng số B3 vào `src/config.py` (`B3_LAMBDA`, `B3_ETA`, `B3_N_ITER`, `B3_MOMENTUM_BETA`).
   - Viết bổ sung `tests/test_optim_linear_huan.py` (4 bài test): kiểm tra độc lập không phạt bias, kiểm tra sai phân hữu hạn đa điểm ngẫu nhiên, momentum với $\beta=0$ khớp GD, SGD và mini-batch giảm loss qua các epoch.
   - Toàn bộ suite `pytest`: **111 passed, 3 skipped, 0 failed**.
 - Tự kiểm hiểu (model hỏi):
