@@ -3,7 +3,7 @@
 Báo cáo chuyên đề học phần **Học máy nâng cao (004295)**, Trường Đại học Điện Lực. Dữ liệu: Panama, 48.048 bản ghi theo giờ
 (03/01/2015 – 27/06/2020), so sánh với dự báo chính thức của CND.
 
-> **Làm việc nhóm: đọc `TEAM.md` trước.** Trạng thái: khung ban đầu. Mã nhóm G = 18, SEED = 2044 (`src/config.py`). Phần lõi trong `src/` còn là stub.
+> **Làm việc nhóm: đọc `TEAM.md` trước.** Trạng thái (24/11/2026): đã cài `data_prep`, `optim_linear` (GD, SGD, mini-batch, momentum, ridge), `perceptron` (`count_errors`, `pla`, `pocket`), `features` (`pca`, `fisher_score`). Còn stub: `mlp`, `lda_two_class`, `lda_multiclass`, `check_separable_lp`, `hand_calc`, `evaluate` và các hàm `run` của B4, B6, B7, B9. Mã nhóm G = 18, SEED = 2044 (`src/config.py`).
 
 ## Môi trường
 Python 3.12 (phát triển trên 3.12.10), thư viện trong `requirements.txt`. Quy ước môi trường đầy đủ: mục "Thống nhất cách làm việc" bên dưới.
@@ -30,7 +30,7 @@ hoặc `curl -L -o <đích> <url>` vào `data/raw/` (tên tệp đích: `continu
 | `continuous dataset.csv` | 10.524.179 | `ef52f68fc8989d02ff2f2565134014eaf9707318a8389d4022cd38d44656fbce` |
 | `weekly pre-dispatch forecast.csv` | 929.119 | `002a40a01b7d7209ae791bb85d7ad2f9c9b5a49754e30e09258e56805b805dac` |
 
-Ngày tải: _điền khi chạy lần đầu_.
+Ngày tải: 18/11/2026 (tạm, lấy theo ngày sửa tệp trong `data/raw`; chưa ghi lúc tải thật).
 
 ## Chạy lại toàn bộ kết quả
 ```bash
