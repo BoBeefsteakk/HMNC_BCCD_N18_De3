@@ -148,6 +148,18 @@ def _pad_last(curve, length):
     return np.r_[curve, np.full(length - len(curve), curve[-1])]
 
 
+def _run_std(a):
+    """ĐLC qua các lần chạy (trục 0), chia n − 1 (Phi chốt 24/11/2026).
+
+    Chỉ một lần chạy (duyệt cố định) thì n − 1 = 0 nên công thức không xác định; cấu hình đó tất định
+    (hạt giống nào cũng ra cùng kết quả) nên trả 0 thay vì NaN.
+    """
+    a = np.asarray(a, dtype=np.float64)
+    if a.shape[0] < 2:
+        return np.zeros(a.shape[1:])
+    return a.std(axis=0, ddof=1)
+
+
 def epoch_error_runs(X, y, seeds, max_epochs):
     """Chạy PLA và Pocket cho 4 cấu hình: {dữ liệu gốc, z-score} x {duyệt cố định, xáo mỗi epoch}.
 
@@ -176,7 +188,7 @@ def epoch_error_runs(X, y, seeds, max_epochs):
 
 
 def epoch_error_table(runs, n):
-    """Bảng 4.1: mỗi cấu hình một dòng, số lỗi cuối (epoch cuối) của PLA và Pocket, trung bình ± độ lệch chuẩn (chia số lần chạy)."""
+    """Bảng 4.1: mỗi cấu hình một dòng, số lỗi cuối (epoch cuối) của PLA và Pocket, trung bình ± độ lệch chuẩn (chia n − 1, xem `_run_std`)."""
     import pandas as pd
 
     rows = []
@@ -188,9 +200,9 @@ def epoch_error_table(runs, n):
             "so_lan_chay": len(pla_last),
             "n_mau": n,
             "pla_loi_cuoi_tb": pla_last.mean(),
-            "pla_loi_cuoi_dlc": pla_last.std(),
+            "pla_loi_cuoi_dlc": float(_run_std(pla_last)),
             "pocket_loi_cuoi_tb": pocket_last.mean(),
-            "pocket_loi_cuoi_dlc": pocket_last.std(),
+            "pocket_loi_cuoi_dlc": float(_run_std(pocket_last)),
             "pocket_ti_le_loi_tb_pct": 100.0 * pocket_last.mean() / n,
             "pla_so_lan_ve_0_loi": int(np.sum(pla_last == 0)),
             "pla_so_epoch_da_chay_tb": r["pla_epochs"].mean(),
@@ -210,7 +222,7 @@ def plot_epoch_errors(runs, n, path):
             for order in ORDERS:
                 curves = runs[(variant, order)][algo]
                 epochs = np.arange(1, curves.shape[1] + 1)
-                mean, sd = curves.mean(axis=0), curves.std(axis=0)
+                mean, sd = curves.mean(axis=0), _run_std(curves)
                 label = f"{algo.upper() if algo == 'pla' else 'Pocket'}, {_LABELS[order]}"
                 if order == "xao":
                     label += f" (TB ± 1 ĐLC, {curves.shape[0]} hạt giống)"

@@ -86,9 +86,15 @@ def test_epoch_error_table_matches_runs():
     row = table[(table["du_lieu"] == "zscore") & (table["thu_tu"] == "xao")].iloc[0]
     last = runs[("zscore", "xao")]["pocket"][:, -1]
     assert row["so_lan_chay"] == 3
-    assert np.isclose(row["pocket_loi_cuoi_tb"], last.mean()) and np.isclose(row["pocket_loi_cuoi_dlc"], last.std())
+    assert np.isclose(row["pocket_loi_cuoi_tb"], last.mean()) and np.isclose(row["pocket_loi_cuoi_dlc"], last.std(ddof=1))
     fixed = table[table["thu_tu"] == "co_dinh"]
     assert (fixed["so_lan_chay"] == 1).all() and (fixed["pla_loi_cuoi_dlc"] == 0).all()
+
+
+def test_run_std_divides_by_n_minus_1_and_single_run_is_zero():
+    a = np.array([[1.0, 4.0], [3.0, 8.0], [5.0, 6.0]])
+    assert np.allclose(pc._run_std(a), [2.0, 2.0])  # chia n - 1 = 2, không phải n = 3
+    assert np.all(pc._run_std(a[:1]) == 0.0)  # một lần chạy (duyệt cố định, tất định): 0, không NaN
 
 
 def test_plot_epoch_errors_writes_png(tmp_path):
