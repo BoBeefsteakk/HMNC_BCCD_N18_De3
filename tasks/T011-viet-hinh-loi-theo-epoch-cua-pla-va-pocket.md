@@ -4,7 +4,7 @@ title: Hình lỗi theo epoch của PLA và Pocket
 phase: P2
 checklist: B4.3
 owner: viet
-status: review
+status: done
 due: 26/11/2026
 files: src/perceptron.py,tests/test_perceptron_viet.py
 depends: T006
