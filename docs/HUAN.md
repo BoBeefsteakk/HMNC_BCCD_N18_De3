@@ -39,7 +39,7 @@ Hạn ở bảng dưới là mốc tham khảo; nếu lệch với `due:` trong 
 |---|---|---|---|
 | 22/11 (P1) | Từ điển dữ liệu đủ 12 biến thời tiết + lịch + `nat_demand`; nháp B1.1 (ai dùng, quyết định gì, chi phí lỗi, vì sao MAPE) | B1.1, B1.2 | T004 |
 | 27/11 | EDA ≥ 4 hình có nhận xét định lượng (cần `data_prep` của Phi); ghi vấn đề dữ liệu và cách xử lý | B1.3 | T005 |
-| 28/11 | `gd`, `sgd`, `minibatch_gd`, `momentum_gd`, kiểm tra gradient; gửi kết quả ban đầu cho Phi để đưa vào báo cáo tiến độ (nộp 30/11) | B3.1, B3.2, B3.4 | T003 |
+| 28/11 | `gd`, `sgd`, `minibatch_gd`, `momentum_gd`, kiểm tra gradient; kết quả ban đầu Huấn tự đưa vào báo cáo tiến độ T008 (nộp 30/11) | B3.1, B3.2, B3.4 | T003 |
 | 07/12 (P3) | Quét η (≥ 4 giá trị theo log), z-score vs không chuẩn hóa; phần lý thuyết GD cho Chương 2 | B3.3, B2.1 | T003 |
 | 10/12 | `hand_calc_huan.py`: B7.1(a) | B7.1(a) | (task do Phi giao) |
 | 18/12 (P4) | `cnd_compare.py`: R2 (cần kết luận căn thời gian CND của Phi, T002) | R2 | (task do Phi giao) |

@@ -40,7 +40,7 @@ Hạn ở bảng dưới là mốc tham khảo; nếu lệch với `due:` trong 
 | Hạn nội bộ | Việc | Mã | Task |
 |---|---|---|---|
 | 22/11 (P1) | Đọc [2, tr. 175–183] và đặt nhãn ±1 cho bài toán "giờ cao điểm" khi Phi xong `peak_label`; thử PLA trên dữ liệu tổng hợp | B4.1 | T006 |
-| 28/11 | `pla`, `pocket`, `count_errors` chạy đúng; lỗi theo epoch ban đầu để Phi đưa vào báo cáo tiến độ (nộp 30/11) | B4.1 | T006 |
+| 28/11 | `pla`, `pocket`, `count_errors` chạy đúng; lỗi theo epoch ban đầu (T011) gửi Huấn để đưa vào báo cáo tiến độ T008 (nộp 30/11) | B4.1 | T006 |
 | 05/12 (P3) | `fisher_score` và bảng xếp hạng đặc trưng gốc; ≥ 5 đặc trưng mới với trễ ≥ 240 giờ | B6.1, B6.2 | T007 |
 | 09/12 | `pca` + đối chiếu sklearn; `check_separable_lp`; thực nghiệm ≥ 5 hạt giống | B6.3, B4.2, B4.3 | T006, T007 |
 | 12/12 | `lda_two_class`, `lda_multiclass`, chọn đặc trưng ≥ 2 họ; R4; suy dẫn B2.2(d); `hand_calc_viet.py` (B7.1(b), B7.3) | B6.4, R4, B2.2, B7 | (task do Phi giao) |
