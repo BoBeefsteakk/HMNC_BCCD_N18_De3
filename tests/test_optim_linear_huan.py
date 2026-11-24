@@ -71,3 +71,24 @@ def test_sgd_and_minibatch_reduce_loss():
 
     _, hist_mb = ol.minibatch_gd(X, y, lam=lam, eta=0.05, n_epochs=30, batch_size=16, seed=2044)
     assert hist_mb[-1] < hist_mb[0]
+
+
+def test_record_per_update_and_updates_to_reach():
+    X, y, _ = _make_data(n=100, d=3, seed=99)
+    lam = 0.01
+    w0 = np.zeros(X.shape[1])
+    _, hist_sgd = ol.sgd(
+        X, y, lam=lam, eta=0.01, n_epochs=1, seed=2044,
+        w0=w0, max_updates=25, record_per_update=True,
+    )
+    assert len(hist_sgd) == 25
+
+    _, hist_mb = ol.minibatch_gd(
+        X, y, lam=lam, eta=0.05, n_epochs=5, batch_size=20, seed=2044,
+        w0=w0, max_updates=25, record_per_update=True,
+    )
+    assert len(hist_mb) == 25
+    assert hist_mb[-1] < hist_mb[0]
+
+    assert ol.updates_to_reach([10.0, 5.0, 2.0, 1.0], 2.5) == 2
+    assert ol.updates_to_reach([10.0, 5.0, 3.0], 1.0) is None
