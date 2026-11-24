@@ -21,6 +21,7 @@ Giao diện:
 """
 from __future__ import annotations
 
+from pathlib import Path
 import numpy as np
 
 from . import config
@@ -235,6 +236,93 @@ def momentum_gd(
     return w, loss_history
 
 
+def plot_gd_momentum_loss(hist_gd: list[float], hist_mom: list[float], path: Path | str) -> None:
+    """Hình 4.2: đường mất mát của GD và Momentum theo số lần cập nhật (B3.2)."""
+    from matplotlib.figure import Figure
+
+    fig = Figure(figsize=(11, 4.5), layout="constrained")
+    axes = fig.subplots(1, 2)
+    iters = np.arange(len(hist_gd))
+
+    eta = config.B3_ETA
+    beta = config.B3_MOMENTUM_BETA
+
+    # Panel trái: toàn bộ quá trình hội tụ (thang log y)
+    axes[0].plot(iters, hist_gd, label=f"GD (η = {eta})", color="tab:blue", linewidth=1.5)
+    axes[0].plot(iters, hist_mom, label=f"Momentum GD (η = {eta}, β = {beta})", color="tab:red", linestyle="--", linewidth=1.5)
+    axes[0].set_yscale("log")
+    axes[0].set_title("Toàn bộ 500 bước lặp (thang log y)")
+    axes[0].set_xlabel("Số lần cập nhật (bước lặp)")
+    axes[0].set_ylabel("Hàm mất mát J(w) (MWh², thang log)")
+    axes[0].grid(True, alpha=0.3, which="both")
+    axes[0].legend()
+
+    # Panel phải: cận cảnh 50 bước lặp đầu tiên (thang tuyến tính)
+    n_zoom = min(50, len(hist_gd))
+    axes[1].plot(iters[:n_zoom], hist_gd[:n_zoom], label=f"GD (η = {eta})", color="tab:blue", linewidth=1.5)
+    axes[1].plot(iters[:n_zoom], hist_mom[:n_zoom], label=f"Momentum GD (η = {eta}, β = {beta})", color="tab:red", linestyle="--", linewidth=1.5)
+    axes[1].set_title(f"{n_zoom} bước lặp đầu tiên (thang tuyến tính)")
+    axes[1].set_xlabel("Số lần cập nhật (bước lặp)")
+    axes[1].set_ylabel("Hàm mất mát J(w) (MSE + L2, MWh²)")
+    axes[1].grid(True, alpha=0.3)
+    axes[1].legend()
+
+    out_path = Path(path)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    fig.savefig(out_path, dpi=120)
+
+
+def save_gd_vs_closed_form_table(
+    loss_cf_train: float,
+    loss_cf_val: float,
+    loss_gd_train: float,
+    loss_gd_val: float,
+    loss_mom_train: float,
+    loss_mom_val: float,
+    fd_err: float,
+    path: Path | str,
+):
+    """Bảng 4.2: val loss của nghiệm đóng, GD, Momentum, và sai số finite-diff."""
+    import pandas as pd
+
+    df_res = pd.DataFrame([
+        {
+            "phuong_phap": "nghiem_dong",
+            "so_buoc_lap": 0,
+            "eta": np.nan,
+            "beta": np.nan,
+            "lambda": config.B3_LAMBDA,
+            "train_loss": round(float(loss_cf_train), 4),
+            "val_loss": round(float(loss_cf_val), 4),
+            "sai_so_finite_diff": f"{fd_err:.2e}",
+        },
+        {
+            "phuong_phap": "gd",
+            "so_buoc_lap": config.B3_N_ITER,
+            "eta": config.B3_ETA,
+            "beta": 0.0,
+            "lambda": config.B3_LAMBDA,
+            "train_loss": round(float(loss_gd_train), 4),
+            "val_loss": round(float(loss_gd_val), 4),
+            "sai_so_finite_diff": f"{fd_err:.2e}",
+        },
+        {
+            "phuong_phap": "momentum_gd",
+            "so_buoc_lap": config.B3_N_ITER,
+            "eta": config.B3_ETA,
+            "beta": config.B3_MOMENTUM_BETA,
+            "lambda": config.B3_LAMBDA,
+            "train_loss": round(float(loss_mom_train), 4),
+            "val_loss": round(float(loss_mom_val), 4),
+            "sai_so_finite_diff": f"{fd_err:.2e}",
+        },
+    ])
+    out_path = Path(path)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    df_res.to_csv(out_path, index=False)
+    return df_res
+
+
 def run(seed: int, final: bool = False) -> None:
     """Thí nghiệm B3.2–B3.4: kiểm tra gradient, so sánh GD/Momentum và nghiệm đóng."""
     from . import data_prep
@@ -246,7 +334,7 @@ def run(seed: int, final: bool = False) -> None:
 
     df = data_prep.load_raw(raw_path)
     splits = data_prep.split_weeks(df)
-    train_df = splits["train"]
+    train_df = data_prep.drop_warmup(splits["train"])
     val_df = splits["val"]
 
     # Sử dụng 12 biến thời tiết từ config
@@ -264,7 +352,11 @@ def run(seed: int, final: bool = False) -> None:
     X_train = np.c_[(X_train_raw - mean) / std, np.ones(len(X_train_raw))]
     X_val = np.c_[(X_val_raw - mean) / std, np.ones(len(X_val_raw))]
 
-    lam = 0.1
+    lam = config.B3_LAMBDA
+    eta = config.B3_ETA
+    n_iter = config.B3_N_ITER
+    beta = config.B3_MOMENTUM_BETA
+
     # 1. Kiểm tra gradient sai phân hữu hạn trên mẫu con
     w_test = np.zeros(X_train.shape[1], dtype=np.float64)
     w_test[0] = 1.0
@@ -277,17 +369,36 @@ def run(seed: int, final: bool = False) -> None:
 
     # 2. Nghiệm đóng Ridge
     w_cf = ridge_closed_form(X_train, y_train, lam)
+    loss_cf_train = mse_l2_loss(w_cf, X_train, y_train, lam)
     loss_cf_val = mse_l2_loss(w_cf, X_val, y_val, lam)
-    print(f"B3.4(b): Nghiệm đóng Ridge - Loss trên val: {loss_cf_val:.4f}")
+    print(f"B3.4(b): Nghiệm đóng Ridge - Loss trên val: {loss_cf_val:.4f} (train: {loss_cf_train:.4f})")
 
     # 3. GD và Momentum GD
-    eta = 0.05
-    n_iter = 500
-    beta = 0.85
     w_gd, hist_gd = gd(X_train, y_train, lam, eta=eta, n_iter=n_iter)
     w_mom, hist_mom = momentum_gd(X_train, y_train, lam, eta=eta, beta=beta, n_iter=n_iter)
 
+    loss_gd_train = mse_l2_loss(w_gd, X_train, y_train, lam)
     loss_gd_val = mse_l2_loss(w_gd, X_val, y_val, lam)
+    loss_mom_train = mse_l2_loss(w_mom, X_train, y_train, lam)
     loss_mom_val = mse_l2_loss(w_mom, X_val, y_val, lam)
-    print(f"B3.1: GD ({n_iter} iter) - Loss val: {loss_gd_val:.4f}")
-    print(f"B3.2: Momentum GD (beta={beta}, {n_iter} iter) - Loss val: {loss_mom_val:.4f}")
+
+    print(f"B3.1: GD ({n_iter} iter) - Loss val: {loss_gd_val:.4f} (train: {loss_gd_train:.4f})")
+    print(f"B3.2: Momentum GD (beta={beta}, {n_iter} iter) - Loss val: {loss_mom_val:.4f} (train: {loss_mom_train:.4f})")
+
+    # 4. Lưu đồ thị và bảng kết quả theo CONVENTIONS.md mục 5
+    fig_path = config.FIG_DIR / "4_2_gd_momentum_loss.png"
+    plot_gd_momentum_loss(hist_gd, hist_mom, fig_path)
+    print(f"B3: Đã lưu hình {fig_path}")
+
+    tbl_path = config.TABLE_DIR / "4_2_gd_vs_closed_form.csv"
+    save_gd_vs_closed_form_table(
+        loss_cf_train=loss_cf_train,
+        loss_cf_val=loss_cf_val,
+        loss_gd_train=loss_gd_train,
+        loss_gd_val=loss_gd_val,
+        loss_mom_train=loss_mom_train,
+        loss_mom_val=loss_mom_val,
+        fd_err=fd_err,
+        path=tbl_path,
+    )
+    print(f"B3: Đã lưu bảng {tbl_path}")
