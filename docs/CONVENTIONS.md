@@ -28,7 +28,7 @@ Mục tiêu: ba người, ba AI vẫn cho ra cùng một định nghĩa, cùng m
 
 ## 5. Đặt tên và nơi lưu
 - Hình: `results/figures/<chương>_<số>_<mô_tả>.png`, ví dụ `4_2_lr_sweep.png`. Bảng: `results/tables/<chương>_<số>_<mô_tả>.csv`. Chương: 1 tổng quan/dữ liệu, 2 lý thuyết, 3 đặc trưng, 4 tuyến tính + perceptron, 5 MLP, 6 đánh giá. Số hình/bảng khớp số trong báo cáo; đồ thị có tên trục và đơn vị.
-- Mỗi hình/bảng ghi 1 dòng vào file truy vết **của mình** `docs/trace_<tên>.md` (huan | viet | phi): số hình/bảng | tệp | hàm hoặc ô notebook | mã task. Cuối kỳ Phi ghép thành Phụ lục D.
+- Mỗi hình/bảng ghi 1 dòng vào file truy vết **của mình** `docs/trace_<tên>.md` (huan | viet | phi): số hình/bảng | tệp | hàm hoặc ô notebook | mã task. Cuối kỳ Huấn ghép thành Phụ lục D (T009), Phi duyệt.
 - Mã quan trọng nằm trong `src/`; notebook chỉ gọi hàm trong `src/`, xóa output trước khi commit, đặt tên `notebooks/<tên>_*.ipynb`.
 - Ngẫu nhiên: mọi `rng` lấy từ `config.get_seed()` (SEED = 2044).
 - Mã tham khảo ngoài (sách, GitHub, Kaggle) phải ghi nguồn ngay tại chỗ bằng chú thích; phần tự cài đặt không lấy từ nguồn ngoài.
