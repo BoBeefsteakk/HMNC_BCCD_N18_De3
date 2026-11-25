@@ -1,4 +1,6 @@
-phuong_phap,so_buoc_lap,eta,beta,lambda,train_loss,val_loss,sai_so_finite_diff
-nghiem_dong,0,,,0.1,9486.6085,11089.2577,4.74e-08
-gd,500,0.05,0.0,0.1,9486.634,11086.2728,4.74e-08
-momentum_gd,500,0.05,0.85,0.1,9486.6085,11089.2577,4.74e-08
+phuong_phap,so_lan_cap_nhat,batch_size,eta,beta,lambda,train_loss_mse_l2,val_loss_mse_l2,chenh_val_loss_vs_nghiem_dong,muc_mat_mat_dich,so_cap_nhat_dat_dich,sai_so_finite_diff
+nghiem_dong,0,34440,,,0.1,9486.6085,11089.2577,0.0,9496.6085,0,4.74e-08
+gd,500,34440,0.05,0.0,0.1,9486.634,11086.2728,-2.985,9496.6085,136,4.74e-08
+momentum_gd,500,34440,0.05,0.85,0.1,9486.6085,11089.2577,0.0,9496.6085,37,4.74e-08
+minibatch_gd,500,256,0.05,0.0,0.1,9496.5307,11223.0731,133.8154,9496.6085,211,4.74e-08
+sgd,500,1,0.05,0.0,0.1,14079.9791,22285.1266,11195.8689,9496.6085,,4.74e-08
