@@ -136,6 +136,9 @@ def sgd(
     eta: float,
     n_epochs: int,
     seed: int,
+    w0: np.ndarray | None = None,
+    max_updates: int | None = None,
+    record_per_update: bool = False,
 ) -> tuple[np.ndarray, list[float]]:
     """Stochastic Gradient Descent (SGD): mỗi mẫu cập nhật một lần.
 
@@ -144,17 +147,26 @@ def sgd(
     X = np.asarray(X, dtype=np.float64)
     y = np.asarray(y, dtype=np.float64)
     n, d = X.shape
-    w = np.zeros(d, dtype=np.float64)
+    w = np.zeros(d, dtype=np.float64) if w0 is None else np.asarray(w0, dtype=np.float64).copy()
     rng = np.random.default_rng(seed)
     loss_history: list[float] = []
+    updates = 0
 
     for _ in range(n_epochs):
-        loss = mse_l2_loss(w, X, y, lam)
-        loss_history.append(loss)
-        if np.isnan(loss) or np.isinf(loss):
-            break
+        if not record_per_update:
+            loss = mse_l2_loss(w, X, y, lam)
+            loss_history.append(loss)
+            if np.isnan(loss) or np.isinf(loss):
+                break
         indices = rng.permutation(n)
         for i in indices:
+            if max_updates is not None and updates >= max_updates:
+                return w, loss_history
+            if record_per_update:
+                loss = mse_l2_loss(w, X, y, lam)
+                loss_history.append(loss)
+                if np.isnan(loss) or np.isinf(loss):
+                    return w, loss_history
             xi = X[i]
             yi = y[i]
             res = float(np.dot(xi, w) - yi)
@@ -162,6 +174,7 @@ def sgd(
             reg = float(lam) * w
             reg[-1] = 0.0
             w -= float(eta) * (g + reg)
+            updates += 1
 
     return w, loss_history
 
@@ -174,22 +187,34 @@ def minibatch_gd(
     n_epochs: int,
     batch_size: int,
     seed: int,
+    w0: np.ndarray | None = None,
+    max_updates: int | None = None,
+    record_per_update: bool = False,
 ) -> tuple[np.ndarray, list[float]]:
     """Mini-batch Gradient Descent: cập nhật theo từng lô mẫu nhỏ (batch)."""
     X = np.asarray(X, dtype=np.float64)
     y = np.asarray(y, dtype=np.float64)
     n, d = X.shape
-    w = np.zeros(d, dtype=np.float64)
+    w = np.zeros(d, dtype=np.float64) if w0 is None else np.asarray(w0, dtype=np.float64).copy()
     rng = np.random.default_rng(seed)
     loss_history: list[float] = []
+    updates = 0
 
     for _ in range(n_epochs):
-        loss = mse_l2_loss(w, X, y, lam)
-        loss_history.append(loss)
-        if np.isnan(loss) or np.isinf(loss):
-            break
+        if not record_per_update:
+            loss = mse_l2_loss(w, X, y, lam)
+            loss_history.append(loss)
+            if np.isnan(loss) or np.isinf(loss):
+                break
         indices = rng.permutation(n)
         for start_idx in range(0, n, batch_size):
+            if max_updates is not None and updates >= max_updates:
+                return w, loss_history
+            if record_per_update:
+                loss = mse_l2_loss(w, X, y, lam)
+                loss_history.append(loss)
+                if np.isnan(loss) or np.isinf(loss):
+                    return w, loss_history
             batch_idx = indices[start_idx : start_idx + batch_size]
             X_b = X[batch_idx]
             y_b = y[batch_idx]
@@ -199,6 +224,7 @@ def minibatch_gd(
             reg = float(lam) * w
             reg[-1] = 0.0
             w -= float(eta) * (g + reg)
+            updates += 1
 
     return w, loss_history
 
@@ -236,36 +262,76 @@ def momentum_gd(
     return w, loss_history
 
 
-def plot_gd_momentum_loss(hist_gd: list[float], hist_mom: list[float], path: Path | str) -> None:
-    """Hình 4.2: đường mất mát của GD và Momentum theo số lần cập nhật (B3.2)."""
+def updates_to_reach(loss_history: list[float], target_loss: float) -> int | None:
+    """Số lần cập nhật nhỏ nhất để mất mát huấn luyện <= target_loss (None nếu chưa đạt)."""
+    for step, loss in enumerate(loss_history):
+        if loss <= target_loss:
+            return step
+    return None
+
+
+def plot_gd_momentum_loss(
+    hist_gd: list[float],
+    hist_mom: list[float],
+    path: Path | str,
+    hist_mb: list[float] | None = None,
+    hist_sgd: list[float] | None = None,
+    loss_cf_train: float | None = None,
+) -> None:
+    """Hình 4.2: đường mất mát của GD, Momentum, Mini-batch và SGD theo số lần cập nhật (B3.1–B3.2)."""
     from matplotlib.figure import Figure
 
-    fig = Figure(figsize=(11, 4.5), layout="constrained")
+    fig = Figure(figsize=(12, 4.8), layout="constrained")
     axes = fig.subplots(1, 2)
     iters = np.arange(len(hist_gd))
 
     eta = config.B3_ETA
     beta = config.B3_MOMENTUM_BETA
+    bs = config.B3_BATCH_SIZE
+    n_zoom = min(60, len(hist_gd))
 
-    # Panel trái: toàn bộ quá trình hội tụ (thang log y)
-    axes[0].plot(iters, hist_gd, label=f"GD (η = {eta})", color="tab:blue", linewidth=1.5)
-    axes[0].plot(iters, hist_mom, label=f"Momentum GD (η = {eta}, β = {beta})", color="tab:red", linestyle="--", linewidth=1.5)
-    axes[0].set_yscale("log")
-    axes[0].set_title("Toàn bộ 500 bước lặp (thang log y)")
-    axes[0].set_xlabel("Số lần cập nhật (bước lặp)")
-    axes[0].set_ylabel("Hàm mất mát J(w) (MWh², thang log)")
-    axes[0].grid(True, alpha=0.3, which="both")
-    axes[0].legend()
-
-    # Panel phải: cận cảnh 50 bước lặp đầu tiên (thang tuyến tính)
-    n_zoom = min(50, len(hist_gd))
-    axes[1].plot(iters[:n_zoom], hist_gd[:n_zoom], label=f"GD (η = {eta})", color="tab:blue", linewidth=1.5)
-    axes[1].plot(iters[:n_zoom], hist_mom[:n_zoom], label=f"Momentum GD (η = {eta}, β = {beta})", color="tab:red", linestyle="--", linewidth=1.5)
-    axes[1].set_title(f"{n_zoom} bước lặp đầu tiên (thang tuyến tính)")
-    axes[1].set_xlabel("Số lần cập nhật (bước lặp)")
-    axes[1].set_ylabel("Hàm mất mát J(w) (MSE + L2, MWh²)")
-    axes[1].grid(True, alpha=0.3)
-    axes[1].legend()
+    for ax, lim, log_y, title in (
+        (axes[0], len(hist_gd), True, f"Toàn bộ {len(hist_gd)} lần cập nhật (thang log y)"),
+        (axes[1], n_zoom, False, f"{n_zoom} lần cập nhật đầu tiên (thang tuyến tính)"),
+    ):
+        if hist_sgd is not None:
+            ax.plot(
+                iters[:lim], hist_sgd[:lim],
+                label=f"SGD (η = {eta}, batch = 1)",
+                color="tab:orange", alpha=0.65, linewidth=1.0,
+            )
+        ax.plot(
+            iters[:lim], hist_gd[:lim],
+            label=f"GD theo lô (η = {eta})",
+            color="tab:blue", linewidth=2.2, alpha=0.85,
+        )
+        if hist_mb is not None:
+            ax.plot(
+                iters[:lim], hist_mb[:lim],
+                label=f"Mini-batch GD (η = {eta}, batch = {bs})",
+                color="tab:green", linestyle="-.", linewidth=1.4,
+            )
+        ax.plot(
+            iters[:lim], hist_mom[:lim],
+            label=f"Momentum GD (η = {eta}, β = {beta})",
+            color="tab:red", linestyle="--", linewidth=1.8,
+        )
+        if loss_cf_train is not None:
+            ax.axhline(
+                loss_cf_train,
+                label=f"Nghiệm đóng Ridge (J* = {loss_cf_train:.2f})",
+                color="black", linestyle=":", linewidth=1.2,
+            )
+        if log_y:
+            ax.set_yscale("log")
+            ax.set_ylabel("Hàm mất mát J(w) (MSE + L2, MWh², thang log)")
+            ax.grid(True, alpha=0.3, which="both")
+        else:
+            ax.set_ylabel("Hàm mất mát J(w) (MSE + L2, MWh²)")
+            ax.grid(True, alpha=0.3)
+        ax.set_title(title)
+        ax.set_xlabel("Số lần cập nhật trọng số (cùng w₀ = 0, cùng η)")
+        ax.legend(fontsize=8.5, loc="upper right")
 
     out_path = Path(path)
     out_path.parent.mkdir(parents=True, exist_ok=True)
@@ -273,50 +339,15 @@ def plot_gd_momentum_loss(hist_gd: list[float], hist_mom: list[float], path: Pat
 
 
 def save_gd_vs_closed_form_table(
-    loss_cf_train: float,
-    loss_cf_val: float,
-    loss_gd_train: float,
-    loss_gd_val: float,
-    loss_mom_train: float,
-    loss_mom_val: float,
-    fd_err: float,
+    rows: list[dict],
     path: Path | str,
 ):
-    """Bảng 4.2: val loss của nghiệm đóng, GD, Momentum, và sai số finite-diff."""
+    """Bảng 4.2: val loss (MSE + L2), số lần cập nhật đạt đích và sai số finite-diff (B3.1–B3.4)."""
     import pandas as pd
 
-    df_res = pd.DataFrame([
-        {
-            "phuong_phap": "nghiem_dong",
-            "so_buoc_lap": 0,
-            "eta": np.nan,
-            "beta": np.nan,
-            "lambda": config.B3_LAMBDA,
-            "train_loss": round(float(loss_cf_train), 4),
-            "val_loss": round(float(loss_cf_val), 4),
-            "sai_so_finite_diff": f"{fd_err:.2e}",
-        },
-        {
-            "phuong_phap": "gd",
-            "so_buoc_lap": config.B3_N_ITER,
-            "eta": config.B3_ETA,
-            "beta": 0.0,
-            "lambda": config.B3_LAMBDA,
-            "train_loss": round(float(loss_gd_train), 4),
-            "val_loss": round(float(loss_gd_val), 4),
-            "sai_so_finite_diff": f"{fd_err:.2e}",
-        },
-        {
-            "phuong_phap": "momentum_gd",
-            "so_buoc_lap": config.B3_N_ITER,
-            "eta": config.B3_ETA,
-            "beta": config.B3_MOMENTUM_BETA,
-            "lambda": config.B3_LAMBDA,
-            "train_loss": round(float(loss_mom_train), 4),
-            "val_loss": round(float(loss_mom_val), 4),
-            "sai_so_finite_diff": f"{fd_err:.2e}",
-        },
-    ])
+    df_res = pd.DataFrame(rows)
+    if "so_cap_nhat_dat_dich" in df_res.columns:
+        df_res["so_cap_nhat_dat_dich"] = df_res["so_cap_nhat_dat_dich"].astype("Int64")
     out_path = Path(path)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     df_res.to_csv(out_path, index=False)
@@ -324,7 +355,7 @@ def save_gd_vs_closed_form_table(
 
 
 def run(seed: int, final: bool = False) -> None:
-    """Thí nghiệm B3.2–B3.4: kiểm tra gradient, so sánh GD/Momentum và nghiệm đóng."""
+    """Thí nghiệm B3.1–B3.4: kiểm tra gradient, so sánh GD/SGD/mini-batch/Momentum và nghiệm đóng."""
     from . import data_prep
 
     raw_path = config.RAW_DIR / config.DATA_FILES["continuous"]["local_name"]
@@ -356,6 +387,10 @@ def run(seed: int, final: bool = False) -> None:
     eta = config.B3_ETA
     n_iter = config.B3_N_ITER
     beta = config.B3_MOMENTUM_BETA
+    batch_size = config.B3_BATCH_SIZE
+    loss_tol = config.B3_LOSS_TOL
+    n_train = len(X_train)
+    w0 = np.zeros(X_train.shape[1], dtype=np.float64)
 
     # 1. Kiểm tra gradient sai phân hữu hạn trên mẫu con
     w_test = np.zeros(X_train.shape[1], dtype=np.float64)
@@ -371,34 +406,126 @@ def run(seed: int, final: bool = False) -> None:
     w_cf = ridge_closed_form(X_train, y_train, lam)
     loss_cf_train = mse_l2_loss(w_cf, X_train, y_train, lam)
     loss_cf_val = mse_l2_loss(w_cf, X_val, y_val, lam)
-    print(f"B3.4(b): Nghiệm đóng Ridge - Loss trên val: {loss_cf_val:.4f} (train: {loss_cf_train:.4f})")
+    target_loss = loss_cf_train + loss_tol
+    print(f"B3.4(b): Nghiệm đóng Ridge - val_loss (MSE+L2): {loss_cf_val:.4f} (train: {loss_cf_train:.4f})")
 
-    # 3. GD và Momentum GD
-    w_gd, hist_gd = gd(X_train, y_train, lam, eta=eta, n_iter=n_iter)
-    w_mom, hist_mom = momentum_gd(X_train, y_train, lam, eta=eta, beta=beta, n_iter=n_iter)
+    # 3. GD, Momentum GD, Mini-batch GD và SGD — cùng điểm khởi tạo w0 = 0 và cùng eta
+    w_gd, hist_gd = gd(X_train, y_train, lam, eta=eta, n_iter=n_iter, w0=w0)
+    w_mom, hist_mom = momentum_gd(X_train, y_train, lam, eta=eta, beta=beta, n_iter=n_iter, w0=w0)
+
+    batches_per_epoch = -(-n_train // batch_size)
+    n_epochs_mb = -(-n_iter // batches_per_epoch)
+    w_mb, hist_mb = minibatch_gd(
+        X_train, y_train, lam, eta=eta, n_epochs=n_epochs_mb, batch_size=batch_size,
+        seed=seed, w0=w0, max_updates=n_iter, record_per_update=True,
+    )
+
+    n_epochs_sgd = -(-n_iter // n_train)
+    w_sgd, hist_sgd = sgd(
+        X_train, y_train, lam, eta=eta, n_epochs=n_epochs_sgd,
+        seed=seed, w0=w0, max_updates=n_iter, record_per_update=True,
+    )
 
     loss_gd_train = mse_l2_loss(w_gd, X_train, y_train, lam)
     loss_gd_val = mse_l2_loss(w_gd, X_val, y_val, lam)
     loss_mom_train = mse_l2_loss(w_mom, X_train, y_train, lam)
     loss_mom_val = mse_l2_loss(w_mom, X_val, y_val, lam)
+    loss_mb_train = mse_l2_loss(w_mb, X_train, y_train, lam)
+    loss_mb_val = mse_l2_loss(w_mb, X_val, y_val, lam)
+    loss_sgd_train = mse_l2_loss(w_sgd, X_train, y_train, lam)
+    loss_sgd_val = mse_l2_loss(w_sgd, X_val, y_val, lam)
 
-    print(f"B3.1: GD ({n_iter} iter) - Loss val: {loss_gd_val:.4f} (train: {loss_gd_train:.4f})")
-    print(f"B3.2: Momentum GD (beta={beta}, {n_iter} iter) - Loss val: {loss_mom_val:.4f} (train: {loss_mom_train:.4f})")
+    upd_gd = updates_to_reach(hist_gd, target_loss)
+    upd_mom = updates_to_reach(hist_mom, target_loss)
+    upd_mb = updates_to_reach(hist_mb, target_loss)
+    upd_sgd = updates_to_reach(hist_sgd, target_loss)
+
+    print(f"B3.1: GD ({n_iter} cập nhật) - val_loss (MSE+L2): {loss_gd_val:.4f} (train: {loss_gd_train:.4f}, đạt đích sau {upd_gd} cập nhật)")
+    print(f"B3.2: Momentum GD (beta={beta}, {n_iter} cập nhật) - val_loss (MSE+L2): {loss_mom_val:.4f} (train: {loss_mom_train:.4f}, đạt đích sau {upd_mom} cập nhật)")
+    print(f"B3.1: Mini-batch GD (bs={batch_size}, {n_iter} cập nhật) - val_loss (MSE+L2): {loss_mb_val:.4f} (train: {loss_mb_train:.4f}, đạt đích sau {upd_mb} cập nhật)")
+    print(f"B3.1: SGD (bs=1, {n_iter} cập nhật) - val_loss (MSE+L2): {loss_sgd_val:.4f} (train: {loss_sgd_train:.4f}, đạt đích sau {upd_sgd} cập nhật)")
 
     # 4. Lưu đồ thị và bảng kết quả theo CONVENTIONS.md mục 5
     fig_path = config.FIG_DIR / "4_2_gd_momentum_loss.png"
-    plot_gd_momentum_loss(hist_gd, hist_mom, fig_path)
+    plot_gd_momentum_loss(
+        hist_gd, hist_mom, fig_path,
+        hist_mb=hist_mb, hist_sgd=hist_sgd, loss_cf_train=loss_cf_train,
+    )
     print(f"B3: Đã lưu hình {fig_path}")
 
+    table_rows = [
+        {
+            "phuong_phap": "nghiem_dong",
+            "so_lan_cap_nhat": 0,
+            "batch_size": n_train,
+            "eta": np.nan,
+            "beta": np.nan,
+            "lambda": lam,
+            "train_loss_mse_l2": round(float(loss_cf_train), 4),
+            "val_loss_mse_l2": round(float(loss_cf_val), 4),
+            "chenh_val_loss_vs_nghiem_dong": 0.0,
+            "muc_mat_mat_dich": round(float(target_loss), 4),
+            "so_cap_nhat_dat_dich": 0,
+            "sai_so_finite_diff": f"{fd_err:.2e}",
+        },
+        {
+            "phuong_phap": "gd",
+            "so_lan_cap_nhat": n_iter,
+            "batch_size": n_train,
+            "eta": eta,
+            "beta": 0.0,
+            "lambda": lam,
+            "train_loss_mse_l2": round(float(loss_gd_train), 4),
+            "val_loss_mse_l2": round(float(loss_gd_val), 4),
+            "chenh_val_loss_vs_nghiem_dong": round(float(loss_gd_val - loss_cf_val), 4),
+            "muc_mat_mat_dich": round(float(target_loss), 4),
+            "so_cap_nhat_dat_dich": upd_gd,
+            "sai_so_finite_diff": f"{fd_err:.2e}",
+        },
+        {
+            "phuong_phap": "momentum_gd",
+            "so_lan_cap_nhat": n_iter,
+            "batch_size": n_train,
+            "eta": eta,
+            "beta": beta,
+            "lambda": lam,
+            "train_loss_mse_l2": round(float(loss_mom_train), 4),
+            "val_loss_mse_l2": round(float(loss_mom_val), 4),
+            "chenh_val_loss_vs_nghiem_dong": round(float(loss_mom_val - loss_cf_val), 4),
+            "muc_mat_mat_dich": round(float(target_loss), 4),
+            "so_cap_nhat_dat_dich": upd_mom,
+            "sai_so_finite_diff": f"{fd_err:.2e}",
+        },
+        {
+            "phuong_phap": "minibatch_gd",
+            "so_lan_cap_nhat": n_iter,
+            "batch_size": batch_size,
+            "eta": eta,
+            "beta": 0.0,
+            "lambda": lam,
+            "train_loss_mse_l2": round(float(loss_mb_train), 4),
+            "val_loss_mse_l2": round(float(loss_mb_val), 4),
+            "chenh_val_loss_vs_nghiem_dong": round(float(loss_mb_val - loss_cf_val), 4),
+            "muc_mat_mat_dich": round(float(target_loss), 4),
+            "so_cap_nhat_dat_dich": upd_mb,
+            "sai_so_finite_diff": f"{fd_err:.2e}",
+        },
+        {
+            "phuong_phap": "sgd",
+            "so_lan_cap_nhat": n_iter,
+            "batch_size": 1,
+            "eta": eta,
+            "beta": 0.0,
+            "lambda": lam,
+            "train_loss_mse_l2": round(float(loss_sgd_train), 4),
+            "val_loss_mse_l2": round(float(loss_sgd_val), 4),
+            "chenh_val_loss_vs_nghiem_dong": round(float(loss_sgd_val - loss_cf_val), 4),
+            "muc_mat_mat_dich": round(float(target_loss), 4),
+            "so_cap_nhat_dat_dich": upd_sgd,
+            "sai_so_finite_diff": f"{fd_err:.2e}",
+        },
+    ]
+
     tbl_path = config.TABLE_DIR / "4_2_gd_vs_closed_form.csv"
-    save_gd_vs_closed_form_table(
-        loss_cf_train=loss_cf_train,
-        loss_cf_val=loss_cf_val,
-        loss_gd_train=loss_gd_train,
-        loss_gd_val=loss_gd_val,
-        loss_mom_train=loss_mom_train,
-        loss_mom_val=loss_mom_val,
-        fd_err=fd_err,
-        path=tbl_path,
-    )
+    save_gd_vs_closed_form_table(table_rows, path=tbl_path)
     print(f"B3: Đã lưu bảng {tbl_path}")
