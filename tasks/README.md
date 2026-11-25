@@ -20,7 +20,7 @@
 
 | id | owner | status | due | checklist | tiêu đề |
 |---|---|---|---|---|---|
-| T003 | huan | review | 25/11/2026 | B3.1,B3.2 | [Tự cài đặt GD, SGD, mini-batch, momentum và nghiệm đóng ridge](T003-huan-tu-cai-dat-gd-sgd-mini-batch-va-nghiem-d.md) |
+| T003 | huan | done | 25/11/2026 | B3.1,B3.2 | [Tự cài đặt GD, SGD, mini-batch, momentum và nghiệm đóng ridge](T003-huan-tu-cai-dat-gd-sgd-mini-batch-va-nghiem-d.md) |
 | T006 | viet | done | 25/11/2026 | B4.1 | [Tự cài đặt PLA và Pocket](T006-viet-tu-cai-dat-pla-va-pocket.md) |
 | T005 | huan | todo | 26/11/2026 | B1.1,B1.3 | [Bài toán nghiệp vụ và EDA](T005-huan-bai-toan-nghiep-vu-va-eda.md) |
 | T011 | viet | done | 26/11/2026 | B4.3 | [Hình lỗi theo epoch của PLA và Pocket](T011-viet-hinh-loi-theo-epoch-cua-pla-va-pocket.md) |
