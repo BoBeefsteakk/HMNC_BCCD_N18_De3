@@ -1,0 +1,44 @@
+nhom,hang_muc,chi_so,gia_tri,don_vi,ghi_chu
+theo_nam,nam_2015_train,trung_binh,1131.5231,MWh,n=8712 giờ
+theo_nam,nam_2015_train,cuc_dai,1645.4773,MWh,n=8712 giờ
+theo_nam,nam_2016_train,trung_binh,1157.1759,MWh,n=8784 giờ
+theo_nam,nam_2016_train,cuc_dai,1615.2451,MWh,n=8784 giờ
+theo_nam,nam_2017_train,trung_binh,1182.3144,MWh,n=8760 giờ
+theo_nam,nam_2017_train,cuc_dai,1635.9155,MWh,n=8760 giờ
+theo_nam,nam_2018_train,trung_binh,1205.6846,MWh,n=8760 giờ
+theo_nam,nam_2018_train,cuc_dai,1635.5409,MWh,n=8760 giờ
+theo_nam,nam_2019_val,trung_binh,1248.112,MWh,n=4368 giờ (26 tuần val)
+theo_nam,nam_2019_val,cuc_dai,1719.0439,MWh,n=4368 giờ (26 tuần val)
+loai_ngay,ngay_lam_viec,trung_binh,1214.7288,MWh,n=23641 giờ
+loai_ngay,ngay_lam_viec,do_lech_chuan,200.481,MWh,n=23641 giờ
+loai_ngay,ngay_lam_viec,dinh_theo_gio,1475.358,MWh,lúc 12:00
+loai_ngay,ngay_lam_viec,day_theo_gio,931.9454,MWh,lúc 03:00
+loai_ngay,ngay_lam_viec,bien_do_ngay,543.4126,MWh,03:00 -> 12:00
+loai_ngay,ngay_lam_viec,thap_hon_ngay_lam_viec_pct,0.0,%,so với TB ngày làm việc
+loai_ngay,cuoi_tuan,trung_binh,1084.158,MWh,n=9263 giờ
+loai_ngay,cuoi_tuan,do_lech_chuan,127.728,MWh,n=9263 giờ
+loai_ngay,cuoi_tuan,dinh_theo_gio,1207.5323,MWh,lúc 10:00
+loai_ngay,cuoi_tuan,day_theo_gio,901.108,MWh,lúc 05:00
+loai_ngay,cuoi_tuan,bien_do_ngay,306.4242,MWh,05:00 -> 10:00
+loai_ngay,cuoi_tuan,thap_hon_ngay_lam_viec_pct,10.749,%,so với TB ngày làm việc
+loai_ngay,ngay_le,trung_binh,1039.7596,MWh,n=2208 giờ
+loai_ngay,ngay_le,do_lech_chuan,128.9264,MWh,n=2208 giờ
+loai_ngay,ngay_le,dinh_theo_gio,1156.3784,MWh,lúc 18:00
+loai_ngay,ngay_le,day_theo_gio,879.7112,MWh,lúc 05:00
+loai_ngay,ngay_le,bien_do_ngay,276.6672,MWh,05:00 -> 18:00
+loai_ngay,ngay_le,thap_hon_ngay_lam_viec_pct,14.404,%,so với TB ngày làm việc
+gio_cao_diem,train,nguong_90pct,1450.7472,MWh,phân vị 90% của train
+gio_cao_diem,train,ty_le_cao_diem_pct,10.0023,%,3512/35112 giờ
+gio_cao_diem,val,ty_le_cao_diem_pct,17.5366,%,766/4368 giờ
+tai_thap_bat_thuong,nguong,nguong_50pct_trung_vi_train,578.357,MWh,50% x 1156.71 MWh
+tai_thap_bat_thuong,train,so_gio,3.0,giờ,3 giờ đơn lẻ
+tai_thap_bat_thuong,val,so_gio,5.0,giờ,5 giờ liên tiếp 20/01/2019 11:00–15:00
+tai_thap_bat_thuong,val_20_01_2019,thap_nhat,85.1925,MWh,7.37% trung vị train
+nhiet_do,t2m_mean_train,tuong_quan_r,0.6839,r,Pearson với nat_demand
+nhiet_do,t2m_mean_train,do_doc_tuyen_tinh,58.0078,MWh/°C,hồi quy tuyến tính toàn bộ train
+nhiet_do,ngay_lam_viec_29_30C,trung_binh,1449.1219,MWh,n=1367 giờ; dưới ngưỡng 1450.75
+nhiet_do,ngay_lam_viec_30_31C,trung_binh,1442.8843,MWh,n=570 giờ; dưới ngưỡng 1450.75
+nhiet_do,ngay_lam_viec_31_32C,trung_binh,1463.994,MWh,n=430 giờ; vượt ngưỡng 1450.75
+nhiet_do,ngay_lam_viec_32_33C,trung_binh,1487.4672,MWh,n=349 giờ; vượt ngưỡng 1450.75
+bai_toan_b1_1,sai_1pct_trung_binh_train,do_lech_mwh,11.6928,MWh,1% của TB 1169.28 MWh
+bai_toan_b1_1,sai_1pct_dinh_max_train,do_lech_mwh,16.4548,MWh,1% của đỉnh 1645.48 MWh

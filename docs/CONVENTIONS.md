@@ -56,6 +56,7 @@ Mục tiêu: ba người, ba AI vẫn cho ra cùng một định nghĩa, cùng m
 
 **Bài toán phụ "giờ cao điểm" và rò rỉ**
 - Ngưỡng chỉ tìm từ các giờ của **train** (35.112 giờ → phân vị 90% = **1.450,75 MWh**); sau đó áp dụng một ngưỡng đó để gán nhãn +1/−1 cho mọi giờ (train, val, test). Tính ngưỡng trên cả ba phần là rò rỉ (đề mục 3.1d): ngưỡng sẽ thành 1.460,91 và nhãn của giờ trong quá khứ đổi theo số liệu tương lai.
+- Ngưỡng tính trên **cả 209 tuần train** rồi mới bỏ `WARMUP_WEEKS` tuần khởi động khỏi phần học (chốt 24/11/2026); tuần khởi động vẫn là dữ liệu train, chỉ không dùng để huấn luyện. Độ lệch chuẩn qua các lần chạy (hạt giống) chia **n − 1** (ddof = 1); cấu hình tất định chỉ chạy 1 lần thì ghi 0.
 - Tỷ lệ giờ cao điểm theo ngưỡng của train: train 10,0%; val 17,5%; test_a 17,3%; **test_b 0,0%**. Nghĩa là bài phân loại cao điểm trên test_b không có nhãn +1 nào để chấm; báo cáo phải nêu rõ, không được bỏ qua. Nguyên nhân: tải điện tăng theo năm (val, test_a cao hơn train) và giai đoạn phong tỏa (test_b) thấp hơn ngưỡng.
 - Quy tắc chung: mọi thứ "học từ dữ liệu" (ngưỡng, trung vị tham chiếu, chuẩn hóa, trọng số, siêu tham số) chỉ học từ train hoặc chọn bằng val; test chỉ chấm một lần.
 

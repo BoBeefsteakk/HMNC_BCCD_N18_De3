@@ -108,3 +108,11 @@ LOW_LOAD_FRACTION = 0.5  # giờ phụ tải thấp bất thường: < 50% trung
 CND_TIME_FORMAT = "%m/%d/%Y %H:%M"
 CND_SHIFT_CANDIDATES = (-1, 0, 1)
 CND_SHIFT_HOURS = -1
+
+# --- B3: Hồi quy tuyến tính và tối ưu hóa (B3.1–B3.4) --------------------------------------------
+B3_LAMBDA: float = 0.1          # Hệ số chính quy hóa L2 (Ridge)
+B3_ETA: float = 0.05            # Tốc độ học (learning rate) chung cho GD, SGD, mini-batch và Momentum GD
+B3_N_ITER: int = 500            # Số lần cập nhật (bước lặp) so sánh trên cùng trục
+B3_MOMENTUM_BETA: float = 0.85  # Hệ số quán tính Polyak momentum
+B3_BATCH_SIZE: int = 256        # Kích thước lô cho Mini-batch GD (B3.1)
+B3_LOSS_TOL: float = 10.0       # Ngưỡng sai lệch mất mát huấn luyện so với nghiệm đóng J(w*) + tol (B3.2)
