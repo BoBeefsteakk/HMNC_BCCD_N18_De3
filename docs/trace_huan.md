@@ -7,6 +7,7 @@ Cuối kỳ trưởng nhóm (Phi) sẽ tổng hợp các bảng truy vết cá n
 |---|---|---|---|---|
 | Bảng 1.1 | `docs/DATA_DICTIONARY.md` | Thống kê từ `continuous.csv` & `forecast_cnd.csv` | T004 | Từ điển dữ liệu 17 biến phụ tải, thời tiết, lịch và tệp CND |
 | Bảng 1.2 | `results/tables/1_2_eda_summary.csv` | `notebooks/huan_eda.ipynb` (Ô 2) | T005 | Thống kê mô tả (n, thiếu, TB, ĐLC, phân vị, tương quan với `nat_demand`) của 16 biến trên train |
+| Bảng 1.3 | `results/tables/1_3_eda_breakdown.csv` | `notebooks/huan_eda.ipynb` (Ô 8) | T005 | Chỉ số EDA phân tách: TB theo năm, TB/đỉnh/đáy/% thấp hơn theo loại ngày, tỷ lệ cao điểm (`train` & `val`), tải thấp và dải nhiệt độ |
 | Hình 1.1 | `results/figures/1_1_load_timeseries_anomalies.png` | `notebooks/huan_eda.ipynb` (Ô 3) | T005 | Chuỗi phụ tải trung bình/cực tiểu theo tuần (`train` & `val`), 4 tuần khởi động và 8 giờ tải thấp bất thường |
 | Hình 1.2 | `results/figures/1_2_load_distribution_peak.png` | `notebooks/huan_eda.ipynb` (Ô 4) | T005 | Phân bố `nat_demand` trên `train`, ngưỡng cao điểm 90% (1.450,75 MWh) và tỷ lệ nhãn +1/-1 (`train` vs `val`) |
 | Hình 1.3 | `results/figures/1_3_diurnal_weekly_profile.png` | `notebooks/huan_eda.ipynb` (Ô 5) | T005 | Hồ sơ phụ tải trung bình ± 1 ĐLC theo 24 giờ (ngày làm việc/cuối tuần/lễ) và theo 7 thứ trong tuần trên `train` |
