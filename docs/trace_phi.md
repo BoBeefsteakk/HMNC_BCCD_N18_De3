@@ -4,3 +4,4 @@ Mỗi hình hoặc bảng sinh ra từ mã thực nghiệm phục vụ báo cáo
 
 | Số Hình / Bảng | Tệp kết quả sinh ra | Hàm / Ô notebook sinh ra | Mã Task | Mô tả tóm tắt |
 |---|---|---|---|---|
+| Bảng 1.4 | `results/tables/1_4_split_sizes.csv` | `src/data_prep.py` (`run` → `split_size_table`) | LEAD | Ngày đầu/cuối, số tuần, số giờ từng tập; giờ học sau khởi động; tỷ lệ cao điểm train và val |

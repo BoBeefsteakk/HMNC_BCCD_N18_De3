@@ -208,12 +208,38 @@ def split_of(ts: pd.Timestamp) -> str:
     return "ngoài"
 
 
+def split_size_table(parts: dict[str, pd.DataFrame]) -> pd.DataFrame:
+    """Bảng kích thước các tập (B1.4): mỗi tập một dòng, theo thứ tự trong `parts` (kết quả của split_weeks).
+
+    `so_gio_hoc` chỉ có ở train: số giờ còn lại sau `drop_warmup`. `ty_le_cao_diem_pct` chỉ tính cho train và val
+    (ngưỡng lấy từ train); không đọc phụ tải của tập kiểm tra nên hai ô đó để trống.
+    """
+    threshold = peak_threshold(parts["train"][config.TARGET_COL].to_numpy())
+    rows = []
+    for name, part in parts.items():
+        seen = name in ("train", "val")
+        rows.append({
+            "tap": name,
+            "tu": part[config.TIME_COL].min(),
+            "den": part[config.TIME_COL].max(),
+            "so_tuan": part["week_idx"].nunique(),
+            "so_gio": len(part),
+            "so_gio_hoc": len(drop_warmup(part)) if name == "train" else pd.NA,
+            "ty_le_cao_diem_pct": (part[config.TARGET_COL] > threshold).mean() * 100 if seen else float("nan"),
+        })
+    return pd.DataFrame(rows).astype({"so_gio_hoc": "Int64"})
+
+
 def run(seed: int, final: bool = False) -> None:
-    """Đọc, chia tuần, in tóm tắt (chưa sinh bảng/hình; EDA là T005)."""
+    """Đọc, chia tuần, in tóm tắt và ghi bảng kích thước các tập (EDA là T005)."""
     df = load_raw()
     parts = split_weeks(df)
     for name, part in parts.items():
         print(f"{name:7s} {part['week_idx'].nunique():3d} tuần  {len(part):6d} giờ  {part[config.TIME_COL].min()} -> {part[config.TIME_COL].max()}")
+    config.TABLE_DIR.mkdir(parents=True, exist_ok=True)
+    sizes_path = config.TABLE_DIR / "1_4_split_sizes.csv"
+    split_size_table(parts).to_csv(sizes_path, index=False, float_format="%.4f")
+    print(f"đã ghi {sizes_path}")
     train_y = parts["train"][config.TARGET_COL].to_numpy()
     print(f"ngưỡng cao điểm (phân vị {config.PEAK_QUANTILE:.0%} của train): {peak_threshold(train_y):.2f} MWh")
     low = low_load_hours(df)
