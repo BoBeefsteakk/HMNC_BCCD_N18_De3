@@ -63,6 +63,8 @@ Phát biểu bài toán nghiệp vụ (ai dùng, quyết định gì, chi phí s
   - Chạy toàn bộ `notebooks/huan_eda.ipynb` từ đầu đến cuối: thành công, xuất đủ 2 bảng (`1_2`, `1_3`) và 5 hình; notebook đã xóa sạch output trước khi commit.
   - `python -m pytest`: **118 passed, 3 skipped, 0 failed**.
   - `python scripts/tasks.py check` và `python scripts/ai_log.py check`: 0 lỗi.
+- Tự kiểm hiểu (model hỏi):
+  - `notebooks/huan_eda.ipynb` (Ô 1–8) | qua | 26/11/2026 (3 câu: vì sao chỉ tính ngưỡng 90% và trung vị trên `train` không chạm `test_a`/`test_b` để tránh rò rỉ dữ liệu; vị trí 8 giờ tải thấp 3 `train` / 5 `val` ngày 20/01/2019 xuống `85,19 MWh`, vì sao làm vọt MAPE do $y_i$ ở mẫu số và cách xử lý giữ nguyên + báo MAPE 2 cách kèm MAE/RMSE; đa cộng tuyến `T2M` $r=0{,}92\text{--}0{,}96$ trên Hình 1.5 và mốc nhiệt độ vượt ngưỡng cao điểm `> 31 °C` trên Hình 1.4; sửa nhỏ: đổi `med_train` sang tính trên `train + val` → vi phạm rò rỉ dữ liệu và đẩy trung vị từ `1.156,71` lên `1.166,64 MWh`, tăng ngưỡng `low_thr` thêm `+4,96 MWh` lên `583,32 MWh`)
 
 ## Ghi chú AI đã dùng
-Đã thêm 1 dòng loại M vào `docs/ai_usage_log.md` cho phần mã notebook và vẽ 5 hình EDA (`notebooks/huan_eda.ipynb`); phần văn xuôi Chương 1 (B1.1, B1.3) và báo cáo tiến độ T008 Huấn tự viết trên Google Docs.
+Đã thêm 2 dòng vào `docs/ai_usage_log.md` (1 dòng loại M viết mã notebook và xuất 2 bảng/5 hình EDA; 1 dòng loại D hỏi kiểm hiểu 3 câu + sửa nhỏ và giải thích số liệu); phần văn xuôi Chương 1 (B1.1, B1.3) và báo cáo tiến độ T008 Huấn tự viết trên Google Docs.
