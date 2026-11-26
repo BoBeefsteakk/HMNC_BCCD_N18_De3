@@ -37,6 +37,15 @@ Mục tiêu: ba người, ba AI vẫn cho ra cùng một định nghĩa, cùng m
 - Báo cáo viết trên Google Docs (không để trong git). Số liệu chỉ lấy từ tệp trong `results/`. Dấu phẩy thập phân trong văn bản (0,875).
 - Công thức đánh số theo chương, ký hiệu thống nhất như file này. Tài liệu tham khảo: IEEE hoặc APA, nhất quán; bắt buộc [1], [2], [3], [7], [8] (xem `docs/DE3.md`).
 
+### Trình bày (đề mục 2.3, `docs/DE3.md`; Phi ghi 26/11/2026)
+- Khổ A4, Times New Roman cỡ 13, giãn dòng 1,3. Lề trên 2 cm, dưới 2 cm, trái 3 cm, phải 2 cm. Số trang ở giữa chân trang.
+- Hình, bảng đánh số theo chương (Hình 3.2, Bảng 4.1), có chú thích, được nhắc đến trong văn bản; ghi nguồn nếu không do nhóm tạo; đồ thị có tên trục và đơn vị.
+- Công thức đánh số theo chương, ví dụ (3.1); ký hiệu thống nhất, liệt kê trong bảng ký hiệu. Bảng xuất trực tiếp từ mã được giữ dấu chấm thập phân nếu nhất quán trong cùng bảng.
+- Trích mã trong thân: mỗi đoạn ≤ 15 dòng, tổng ≤ 3 trang. Tài liệu tham khảo ghi đến chương, mục hoặc trang.
+- Chỉ cho báo cáo cuối kỳ: thân (Chương 1 đến Kết luận) 25–35 trang, khuyến nghị khoảng 30; phụ lục ≤ 15 trang; tên tệp `HMNC_BCCD_N18_De3` (.docx và .pdf).
+- **Báo cáo tiến độ (mốc 30/11/2026):** 2–3 trang, đủ 4 ý (EDA, cách chia dữ liệu, kết quả GD và perceptron ban đầu, kế hoạch còn lại). Tài liệu của đề trong repo không nêu mẫu trình bày riêng, nhóm áp dụng các dòng trên (trừ dòng chỉ cho cuối kỳ); thông báo khác của giảng viên thì ưu tiên.
+- Ghép báo cáo: người ghép sửa hình thức (định dạng, đánh số, chính tả); nội dung phần nào người viết phần đó tự sửa.
+
 ## 7. Quyết định đã chốt (17/11/2026; hằng số ở `src/config.py`)
 - **Hạt giống lặp (B4.3):** 5 hạt giống = SEED, SEED+1, …, SEED+4 (nhóm 18: 2044–2048), lấy bằng `config.get_run_seeds()`. Báo cáo trung bình ± độ lệch chuẩn.
 - **Bootstrap (B9.1):** lấy lại mẫu **theo tuần** (các giờ trong tuần và các tuần liền nhau tương quan), `BOOTSTRAP_ITERS` = 2000 lần, khoảng tin cậy 95% kiểu phân vị, `rng` từ `get_seed()`.
