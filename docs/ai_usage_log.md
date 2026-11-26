@@ -45,3 +45,13 @@ Cột `Người` ghi `Phi`, `Huấn` hoặc `Việt`; cột `Task` ghi mã task 
 | 26/11/2026 | Claude Code (claude-sonnet-5-5) | M | Viết mã xuất bảng kích thước các tập, test | `src/data_prep.py` (`split_size_table`, `run`), `tests/test_data_prep.py`, `results/tables/1_4_split_sizes.csv` | Phi | LEAD |
 | 26/11/2026 | Claude Code (claude-opus-5-5) | D | Dàn ý đoạn "kết quả PLA và Pocket ban đầu", đối chiếu số liệu với bảng 4.1 và hình 4.1 | Báo cáo tiến độ, phần PLA/Pocket ban đầu (`results/tables/4_1_pla_pocket_epoch_error.csv`) | Việt | T008 |
 | 26/11/2026 | Claude Code (claude-opus-5-5) | B | Sửa chữ, tách đoạn, định dạng theo đề mục 2.3, chèn hình 4.1 và bảng 4.1 từ kết quả có sẵn (không sinh đoạn mới) | Báo cáo tiến độ, phần PLA/Pocket ban đầu | Việt | T008 |
+| 21/11/2026 | Claude Code (claude-sonnet-5-5) | D | Nghiệm thu và đối chiếu T001, T002, T004; ghi lịch thi | `tasks/`, `docs/`, `README.md` | Phi | LEAD |
+| 22/11/2026 | Claude Code (claude-sonnet-5-5) | M | Thêm hằng số số epoch tối đa của PLA/Pocket | `src/config.py` (`PERCEPTRON_MAX_EPOCHS`) | Phi | LEAD |
+| 22/11/2026 | Claude Code (claude-sonnet-5-5) | D | Đối chiếu công thức Fisher với slide, ghi quy ước; soạn task T011 | `docs/CONVENTIONS.md`, `tasks/T011-viet-hinh-loi-theo-epoch-cua-pla-va-pocket.md` | Phi | LEAD |
+| 23/11/2026 | Claude Code (claude-sonnet-5-5) | D | Nghiệm thu T006, T007 | `tasks/` | Phi | LEAD |
+| 24/11/2026 | Claude Code (claude-sonnet-5-5) | D | Đồng bộ mốc ngày, trạng thái README, tạo tệp truy vết | `docs/HUAN.md`, `docs/VIET.md`, `README.md`, `docs/trace_phi.md`, `docs/trace_viet.md` | Phi | LEAD |
+| 24/11/2026 | Claude Code (claude-sonnet-5-5) | D | Review, nghiệm thu T011; ghi quy ước ngưỡng 209 tuần và độ lệch chuẩn chia n − 1 | `docs/CONVENTIONS.md`, `tasks/` | Phi | T011 |
+| 25/11/2026 | Claude Code (claude-sonnet-5-5) | D | Review mã, chạy lại kết quả, nghiệm thu T003; tick CHECKLIST | `docs/CHECKLIST.md`, `tasks/` | Phi | T003 |
+| 26/11/2026 | Claude Code (claude-sonnet-5-5) | D | Review, chạy lại notebook, nghiệm thu T005; tick CHECKLIST | `docs/CHECKLIST.md`, `tasks/` | Phi | T005 |
+| 26/11/2026 | Claude Code (claude-sonnet-5-5) | D | Lập lịch, gợi ý dàn ý và prompt kiểm bài cho mục cách chia dữ liệu, đối chiếu số liệu, review PR của thành viên | Báo cáo tiến độ, mục cách chia dữ liệu | Phi | T008 |
+| 26/11/2026 | Claude Code (claude-sonnet-5-5) | T | Giải thích khái niệm: cách chia dữ liệu và rò rỉ, z-score, PLA/Pocket | Ôn kiến thức, báo cáo tiến độ | Phi | T008 |
