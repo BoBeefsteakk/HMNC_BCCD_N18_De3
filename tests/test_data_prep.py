@@ -274,3 +274,17 @@ def test_real_cnd_best_shift_on_validation_matches_config():
     best = int(table.loc[table["mape"].idxmin(), "shift_hours"])
     assert best == config.CND_SHIFT_HOURS
     assert (table["n_hours"] == len(val)).all()  # CND phủ trọn tập kiểm định
+
+
+def test_split_size_table_counts_and_hides_test_rates(prepared):
+    parts = data_prep.split_weeks(prepared)
+    table = data_prep.split_size_table(parts).set_index("tap")
+    assert list(table.index) == list(config.SPLITS)
+    for name, weeks in config.EXPECTED_WEEKS.items():
+        assert table.loc[name, "so_tuan"] == weeks
+        assert table.loc[name, "so_gio"] == weeks * config.HOURS_PER_WEEK
+    learn_weeks = config.EXPECTED_WEEKS["train"] - config.WARMUP_WEEKS
+    assert table.loc["train", "so_gio_hoc"] == learn_weeks * config.HOURS_PER_WEEK
+    assert table["so_gio_hoc"].drop("train").isna().all()
+    assert table.loc[["train", "val"], "ty_le_cao_diem_pct"].notna().all()
+    assert table.loc[["test_a", "test_b"], "ty_le_cao_diem_pct"].isna().all()
