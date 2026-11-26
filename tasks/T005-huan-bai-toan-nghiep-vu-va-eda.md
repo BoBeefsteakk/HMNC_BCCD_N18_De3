@@ -4,7 +4,7 @@ title: Bài toán nghiệp vụ và EDA
 phase: P2
 checklist: B1.1,B1.3
 owner: huan
-status: review
+status: done
 due: 26/11/2026
 files: notebooks/huan_eda.ipynb,results/figures,docs/trace_huan.md
 depends: T001
