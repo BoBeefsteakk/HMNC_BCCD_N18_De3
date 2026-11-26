@@ -55,3 +55,4 @@ Cột `Người` ghi `Phi`, `Huấn` hoặc `Việt`; cột `Task` ghi mã task 
 | 26/11/2026 | Claude Code (claude-sonnet-5-5) | D | Review, chạy lại notebook, nghiệm thu T005; tick CHECKLIST | `docs/CHECKLIST.md`, `tasks/` | Phi | T005 |
 | 26/11/2026 | Claude Code (claude-sonnet-5-5) | D | Lập lịch, gợi ý dàn ý và prompt kiểm bài cho mục cách chia dữ liệu, đối chiếu số liệu, review PR của thành viên | Báo cáo tiến độ, mục cách chia dữ liệu | Phi | T008 |
 | 26/11/2026 | Claude Code (claude-sonnet-5-5) | T | Giải thích khái niệm: cách chia dữ liệu và rò rỉ, z-score, PLA/Pocket | Ôn kiến thức, báo cáo tiến độ | Phi | T008 |
+| 26/11/2026 | Claude Code (claude-sonnet-5-5) | D | Tổng hợp quy định trình bày của đề vào quy ước nhóm | `docs/CONVENTIONS.md` | Phi | LEAD |
